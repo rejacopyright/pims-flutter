@@ -101,10 +101,10 @@ List<Route> menusNav = [
   ),
   Route(
     name: '/product',
-    page: const Scoper(name: '/product', child: ProductPage()),
-    label: 'Disukai',
-    icon: Iconsax.heart,
-    activeIcon: Iconsax.heart5,
+    page: const Scoper(name: '/product', child: ProductApp()),
+    label: 'Program',
+    icon: Iconsax.search_status,
+    activeIcon: Iconsax.search_status4,
     children: [
       GetPage(
         name: '/detail',
@@ -113,6 +113,24 @@ List<Route> menusNav = [
         page: () => const ProductDetailPage(),
       ),
     ],
+  ),
+  Route(
+    name: '/spacer',
+    page: const Scoper(name: '/spacer', child: ProductApp()),
+  ),
+  Route(
+    name: '/order',
+    page: const Scoper(name: '/order', child: ProductApp()),
+    label: 'Pesanan',
+    icon: Iconsax.shopping_cart,
+    activeIcon: Iconsax.shopping_cart5,
+  ),
+  Route(
+    name: '/account',
+    page: const Scoper(name: '/account', child: ProductApp()),
+    label: 'Akun',
+    icon: Iconsax.profile_circle,
+    activeIcon: Iconsax.profile_circle5,
   ),
 ];
 
