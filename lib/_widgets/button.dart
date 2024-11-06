@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:pims/_router/main.dart';
@@ -13,6 +15,7 @@ class LinkWell extends StatelessWidget {
       splashFactory: InkSplash.splashFactory,
       highlightColor: Colors.transparent,
       onTap: () {
+        log('${homeRoute != '/' ? '$homeRoute/' : ''}${to ?? homeRoute}');
         if (to != null && to != '') {
           Future.delayed(const Duration(milliseconds: 200), () {
             Get.rootDelegate.toNamed(

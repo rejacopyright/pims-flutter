@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:pims/_widgets/navbar.dart';
 
 import '_config/theme.dart';
@@ -16,6 +18,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Intl.defaultLocale = 'id';
+    initializeDateFormatting();
     return GetMaterialApp(
       title: 'Flutter Demos',
       defaultTransition: Transition.noTransition,
@@ -33,22 +37,25 @@ class MyApp extends StatelessWidget {
               currentRoute != null ? currentRoute.currentPage!.name : homeRoute;
           final NavStore navController = Get.put(NavStore());
           return Scaffold(
-              body: GetRouterOutlet(
-                navigatorKey: delegate.navigatorKey,
-                delegate: delegate,
-                initialRoute: homeRoute,
-                anchorRoute: '/',
-              ),
-              bottomNavigationBar:
-                  pageHasNav.contains(name) || navController.nav.value
-                      ? SafeArea(
-                          child: NavbarWidget(
-                            name: name != homeRoute
-                                ? name.replaceAll(homeRoute, '')
-                                : name,
-                          ),
-                        )
-                      : const SafeArea(child: SizedBox.shrink()));
+            body: GetRouterOutlet(
+              navigatorKey: delegate.navigatorKey,
+              delegate: delegate,
+              initialRoute: homeRoute,
+              anchorRoute: '/',
+            ),
+            bottomNavigationBar:
+                pageHasNav.contains(name) || navController.nav.value
+                    ? SafeArea(
+                        child: NavbarWidget(
+                          name: name != homeRoute
+                              ? name.replaceAll(homeRoute, '')
+                              : name,
+                        ),
+                      )
+                    : const SafeArea(
+                        child: SizedBox.shrink(),
+                      ),
+          );
         },
       ),
     );

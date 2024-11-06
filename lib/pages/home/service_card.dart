@@ -1,13 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_config/services.dart';
+import 'package:pims/_router/main.dart';
 import 'package:pims/pages/home/main.dart';
 
 class ServiceCard extends StatelessWidget {
-  const ServiceCard({super.key, required this.label, this.icon});
+  const ServiceCard({super.key, required this.label, this.icon, this.name});
 
   final String label;
   final String? icon;
+  final String? name;
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).primaryColor;
@@ -15,7 +19,8 @@ class ServiceCard extends StatelessWidget {
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       onTap: () {
-        Get.rootDelegate.toNamed('/app/profile');
+        log(name ?? '');
+        Get.rootDelegate.toNamed('$homeRoute${name ?? '/'}');
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -76,7 +81,13 @@ class ServiceSection extends StatelessWidget {
             mainAxisSpacing: 15,
             children: servicesList
                 .where((item) => item.home == true)
-                .map((e) => ServiceCard(label: e.label, icon: e.icon))
+                .map(
+                  (e) => ServiceCard(
+                    label: e.label,
+                    icon: e.icon,
+                    name: e.name,
+                  ),
+                )
                 .toList(),
           ),
         );

@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:pims/pages/home/main.dart';
 import 'package:pims/pages/product/detail/main.dart';
 import 'package:pims/pages/product/main.dart';
+import 'package:pims/pages/visit/main.dart';
 
 // class PageMiddelware extends GetMiddleware {
 //   @override
@@ -97,6 +98,10 @@ List<Route> menusNav = [
         name: '/home/product/detail',
         page: () => const ProductDetailPage(),
       ),
+      GetPage(
+        name: '/services/visit',
+        page: () => const VisitPage(),
+      ),
     ],
   ),
   Route(
@@ -166,11 +171,13 @@ List<GetPage> routes() {
                   children: e.children ?? [],
                 )),
             // GetPage(
-            //   name: '/likes',
+            //   name: '/services/visit',
             //   preventDuplicates: true,
             //   participatesInRootNavigator: true,
-            //   page: () => const Scoper(name: '/likes', child: LikesApp()),
-            //   // middlewares: [PageMiddelware()],
+            //   page: () => const Scoper(
+            //     name: '/services/visit',
+            //     child: ProductApp(),
+            //   ),
             // ),
           ],
         ),
