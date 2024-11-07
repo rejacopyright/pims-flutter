@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -71,7 +73,10 @@ class SelectTimes extends StatelessWidget {
                     highlightColor: Colors.transparent,
                     onTap: () {
                       if (!isPastTime) {
-                        selectTimesController.selectedTime(item);
+                        log(DateFormat('dd:HH:mm').format(item));
+                        log(isSelected.toString());
+                        selectTimesController
+                            .setSelectedTime(isSelected ? null : item);
                       }
                     },
                     child: Center(
