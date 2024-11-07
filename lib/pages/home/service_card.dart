@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_config/services.dart';
@@ -19,7 +17,6 @@ class ServiceCard extends StatelessWidget {
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       onTap: () {
-        log(name ?? '');
         Get.rootDelegate.toNamed('$homeRoute${name ?? '/'}');
       },
       child: Column(

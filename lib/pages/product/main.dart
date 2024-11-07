@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_widgets/form.dart';
+import 'package:pims/_widgets/navbar.dart';
 import 'package:pims/_widgets/program_card.dart';
 
 class ProductController extends GetxController {
@@ -77,6 +78,7 @@ class ProductApp extends StatelessWidget {
     ];
 
     return Scaffold(
+      bottomNavigationBar: SafeArea(child: NavbarWidget(name: '/product')),
       body: Obx(() {
         final pageIsReady = store.pageIsReady.value;
         if (pageIsReady) {

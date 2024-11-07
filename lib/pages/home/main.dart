@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_widgets/navbar.dart';
 import 'package:pims/_widgets/title_show_all.dart';
 import 'package:pims/pages/home/banner_promo.dart';
 import 'package:pims/pages/home/header.dart';
@@ -65,6 +66,7 @@ class Homepage extends StatelessWidget {
     final bannerController = Get.put(BannerPromoController());
     final programController = Get.put(ProgramSectionController());
     return Scaffold(
+      bottomNavigationBar: SafeArea(child: NavbarWidget(name: '/app')),
       body: Obx(() {
         final pageIsReady = homeController.loadingPage.value;
         return NestedScrollView(

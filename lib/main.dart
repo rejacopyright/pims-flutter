@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:pims/_widgets/navbar.dart';
-
 import '_config/theme.dart';
-import '_controller/navbar_controller.dart';
 import '_router/main.dart';
 
 void main() {
@@ -33,9 +30,9 @@ class MyApp extends StatelessWidget {
         routerDelegate: Get.rootDelegate,
         // key: navKey,
         builder: (ctx, delegate, currentRoute) {
-          final String name =
-              currentRoute != null ? currentRoute.currentPage!.name : homeRoute;
-          final NavStore navController = Get.put(NavStore());
+          // final String name =
+          //     currentRoute != null ? currentRoute.currentPage!.name : homeRoute;
+          // final NavStore navController = Get.put(NavStore());
           return Scaffold(
             body: GetRouterOutlet(
               navigatorKey: delegate.navigatorKey,
@@ -43,18 +40,18 @@ class MyApp extends StatelessWidget {
               initialRoute: homeRoute,
               anchorRoute: '/',
             ),
-            bottomNavigationBar:
-                pageHasNav.contains(name) || navController.nav.value
-                    ? SafeArea(
-                        child: NavbarWidget(
-                          name: name != homeRoute
-                              ? name.replaceAll(homeRoute, '')
-                              : name,
-                        ),
-                      )
-                    : const SafeArea(
-                        child: SizedBox.shrink(),
-                      ),
+            // bottomNavigationBar:
+            //     pageHasNav.contains(name) || navController.nav.value
+            //         ? SafeArea(
+            //             child: NavbarWidget(
+            //               name: name != homeRoute
+            //                   ? name.replaceAll(homeRoute, '')
+            //                   : name,
+            //             ),
+            //           )
+            //         : const SafeArea(
+            //             child: SizedBox.shrink(),
+            //           ),
           );
         },
       ),
