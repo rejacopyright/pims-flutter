@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +18,6 @@ class SelectDays extends StatelessWidget {
     return Obx(() {
       final pageIsReady = selectDaysController.pageIsReady.value;
       final selectedDate = selectDaysController.selectedDate.value;
-      inspect(selectedDate);
       if (pageIsReady) {
         return Container(
           constraints: const BoxConstraints(maxHeight: 125),

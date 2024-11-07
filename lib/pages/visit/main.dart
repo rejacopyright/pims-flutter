@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/pages/visit/bottom_nav.dart';
 import 'package:pims/pages/visit/header.dart';
 import 'package:pims/pages/visit/select_days.dart';
+import 'package:pims/pages/visit/select_times.dart';
 
 class VisitAppController extends GetxController {
   RxBool pageIsReady = false.obs;
@@ -9,23 +11,21 @@ class VisitAppController extends GetxController {
   final selectedDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .obs;
+  final selectedTime = Rxn<DateTime>(null);
 
-  void setSelectedDate(e) {
-    selectedDate.value = e;
-  }
+  void setSelectedDate(e) => selectedDate.value = e;
+  void setSelectedTime(e) => selectedTime.value = e;
 
   @override
   void onReady() {
-    Future.delayed(const Duration(milliseconds: 100), () {
-      pageIsReady.value = true;
-    });
+    pageIsReady.value = true;
     super.onReady();
   }
 
   @override
   void refresh() {
     pageIsReady.value = false;
-    Future.delayed(const Duration(milliseconds: 400), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       onReady();
     });
     super.refresh();
@@ -41,6 +41,7 @@ class VisitPage extends StatelessWidget {
     // final selectDaysController = Get.put(SelectDaysController());
     return Scaffold(
       appBar: VisitAppBar(),
+      bottomNavigationBar: VisitBottomNav(),
       body: Obx(
         () {
           final pageIsReady = visitController.pageIsReady.value;
@@ -70,9 +71,7 @@ class VisitPage extends StatelessWidget {
                                 SliverChildBuilderDelegate((context, index) {
                               return Padding(
                                 padding: const EdgeInsets.only(top: 10),
-                                child: pageIsReady
-                                    ? Text('AAA')
-                                    : Text('Loading...'),
+                                child: SelectTimes(pageIsReady: pageIsReady),
                               );
                             }, childCount: 1),
                           ),

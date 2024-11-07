@@ -39,7 +39,7 @@ class ProgramCard extends StatelessWidget {
       shadowColor: Colors.black.withOpacity(0.5),
       elevation: 3.5,
       child: LinkWell(
-        to: '/home/product/detail',
+        to: '/product/detail',
         child: Stack(
           children: [
             Column(
