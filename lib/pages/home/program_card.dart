@@ -73,7 +73,7 @@ class ProgramSection extends StatelessWidget {
           },
           child: GridView.count(
             clipBehavior: Clip.antiAlias,
-            childAspectRatio: 5 / 6,
+            childAspectRatio: 0.75,
             crossAxisCount: crossAxisCount,
             padding:
                 const EdgeInsets.only(top: 0, bottom: 15, left: 15, right: 15),

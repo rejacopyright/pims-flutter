@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
     initializeDateFormatting();
     return GetMaterialApp(
       title: 'Flutter Demos',
-      defaultTransition: Transition.noTransition,
-      transitionDuration: Duration.zero,
+      // defaultTransition: Transition.rightToLeft,
+      // transitionDuration: Duration.zero,
       debugShowCheckedModeBanner: false,
       showPerformanceOverlay: false,
       theme: themeConfig(),

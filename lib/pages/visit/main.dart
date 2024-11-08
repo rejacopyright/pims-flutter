@@ -12,9 +12,11 @@ class VisitAppController extends GetxController {
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
           .obs;
   final selectedTime = Rxn<DateTime>(null);
+  final selectedVoucher = Rxn<String>(null);
 
   void setSelectedDate(e) => selectedDate.value = e;
   void setSelectedTime(e) => selectedTime.value = e;
+  void setSelectedVoucher(e) => selectedVoucher.value = e;
 
   @override
   void onReady() {

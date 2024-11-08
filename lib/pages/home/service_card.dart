@@ -18,6 +18,7 @@ class ServiceCard extends StatelessWidget {
       highlightColor: Colors.transparent,
       onTap: () {
         Get.rootDelegate.toNamed('$homeRoute${name ?? '/'}');
+        // Get.toNamed('$homeRoute${name ?? '/'}');
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -60,6 +61,8 @@ class ServiceSection extends StatelessWidget {
     final Color primary = Theme.of(context).primaryColor;
     return Obx(() {
       final pageIsReady = store.loadingPage.value;
+      final gridCount = 4;
+      final gridSize = (MediaQuery.of(context).size.width / gridCount) - 30;
       if (pageIsReady) {
         return Container(
           color: primary.withOpacity(0),
@@ -94,10 +97,10 @@ class ServiceSection extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
-            4,
+            gridCount,
             (index) => Container(
-              width: 75,
-              height: 75,
+              width: gridSize,
+              height: gridSize,
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.05),

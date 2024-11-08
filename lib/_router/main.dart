@@ -101,6 +101,7 @@ List<Route> menusNav = [
       GetPage(
         name: '/services/visit',
         page: () => const VisitPage(),
+        // transition: Transition.fade,
       ),
     ],
   ),

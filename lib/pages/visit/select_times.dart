@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -36,7 +34,7 @@ class SelectTimes extends StatelessWidget {
       final now = DateTime.now();
       return GridView.count(
         clipBehavior: Clip.antiAlias,
-        childAspectRatio: 5 / 3,
+        childAspectRatio: 10 / 5,
         crossAxisCount: 4,
         padding: const EdgeInsets.only(top: 0, bottom: 15, left: 0, right: 0),
         physics: const NeverScrollableScrollPhysics(),
@@ -73,8 +71,6 @@ class SelectTimes extends StatelessWidget {
                     highlightColor: Colors.transparent,
                     onTap: () {
                       if (!isPastTime) {
-                        log(DateFormat('dd:HH:mm').format(item));
-                        log(isSelected.toString());
                         selectTimesController
                             .setSelectedTime(isSelected ? null : item);
                       }
