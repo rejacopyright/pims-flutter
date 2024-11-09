@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +16,6 @@ class SelectDays extends StatelessWidget {
     final days = List.generate(30, (i) {
       return DateTime.now().add(Duration(days: i));
     });
-    log(isCollapsed.toString());
     return Obx(() {
       final pageIsReady = selectDaysController.pageIsReady.value;
       final selectedDate = selectDaysController.selectedDate.value;

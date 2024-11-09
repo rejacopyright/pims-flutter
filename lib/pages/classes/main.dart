@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/pages/classes/select_days.dart';
 
-import 'bottom_nav.dart';
 import 'select_class.dart';
 import 'studio/appbar.dart';
 
@@ -41,9 +40,10 @@ class ClassPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final classController = Get.put(ClassAppController());
+    final selectClassController = Get.put(SelectClassController());
     // final selectDaysController = Get.put(SelectDaysController());
     return Scaffold(
-      bottomNavigationBar: SafeArea(child: ClassBottomNav()),
+      // bottomNavigationBar: SafeArea(child: ClassBottomNav()),
       body: Obx(
         () {
           final pageIsReady = classController.pageIsReady.value;
@@ -69,18 +69,19 @@ class ClassPage extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate((context, index) {
                     return RefreshIndicator(
                       color: Theme.of(context).primaryColor,
-                      displacement: 20,
+                      displacement: 50,
                       onRefresh: () async {
                         classController.refresh();
+                        selectClassController.refresh();
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(
                           top: 20,
-                          left: 15,
-                          right: 15,
+                          // left: 15,
+                          // right: 15,
                         ),
                         // child: SelectClass(pageIsReady: pageIsReady),
-                        child: SelectClass(pageIsReady: pageIsReady),
+                        child: SelectClass(),
                       ),
                     );
                   }, childCount: 1),

@@ -15,7 +15,7 @@ class ProgramSection extends StatelessWidget {
     final store = Get.put(ProgramSectionController());
     List<ProgramState> programData = [
       ProgramState(
-        title: 'Jiu Jitsu',
+        title: 'Progressive Overload Strength & Conditioning by Reja Jamil',
         category: 'Fungsional',
         image: 'assets/images/sample/jujutsu.jpg',
         price: 100000,

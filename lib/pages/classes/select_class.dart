@@ -1,77 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_widgets/program_booking_card.dart';
 
 import 'main.dart';
 
 class SelectClassController extends ClassAppController {}
 
 class SelectClass extends StatelessWidget {
-  const SelectClass({
-    super.key,
-    this.pageIsReady,
-  });
+  const SelectClass({super.key});
 
-  final dynamic pageIsReady;
+  final int crossAxisCount = 2;
 
   @override
   Widget build(BuildContext context) {
-    final selectClassController = Get.put(SelectClassController());
-    final primaryColor = Theme.of(context).primaryColor;
+    final classController = Get.put(SelectClassController());
+    List<ProgramBookingState> programData = [
+      ProgramBookingState(
+        title: 'Progressive Overload Strength & Conditioning by Reja Jamil',
+        category: 'Fungsional',
+        image: 'assets/images/sample/jujutsu.jpg',
+        price: 100000,
+        userImage: 'assets/avatar/1.png',
+        userName: 'Reja Jamil',
+      ),
+      ProgramBookingState(
+        title: 'Tai Chi',
+        category: 'Studio',
+        image: 'assets/images/sample/taichi.jpg',
+        price: 150000,
+        userImage: 'assets/avatar/2.png',
+        userName: 'Reja Jamil',
+      ),
+      ProgramBookingState(
+        title: 'Karate',
+        category: 'Fungsional',
+        image: 'assets/images/sample/karate.jpg',
+        price: 100000,
+        userImage: 'assets/avatar/3.png',
+        userName: 'Reja Jamil',
+      ),
+      ProgramBookingState(
+        title: 'Muay Thai',
+        category: 'Studio',
+        image: 'assets/images/sample/muaythai.jpg',
+        price: 25000,
+        userImage: 'assets/avatar/4.png',
+        userName: 'Reja Jamil',
+      ),
+      ProgramBookingState(
+        title: 'Kung Fu',
+        category: 'Fungsional',
+        image: 'assets/images/sample/kungfu.jpg',
+        price: 35000,
+        userImage: 'assets/avatar/5.png',
+        userName: 'Reja Jamil',
+      ),
+      ProgramBookingState(
+        title: 'Taekwondo',
+        category: 'Studio',
+        image: 'assets/images/sample/taekwondo.jpg',
+        price: 3000000,
+        userImage: 'assets/avatar/6.png',
+        userName: 'Reja Jamil',
+      ),
+    ];
 
     return Obx(() {
-      final classes = List.generate(32, (i) {
-        return i.toString();
-      });
-      final selectedClass = selectClassController.selectedClass.value;
+      final pageIsReady = classController.pageIsReady.value;
       return GridView.count(
         clipBehavior: Clip.antiAlias,
-        childAspectRatio: 10 / 5,
-        crossAxisCount: 4,
-        padding: const EdgeInsets.only(top: 0, bottom: 15, left: 0, right: 0),
+        childAspectRatio: pageIsReady ? 0.75 : 1,
+        crossAxisCount: crossAxisCount,
+        padding: const EdgeInsets.only(top: 0, bottom: 15, left: 15, right: 15),
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        // controller: ScrollController(keepScrollOffset: false),
+        // controller:
+        //     ScrollController(keepScrollOffset: false),
         scrollDirection: Axis.vertical,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
-        children: classes.map((item) {
-          final isSelected = selectedClass == item;
-          return Material(
-            color: isSelected ? primaryColor : Colors.white,
-            clipBehavior: Clip.antiAlias,
-            shadowColor: Colors.black.withOpacity(0.25),
-            elevation: !pageIsReady ? 0 : 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-              side: BorderSide(
-                color: Colors.black.withOpacity(0.1),
-                width: 0.75,
-              ),
-            ),
-            child: pageIsReady
-                ? InkWell(
-                    splashFactory: InkSplash.splashFactory,
-                    highlightColor: Colors.transparent,
-                    onTap: () {
-                      selectClassController
-                          .setSelectedClass(isSelected ? null : item);
-                    },
-                    child: Center(
-                      child: Text(
-                        'Kelas $item',
-                        style: TextStyle(
-                          color: isSelected
-                              ? Colors.white
-                              : Colors.black.withOpacity(0.5),
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
+        children: pageIsReady
+            ? programData.map((item) {
+                return ProgramBookingCard(
+                    item: item, crossAxisCount: crossAxisCount);
+              }).toList()
+            : List.generate(
+                4,
+                (index) => Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.05),
+                        borderRadius: BorderRadius.circular(7.5),
                       ),
-                    ),
-                  )
-                : Container(color: Color(0xfffafafa)),
-          );
-        }).toList(),
+                    )),
       );
     });
   }
