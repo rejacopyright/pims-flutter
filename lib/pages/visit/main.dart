@@ -41,7 +41,7 @@ class VisitPage extends StatelessWidget {
     // final selectDaysController = Get.put(SelectDaysController());
     return Scaffold(
       appBar: VisitAppBar(),
-      bottomNavigationBar: VisitBottomNav(),
+      bottomNavigationBar: SafeArea(child: VisitBottomNav()),
       body: Obx(
         () {
           final pageIsReady = visitController.pageIsReady.value;

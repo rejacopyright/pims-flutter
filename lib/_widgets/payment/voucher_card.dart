@@ -98,7 +98,7 @@ class VoucherCard extends StatelessWidget {
                               'Rp. ${currency.format(5000)}',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                                fontSize: 18,
                               ),
                             ),
                             Padding(

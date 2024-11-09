@@ -26,7 +26,7 @@ List<Widget> content = [
   const ServiceSection(),
   const TitleShowAll(
     title: 'Trainers',
-    margin: EdgeInsets.only(top: 10, bottom: 5),
+    margin: EdgeInsets.only(top: 5, bottom: 5),
   ),
   TopUserCard(),
   const Padding(padding: EdgeInsets.only(bottom: 5)),

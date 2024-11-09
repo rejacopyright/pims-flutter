@@ -39,9 +39,9 @@ class ServiceCard extends StatelessWidget {
             child: Text(
               label,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
               overflow: TextOverflow.ellipsis,
-              maxLines: 1,
+              maxLines: 2,
             ),
           ),
         ],
@@ -72,7 +72,7 @@ class ServiceSection extends StatelessWidget {
             padding:
                 const EdgeInsets.only(top: 15, bottom: 5, left: 20, right: 20),
             physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: 1,
+            childAspectRatio: 0.9,
             shrinkWrap: true,
             // controller:
             //     ScrollController(keepScrollOffset: false),

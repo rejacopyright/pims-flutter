@@ -30,8 +30,8 @@ class VisitBottomNav extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            offset: const Offset(0, 2.5),
+            color: Colors.black.withOpacity(0.05),
+            offset: const Offset(0, -5),
             blurRadius: 5,
           ),
         ],
@@ -78,7 +78,7 @@ class VisitBottomNav extends StatelessWidget {
                               Text(
                                 'Kembali',
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 16,
                                   color: Color(0xffaaaaaa),
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -122,7 +122,7 @@ class VisitBottomNav extends StatelessWidget {
                           child: Text(
                             timeIsSelected ? 'Bayar' : 'Booking',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 16,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
@@ -182,59 +182,63 @@ class BookingVisitButton extends StatelessWidget {
                   child: PaymentCard(),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 20,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.25),
-                      offset: const Offset(0, 2.5),
-                      blurRadius: 7.5,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    VisitFinalPrice(),
-                    Material(
-                      borderRadius: BorderRadius.circular(5),
-                      clipBehavior: Clip.antiAlias,
-                      color:
-                          primaryColor.withOpacity(paymentIsSelected ? 1 : 0.5),
-                      child: InkWell(
-                        splashFactory: InkSplash.splashFactory,
-                        highlightColor: Colors.transparent,
-                        onTap: () {
-                          if (paymentIsSelected) {
-                            Future.delayed(const Duration(milliseconds: 200),
-                                () {
-                              Get.rootDelegate.popRoute();
-                            });
-                          }
-                        },
-                        child: Container(
-                          height: 50,
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 10,
-                          ),
-                          child: Text(
-                            'Booking',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+              SafeArea(
+                child: Container(
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                    bottom: 15,
+                    left: 20,
+                    right: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        offset: const Offset(0, -5),
+                        blurRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      VisitFinalPrice(),
+                      Material(
+                        borderRadius: BorderRadius.circular(5),
+                        clipBehavior: Clip.antiAlias,
+                        color: primaryColor
+                            .withOpacity(paymentIsSelected ? 1 : 0.5),
+                        child: InkWell(
+                          splashFactory: InkSplash.splashFactory,
+                          highlightColor: Colors.transparent,
+                          onTap: () {
+                            if (paymentIsSelected) {
+                              Future.delayed(const Duration(milliseconds: 200),
+                                  () {
+                                Get.rootDelegate.popRoute();
+                              });
+                            }
+                          },
+                          child: Container(
+                            height: 50,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10,
+                            ),
+                            child: Text(
+                              'Booking',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

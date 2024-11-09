@@ -25,7 +25,7 @@ ThemeData themeConfig() {
         fontSize: 16,
       ),
       bodyMedium: TextStyle(
-        fontSize: 13,
+        fontSize: 14,
         // fontWeight: FontWeight.w600,
       ),
       displaySmall: TextStyle(

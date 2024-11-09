@@ -93,38 +93,42 @@ class VoucherSection extends StatelessWidget {
                               Expanded(
                                 child: VoucherCard(),
                               ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 20,
-                                  horizontal: 20,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.25),
-                                      offset: const Offset(0, 2.5),
-                                      blurRadius: 7.5,
-                                    ),
-                                  ],
-                                ),
-                                child: Material(
-                                  borderRadius: BorderRadius.circular(5),
-                                  clipBehavior: Clip.antiAlias,
-                                  color: primaryColor,
-                                  child: BackWell(
-                                    child: Container(
-                                      height: 50,
-                                      alignment: Alignment.center,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 10,
+                              SafeArea(
+                                child: Container(
+                                  padding: const EdgeInsets.only(
+                                    top: 20,
+                                    bottom: 15,
+                                    left: 20,
+                                    right: 20,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.05),
+                                        offset: const Offset(0, -5),
+                                        blurRadius: 5,
                                       ),
-                                      child: Text(
-                                        'Terapkan',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
+                                    ],
+                                  ),
+                                  child: Material(
+                                    borderRadius: BorderRadius.circular(5),
+                                    clipBehavior: Clip.antiAlias,
+                                    color: primaryColor,
+                                    child: BackWell(
+                                      child: Container(
+                                        height: 50,
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                        ),
+                                        child: Text(
+                                          'Terapkan',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -143,7 +147,7 @@ class VoucherSection extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10),
                   child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.end,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     spacing: 5,
                     children: [
                       Container(
@@ -152,14 +156,14 @@ class VoucherSection extends StatelessWidget {
                                 '-Rp. ${currency.format(5000)}',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 14,
+                                    fontSize: 15,
                                     color: Colors.red),
                               )
                             : Text(
                                 'Gunakan Voucher',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 12,
+                                  fontSize: 13,
                                   color: Color(0xffaaaaaa),
                                 ),
                               ),
