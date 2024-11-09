@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pims/pages/classes/main.dart';
 import 'package:pims/pages/home/main.dart';
 import 'package:pims/pages/product/detail/main.dart';
 import 'package:pims/pages/product/main.dart';
@@ -102,6 +103,10 @@ List<Route> menusNav = [
         name: '/services/visit',
         page: () => const VisitPage(),
         // transition: Transition.fade,
+      ),
+      GetPage(
+        name: '/services/class/studio',
+        page: () => const ClassPage(),
       ),
     ],
   ),

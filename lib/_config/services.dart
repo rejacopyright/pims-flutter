@@ -16,13 +16,13 @@ List<ProductService> servicesList = [
   ),
   ProductService(
     label: 'Kelas Studio',
-    name: '/services/studio',
+    name: '/services/class/studio',
     icon: 'assets/icons/yoga.png',
     home: true,
   ),
   ProductService(
     label: 'Kelas Fungsional',
-    name: '/services/functional',
+    name: '/services/class/functional',
     icon: 'assets/icons/bike.png',
     home: true,
   ),
