@@ -3,8 +3,10 @@ import 'package:get/route_manager.dart';
 import 'package:pims/_router/main.dart';
 
 class LinkWell extends StatelessWidget {
-  const LinkWell({super.key, required this.to, required this.child});
+  const LinkWell(
+      {super.key, required this.to, this.params, required this.child});
   final String? to;
+  final Map<String, String>? params;
   final Widget child;
 
   @override
@@ -16,7 +18,10 @@ class LinkWell extends StatelessWidget {
         if (to != null && to != '') {
           Future.delayed(const Duration(milliseconds: 200), () {
             Get.rootDelegate.toNamed(
-                '${homeRoute != '/' ? '$homeRoute/' : ''}${to ?? homeRoute}');
+              '${homeRoute != '/' ? '$homeRoute/' : ''}${to ?? homeRoute}',
+              arguments: true,
+              parameters: params,
+            );
           });
         }
       },

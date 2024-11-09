@@ -40,6 +40,7 @@ class ProgramBookingCard extends StatelessWidget {
       elevation: 3.5,
       child: LinkWell(
         to: '/product/detail',
+        params: {'satu': 'Hello 1', 'dua': 'Hello 2'},
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
