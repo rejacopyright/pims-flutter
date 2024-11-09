@@ -17,6 +17,7 @@ dependencies:
  flutter_rating_bar: ^4.0.1
  flutter_svg: ^2.0.11
  coupon_uikit: ^0.2.1
+ flutter_launcher_icons: ^0.14.1
 dev_dependencies:
  flutter_test:
   sdk: flutter
