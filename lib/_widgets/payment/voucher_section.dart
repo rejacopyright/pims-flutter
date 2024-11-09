@@ -125,7 +125,7 @@ class VoucherSection extends StatelessWidget {
                                         child: Text(
                                           'Terapkan',
                                           style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 18,
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                           ),

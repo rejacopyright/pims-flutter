@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/_widgets/button.dart';
+import 'package:pims/pages/visit/select_days.dart';
 
 class VisitHeader extends StatelessWidget {
   const VisitHeader({super.key, required this.pageIsReady});
@@ -8,127 +9,167 @@ class VisitHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      backgroundColor: Colors.white,
-      shadowColor: Colors.black.withOpacity(0.25),
-      elevation: 1,
-      forceElevated: true,
-      pinned: true,
-      stretch: false,
-      automaticallyImplyLeading: false,
-      surfaceTintColor: Colors.transparent,
-      centerTitle: false,
-      bottom: PreferredSize(
-        preferredSize: Size.fromHeight(5),
-        child: SizedBox.shrink(),
-      ),
-      flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.zero,
+    const double expandedHeight = 225;
+    const double toolbarHeight = 150;
+    return SliverLayoutBuilder(
+        builder: (BuildContext context, sliverConstraints) {
+      final bool isCollapsed =
+          sliverConstraints.scrollOffset + toolbarHeight > expandedHeight;
+      final Color statusBarColor =
+          isCollapsed ? Colors.white : Colors.transparent;
+      return SliverAppBar(
+        backgroundColor: statusBarColor,
+        shadowColor: Colors.black.withOpacity(0.25),
+        elevation: 1,
+        forceElevated: true,
+        pinned: true,
+        snap: false,
+        floating: false,
+        stretch: false,
+        stretchTriggerOffset: 20,
+        expandedHeight: expandedHeight,
+        collapsedHeight: toolbarHeight,
+        toolbarHeight: toolbarHeight,
+        automaticallyImplyLeading: false,
+        surfaceTintColor: Colors.transparent,
         centerTitle: false,
-        title: Container(
-          margin: const EdgeInsetsDirectional.only(bottom: 10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+        flexibleSpace: FlexibleSpaceBar(
+          titlePadding: EdgeInsets.symmetric(vertical: 5),
+          centerTitle: false,
+          expandedTitleScale: 1.35,
+          background: HeaderBackgroundVisit(),
+          title: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Material(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    side: BorderSide(
-                      color: Colors.black.withOpacity(0),
-                      width: 1,
-                    ),
-                  ),
-                  color: Colors.black.withOpacity(0.05),
-                  clipBehavior: Clip.antiAlias,
-                  child: BackWell(
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 1),
-                      width: 40,
-                      height: 40,
-                      child: Icon(
-                        Iconsax.arrow_left_2,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 10),
-                child: Text(
-                  'Gym Visit',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              )
+              HeaderTitle(isCollapsed: isCollapsed),
+              SelectDays(isCollapsed: isCollapsed)
             ],
           ),
         ),
+      );
+    });
+  }
+}
+
+class HeaderTitle extends StatelessWidget {
+  const HeaderTitle({
+    super.key,
+    required this.isCollapsed,
+  });
+
+  final bool isCollapsed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsetsDirectional.only(bottom: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Material(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+                side: BorderSide(
+                  color: Colors.black.withOpacity(0),
+                  width: 1,
+                ),
+              ),
+              color: Colors.white.withOpacity(0.15),
+              clipBehavior: Clip.antiAlias,
+              child: BackWell(
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 1),
+                  width: 30,
+                  height: 30,
+                  child: Icon(
+                    Iconsax.arrow_left_2,
+                    color: isCollapsed ? Colors.black : Colors.white,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          BackWell(
+            child: Container(
+              margin: EdgeInsets.only(left: 10),
+              child: Text(
+                'Gym Visit',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: isCollapsed
+                      ? Theme.of(context).primaryColor
+                      : Colors.white,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
 }
 
-class VisitAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const VisitAppBar({
-    super.key,
-  });
-
-  @override
-  Size get preferredSize => const Size.fromHeight(60);
+class HeaderBackgroundVisit extends StatelessWidget {
+  const HeaderBackgroundVisit({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      leadingWidth: 65,
-      titleSpacing: 5,
-      backgroundColor: Colors.white,
-      surfaceTintColor: Colors.transparent,
-      shadowColor: Colors.black.withOpacity(0.5),
-      elevation: 1,
-      bottom: PreferredSize(
-        preferredSize: Size.fromHeight(5),
-        child: SizedBox.shrink(),
-      ),
-      leading: Container(
-        padding: const EdgeInsets.all(7.5),
-        margin: EdgeInsets.only(left: 10),
-        child: Material(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-            side: BorderSide(
-              color: Colors.black.withOpacity(0),
-              width: 1,
-            ),
-          ),
-          color: Colors.black.withOpacity(0.05),
-          clipBehavior: Clip.antiAlias,
-          child: BackWell(
-            child: Container(
-              margin: EdgeInsets.only(bottom: 1),
-              width: 40,
-              height: 40,
-              child: Icon(
-                Iconsax.arrow_left_2,
-                color: Colors.black,
-              ),
+    final primaryColor = Theme.of(context).primaryColor;
+    return Stack(
+      fit: StackFit.expand,
+      clipBehavior: Clip.antiAlias,
+      children: [
+        DecoratedBox(
+          // decoration: BoxDecoration(
+          //   color: Theme.of(context).primaryColor,
+          // ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                // primaryColor.withOpacity(0),
+                primaryColor.withOpacity(0.5),
+                primaryColor.withOpacity(0.75),
+                primaryColor.withOpacity(0.85),
+                primaryColor.withOpacity(1),
+              ],
             ),
           ),
         ),
-      ),
-      title: Text(
-        'Gym Visit',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
+        Positioned(
+          right: -375,
+          top: -10,
+          bottom: -200,
+          child: Transform.rotate(
+            angle: 0.35,
+            child: Image.asset(
+              'assets/images/shape-2.png',
+              fit: BoxFit.fitHeight,
+              color: Colors.black,
+              opacity: const AlwaysStoppedAnimation(0.05),
+            ),
+          ),
         ),
-      ),
+        Positioned(
+          right: -320,
+          top: 0,
+          bottom: -125,
+          child: Transform.rotate(
+            angle: 0.45,
+            child: Image.asset(
+              'assets/images/shape-2.png',
+              fit: BoxFit.fitHeight,
+              color: Colors.black,
+              opacity: const AlwaysStoppedAnimation(0.05),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

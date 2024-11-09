@@ -6,7 +6,9 @@ import 'package:pims/pages/visit/main.dart';
 class SelectDaysController extends VisitAppController {}
 
 class SelectDays extends StatelessWidget {
-  const SelectDays({super.key});
+  const SelectDays({super.key, this.isCollapsed = true});
+
+  final bool isCollapsed;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class SelectDays extends StatelessWidget {
       final selectedDate = selectDaysController.selectedDate.value;
       if (pageIsReady) {
         return Container(
-          constraints: const BoxConstraints(maxHeight: 125),
+          constraints: const BoxConstraints(maxHeight: 100),
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             scrollDirection: Axis.horizontal,
@@ -37,17 +39,23 @@ class SelectDays extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.only(top: 5),
                     child: Text(
-                      isToday ? 'Hari ini' : DateFormat('E').format(e),
+                      isToday ? 'Today' : DateFormat('E').format(e),
                       style: TextStyle(
-                        color: isSelected ? primaryColor : Colors.black,
+                        color: isSelected
+                            ? isCollapsed
+                                ? primaryColor
+                                : Colors.white
+                            : isCollapsed
+                                ? Colors.black
+                                : Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                        fontSize: 11,
                       ),
                     ),
                   ),
                   Container(
-                    width: 72.5,
-                    height: 72.5,
+                    width: 52.5,
+                    height: 52.5,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 7.5, vertical: 7.5),
                     child: Material(
@@ -58,7 +66,9 @@ class SelectDays extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                         side: BorderSide(
-                          color: Colors.black.withOpacity(0.1),
+                          color: isCollapsed
+                              ? Colors.black.withOpacity(0.1)
+                              : Colors.white,
                           width: 0.75,
                         ),
                       ),
@@ -84,7 +94,13 @@ class SelectDays extends StatelessWidget {
                   Text(
                     DateFormat('MMM').format(e),
                     style: TextStyle(
-                      color: isSelected ? primaryColor : Colors.black,
+                      color: isSelected
+                          ? isCollapsed
+                              ? primaryColor
+                              : Colors.white
+                          : isCollapsed
+                              ? Colors.black
+                              : Colors.white,
                       fontSize: 10,
                     ),
                   ),

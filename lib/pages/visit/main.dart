@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/pages/visit/bottom_nav.dart';
 import 'package:pims/pages/visit/header.dart';
-import 'package:pims/pages/visit/select_days.dart';
 import 'package:pims/pages/visit/select_times.dart';
 
 class VisitAppController extends GetxController {
@@ -40,16 +39,26 @@ class VisitPage extends StatelessWidget {
     final visitController = Get.put(VisitAppController());
     // final selectDaysController = Get.put(SelectDaysController());
     return Scaffold(
-      appBar: VisitAppBar(),
+      // appBar: VisitAppBar(),
       bottomNavigationBar: SafeArea(child: VisitBottomNav()),
       body: Obx(
         () {
           final pageIsReady = visitController.pageIsReady.value;
-          return SafeArea(
-            child: Column(
+          return NestedScrollView(
+            physics: const ClampingScrollPhysics(),
+            scrollBehavior:
+                const MaterialScrollBehavior().copyWith(overscroll: false),
+            floatHeaderSlivers: true,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return [
+                VisitHeader(pageIsReady: pageIsReady),
+                // DaysWidget(),
+              ];
+            },
+            body: Column(
               children: [
                 Padding(padding: EdgeInsets.only(bottom: 10)),
-                SelectDays(),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
