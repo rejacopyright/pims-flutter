@@ -28,7 +28,7 @@ class SelectClass extends StatelessWidget {
         childAspectRatio: 10 / 5,
         crossAxisCount: 4,
         padding: const EdgeInsets.only(top: 0, bottom: 15, left: 0, right: 0),
-        physics: const AlwaysScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         // controller: ScrollController(keepScrollOffset: false),
         scrollDirection: Axis.vertical,

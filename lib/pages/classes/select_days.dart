@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -6,7 +8,8 @@ import 'package:pims/pages/classes/main.dart';
 class SelectDaysController extends ClassAppController {}
 
 class SelectDays extends StatelessWidget {
-  const SelectDays({super.key});
+  const SelectDays({super.key, this.isCollapsed = false});
+  final bool isCollapsed;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +18,7 @@ class SelectDays extends StatelessWidget {
     final days = List.generate(30, (i) {
       return DateTime.now().add(Duration(days: i));
     });
+    log(isCollapsed.toString());
     return Obx(() {
       final pageIsReady = selectDaysController.pageIsReady.value;
       final selectedDate = selectDaysController.selectedDate.value;
@@ -39,7 +43,13 @@ class SelectDays extends StatelessWidget {
                     child: Text(
                       isToday ? 'Today' : DateFormat('E').format(e),
                       style: TextStyle(
-                        color: isSelected ? primaryColor : Colors.black,
+                        color: isSelected
+                            ? isCollapsed
+                                ? primaryColor
+                                : Colors.white
+                            : isCollapsed
+                                ? Colors.black
+                                : Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 11,
                       ),
@@ -58,7 +68,9 @@ class SelectDays extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                         side: BorderSide(
-                          color: Colors.black.withOpacity(0.1),
+                          color: isCollapsed
+                              ? Colors.black.withOpacity(0.1)
+                              : Colors.white,
                           width: 0.75,
                         ),
                       ),
@@ -84,7 +96,13 @@ class SelectDays extends StatelessWidget {
                   Text(
                     DateFormat('MMM').format(e),
                     style: TextStyle(
-                      color: isSelected ? primaryColor : Colors.black,
+                      color: isSelected
+                          ? isCollapsed
+                              ? primaryColor
+                              : Colors.white
+                          : isCollapsed
+                              ? Colors.black
+                              : Colors.white,
                       fontSize: 10,
                     ),
                   ),

@@ -209,7 +209,7 @@ class BookingClassButton extends StatelessWidget {
                             child: Text(
                               'Booking',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 18,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),

@@ -48,13 +48,15 @@ class ClassPage extends StatelessWidget {
         () {
           final pageIsReady = classController.pageIsReady.value;
           return NestedScrollView(
-            // floatHeaderSlivers: true,
+            physics: const ClampingScrollPhysics(),
+            scrollBehavior:
+                const MaterialScrollBehavior().copyWith(overscroll: false),
+            floatHeaderSlivers: true,
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return [
                 StudioClassHeader(pageIsReady: pageIsReady),
-                DaysWidget(),
-                // SliverAppBar(pinned: true),
+                // DaysWidget(),
               ];
             },
             body: CustomScrollView(
@@ -63,17 +65,20 @@ class ClassPage extends StatelessWidget {
               scrollBehavior:
                   const MaterialScrollBehavior().copyWith(overscroll: false),
               slivers: [
-                // DaysWidget(),
                 SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                     return RefreshIndicator(
                       color: Theme.of(context).primaryColor,
-                      displacement: 0,
+                      displacement: 20,
                       onRefresh: () async {
                         classController.refresh();
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                        padding: const EdgeInsets.only(
+                          top: 20,
+                          left: 15,
+                          right: 15,
+                        ),
                         // child: SelectClass(pageIsReady: pageIsReady),
                         child: SelectClass(pageIsReady: pageIsReady),
                       ),
