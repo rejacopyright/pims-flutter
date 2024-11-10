@@ -105,8 +105,15 @@ List<Route> menusNav = [
         // transition: Transition.fade,
       ),
       GetPage(
-        name: '/services/class/studio',
+        name: '/services/class/:type',
         page: () => const ClassPage(),
+        children: [
+          GetPage(
+            name: '/detail',
+            page: () => const ProductDetailPage(),
+            // transition: Transition.fade,
+          ),
+        ],
       ),
     ],
   ),
