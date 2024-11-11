@@ -7,7 +7,8 @@ import 'main.dart';
 class SelectClassController extends ClassAppController {}
 
 class SelectClass extends StatelessWidget {
-  const SelectClass({super.key});
+  const SelectClass({super.key, this.params});
+  final Map<String, String>? params;
 
   final int crossAxisCount = 2;
 
@@ -82,7 +83,11 @@ class SelectClass extends StatelessWidget {
         children: pageIsReady
             ? programData.map((item) {
                 return ProgramBookingCard(
-                    item: item, crossAxisCount: crossAxisCount);
+                  to: '/services/class/detail',
+                  params: params,
+                  item: item,
+                  crossAxisCount: crossAxisCount,
+                );
               }).toList()
             : List.generate(
                 4,

@@ -24,10 +24,14 @@ class ProgramBookingCard extends StatelessWidget {
     super.key,
     required this.crossAxisCount,
     required this.item,
+    required this.to,
+    this.params,
   });
 
   final int crossAxisCount;
   final ProgramBookingState item;
+  final String to;
+  final Map<String, String>? params;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +43,8 @@ class ProgramBookingCard extends StatelessWidget {
       shadowColor: Colors.black.withOpacity(0.5),
       elevation: 3.5,
       child: LinkWell(
-        to: '/product/detail',
-        params: {'satu': 'Hello 1', 'dua': 'Hello 2'},
+        to: to,
+        params: params,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

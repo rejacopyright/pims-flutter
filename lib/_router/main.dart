@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pims/pages/classes/detail/main.dart';
 import 'package:pims/pages/classes/main.dart';
 import 'package:pims/pages/home/main.dart';
 import 'package:pims/pages/product/detail/main.dart';
@@ -15,7 +16,7 @@ import 'package:pims/pages/visit/main.dart';
 
 //   @override
 //   GetPage? onPageCalled(GetPage? page) {
-//     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+//     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
 //       statusBarColor: Colors.white,
 //       systemStatusBarContrastEnforced: true,
 //       statusBarIconBrightness: Brightness.dark, // Android
@@ -90,36 +91,28 @@ class Route {
 List<Route> menusNav = [
   Route(
     name: homeRoute,
-    page: const Scoper(name: homeRoute, child: HomeApp()),
+    page: Scoper(name: homeRoute, child: HomeApp()),
     label: 'Beranda',
     icon: Iconsax.home_2,
     activeIcon: Iconsax.home_25,
     children: [
       GetPage(
         name: '/home/product/detail',
-        page: () => const ProductDetailPage(),
+        page: () => ProductDetailPage(),
       ),
       GetPage(
         name: '/services/visit',
-        page: () => const VisitPage(),
+        page: () => VisitPage(),
         // transition: Transition.fade,
       ),
-      GetPage(
-        name: '/services/class/:type',
-        page: () => const ClassPage(),
-        children: [
-          GetPage(
-            name: '/detail',
-            page: () => const ProductDetailPage(),
-            // transition: Transition.fade,
-          ),
-        ],
-      ),
+      GetPage(name: '/services/class', page: () => ClassPage(), children: [
+        GetPage(name: '/detail', page: () => ClassDetailPage()),
+      ]),
     ],
   ),
   Route(
     name: '/product',
-    page: const Scoper(name: '/product', child: ProductApp()),
+    page: Scoper(name: '/product', child: ProductApp()),
     label: 'Program',
     icon: Iconsax.search_status,
     activeIcon: Iconsax.search_status4,
@@ -128,24 +121,24 @@ List<Route> menusNav = [
         name: '/detail',
         preventDuplicates: true,
         participatesInRootNavigator: true,
-        page: () => const ProductDetailPage(),
+        page: () => ProductDetailPage(),
       ),
     ],
   ),
   Route(
     name: '/spacer',
-    page: const Scoper(name: '/spacer', child: ProductApp()),
+    page: Scoper(name: '/spacer', child: ProductApp()),
   ),
   Route(
     name: '/order',
-    page: const Scoper(name: '/order', child: ProductApp()),
+    page: Scoper(name: '/order', child: ProductApp()),
     label: 'Pesanan',
     icon: Iconsax.shopping_cart,
     activeIcon: Iconsax.shopping_cart5,
   ),
   Route(
     name: '/account',
-    page: const Scoper(name: '/account', child: ProductApp()),
+    page: Scoper(name: '/account', child: ProductApp()),
     label: 'Akun',
     icon: Iconsax.profile_circle,
     activeIcon: Iconsax.profile_circle5,
@@ -163,13 +156,13 @@ List<GetPage> routes() {
       name: '/',
       preventDuplicates: true,
       participatesInRootNavigator: true,
-      page: () => const Scoper(name: '/', child: HomeApp()),
+      page: () => Scoper(name: '/', child: HomeApp()),
       children: [
         GetPage(
           name: homeRoute,
           preventDuplicates: true,
           participatesInRootNavigator: true,
-          page: () => const Scoper(name: homeRoute, child: HomeApp()),
+          page: () => Scoper(name: homeRoute, child: HomeApp()),
           children: [
             ...(menusNav
                     .firstWhereOrNull((e) => e.name == homeRoute)!
@@ -187,7 +180,7 @@ List<GetPage> routes() {
             //   name: '/services/visit',
             //   preventDuplicates: true,
             //   participatesInRootNavigator: true,
-            //   page: () => const Scoper(
+            //   page: () => Scoper(
             //     name: '/services/visit',
             //     child: ProductApp(),
             //   ),

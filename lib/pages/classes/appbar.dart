@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pims/_config/services.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/pages/classes/select_days.dart';
 
-class StudioClassHeader extends StatelessWidget {
-  const StudioClassHeader({super.key, required this.pageIsReady});
+class ClassHeader extends StatelessWidget {
+  const ClassHeader({super.key, required this.pageIsReady, this.thisClass});
   final bool pageIsReady;
+  final ClassItem? thisClass;
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +39,14 @@ class StudioClassHeader extends StatelessWidget {
           titlePadding: EdgeInsets.symmetric(vertical: 5),
           centerTitle: false,
           expandedTitleScale: 1.35,
-          background: HeaderBackgroundStudio(),
+          background: ClassHeaderBackground(),
           title: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              HeaderTitle(isCollapsed: isCollapsed),
+              HeaderTitle(
+                isCollapsed: isCollapsed,
+                thisClass: thisClass,
+              ),
               SelectDays(isCollapsed: isCollapsed)
             ],
           ),
@@ -55,9 +60,11 @@ class HeaderTitle extends StatelessWidget {
   const HeaderTitle({
     super.key,
     required this.isCollapsed,
+    this.thisClass,
   });
 
   final bool isCollapsed;
+  final ClassItem? thisClass;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +103,7 @@ class HeaderTitle extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(left: 10),
               child: Text(
-                'Kelas Studio',
+                'Kelas ${thisClass?.label ?? ''}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -113,8 +120,8 @@ class HeaderTitle extends StatelessWidget {
   }
 }
 
-class HeaderBackgroundStudio extends StatelessWidget {
-  const HeaderBackgroundStudio({super.key});
+class ClassHeaderBackground extends StatelessWidget {
+  const ClassHeaderBackground({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_config/services.dart';
 import 'package:pims/pages/classes/select_days.dart';
 
 import 'select_class.dart';
-import 'studio/appbar.dart';
+import 'appbar.dart';
 
 ScrollController classScrollController = ScrollController();
 
@@ -42,6 +43,9 @@ class ClassPage extends StatelessWidget {
     final classController = Get.put(ClassAppController());
     final selectClassController = Get.put(SelectClassController());
     // final selectDaysController = Get.put(SelectDaysController());
+    final classType = Get.rootDelegate.parameters['type'];
+    final thisClass =
+        classesList.firstWhereOrNull((item) => item.name == classType);
     return Scaffold(
       // bottomNavigationBar: SafeArea(child: ClassBottomNav()),
       body: Obx(
@@ -55,7 +59,10 @@ class ClassPage extends StatelessWidget {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return [
-                StudioClassHeader(pageIsReady: pageIsReady),
+                ClassHeader(
+                  pageIsReady: pageIsReady,
+                  thisClass: thisClass,
+                ),
                 // DaysWidget(),
               ];
             },
@@ -81,7 +88,7 @@ class ClassPage extends StatelessWidget {
                           // right: 15,
                         ),
                         // child: SelectClass(pageIsReady: pageIsReady),
-                        child: SelectClass(),
+                        child: SelectClass(params: {'type': thisClass!.name}),
                       ),
                     );
                   }, childCount: 1),

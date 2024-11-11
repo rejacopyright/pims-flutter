@@ -5,11 +5,18 @@ import 'package:pims/_router/main.dart';
 import 'package:pims/pages/home/main.dart';
 
 class ServiceCard extends StatelessWidget {
-  const ServiceCard({super.key, required this.label, this.icon, this.name});
+  const ServiceCard({
+    super.key,
+    required this.label,
+    this.icon,
+    this.name,
+    this.type = '',
+  });
 
   final String label;
   final String? icon;
   final String? name;
+  final String type;
   @override
   Widget build(BuildContext context) {
     final Color primary = Theme.of(context).primaryColor;
@@ -17,7 +24,8 @@ class ServiceCard extends StatelessWidget {
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       onTap: () {
-        Get.rootDelegate.toNamed('$homeRoute${name ?? '/'}');
+        Get.rootDelegate
+            .toNamed('$homeRoute${name ?? '/'}', parameters: {'type': type});
         // Get.toNamed('$homeRoute${name ?? '/'}');
       },
       child: Column(
@@ -86,6 +94,7 @@ class ServiceSection extends StatelessWidget {
                     label: e.label,
                     icon: e.icon,
                     name: e.name,
+                    type: e.type,
                   ),
                 )
                 .toList(),

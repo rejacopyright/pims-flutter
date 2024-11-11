@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       showPerformanceOverlay: false,
       theme: themeConfig(),
       opaqueRoute: true,
+      enableLog: false,
       getPages: routes(),
       builder: (ctxParent, state) => GetRouterOutlet.builder(
         routerDelegate: Get.rootDelegate,
