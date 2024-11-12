@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_controller/payment_controller.dart';
+import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/helper.dart';
 import 'package:pims/_widgets/payment/payment_card.dart';
 import 'package:pims/_widgets/payment/payment_data.dart';
@@ -73,17 +74,8 @@ class BookingClassPaymentCard extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         color: primaryColor
                             .withOpacity(paymentIsSelected ? 1 : 0.5),
-                        child: InkWell(
-                          splashFactory: InkSplash.splashFactory,
-                          highlightColor: Colors.transparent,
-                          onTap: () {
-                            if (paymentIsSelected) {
-                              Future.delayed(const Duration(milliseconds: 200),
-                                  () {
-                                Get.rootDelegate.popRoute();
-                              });
-                            }
-                          },
+                        child: LinkWell(
+                          to: '/order/detail',
                           child: Container(
                             height: 50,
                             alignment: Alignment.center,

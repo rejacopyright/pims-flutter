@@ -5,6 +5,8 @@ import 'package:pims/pages/classes/detail/main.dart';
 import 'package:pims/pages/classes/main.dart';
 import 'package:pims/pages/classes/payment/confirm.dart';
 import 'package:pims/pages/home/main.dart';
+import 'package:pims/pages/order/detail/main.dart';
+import 'package:pims/pages/order/main.dart';
 import 'package:pims/pages/product/detail/main.dart';
 import 'package:pims/pages/product/main.dart';
 import 'package:pims/pages/visit/main.dart';
@@ -133,12 +135,14 @@ List<Route> menusNav = [
     page: Scoper(name: '/spacer', child: ProductApp()),
   ),
   Route(
-    name: '/order',
-    page: Scoper(name: '/order', child: ProductApp()),
-    label: 'Pesanan',
-    icon: Iconsax.shopping_cart,
-    activeIcon: Iconsax.shopping_cart5,
-  ),
+      name: '/order',
+      page: Scoper(name: '/order', child: OrderPage()),
+      label: 'Pesanan',
+      icon: Iconsax.shopping_cart,
+      activeIcon: Iconsax.shopping_cart5,
+      children: [
+        GetPage(name: '/detail', page: () => OrderDetailPage()),
+      ]),
   Route(
     name: '/account',
     page: Scoper(name: '/account', child: ProductApp()),

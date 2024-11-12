@@ -209,17 +209,8 @@ class BookingVisitPaymentCard extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         color: primaryColor
                             .withOpacity(paymentIsSelected ? 1 : 0.5),
-                        child: InkWell(
-                          splashFactory: InkSplash.splashFactory,
-                          highlightColor: Colors.transparent,
-                          onTap: () {
-                            if (paymentIsSelected) {
-                              Future.delayed(const Duration(milliseconds: 200),
-                                  () {
-                                Get.rootDelegate.popRoute();
-                              });
-                            }
-                          },
+                        child: LinkWell(
+                          to: '/order/detail',
                           child: Container(
                             height: 50,
                             alignment: Alignment.center,
