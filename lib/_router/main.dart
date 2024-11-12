@@ -180,6 +180,8 @@ List<GetPage> routes() {
                   preventDuplicates: true,
                   participatesInRootNavigator: true,
                   page: () => e.page,
+                  transition: Transition.noTransition,
+                  transitionDuration: Duration.zero,
                   // middlewares: e.middlewares,
                   children: e.children ?? [],
                 )),

@@ -1,0 +1,196 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pims/pages/order/main.dart';
+
+import 'pages/unpaid.dart';
+
+class TabList {
+  String id;
+  String label;
+  Widget child;
+  TabList({
+    required this.id,
+    required this.label,
+    required this.child,
+  });
+}
+
+class OrderTabsController extends OrderController
+    with GetSingleTickerProviderStateMixin {
+  late TabController controller;
+  final List<TabList> tabs = [
+    TabList(
+      id: 'unpaid',
+      label: 'Belum Bayar',
+      child: UnpaidPage(),
+    ),
+    TabList(
+      id: 'active',
+      label: 'Berlangsung',
+      child: Text('Berlangsung'),
+    ),
+    TabList(
+      id: 'done',
+      label: 'Selesai',
+      child: Text('Selesai'),
+    ),
+    TabList(
+      id: 'cancel',
+      label: 'Dibatalkan',
+      child: Text('Dibatalkan'),
+    ),
+  ];
+
+  RxString currentID = ''.obs;
+  setID(val) => currentID.value = val;
+
+  @override
+  void onInit() {
+    super.onInit();
+    controller = TabController(vsync: this, length: tabs.length);
+  }
+
+  @override
+  void onClose() {
+    controller.dispose();
+    super.onClose();
+  }
+}
+
+class OrderTabs extends StatelessWidget {
+  const OrderTabs({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final store = Get.put(OrderTabsController());
+    final Color primaryColor = Theme.of(context).primaryColor;
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(50),
+      ),
+      child: TabBar(
+        physics: const ClampingScrollPhysics(),
+        tabAlignment: TabAlignment.start,
+        splashFactory: NoSplash.splashFactory,
+        dividerColor: Colors.transparent,
+        unselectedLabelColor: primaryColor,
+        labelColor: Colors.white,
+        indicatorColor: primaryColor,
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        labelPadding: const EdgeInsets.symmetric(horizontal: 5),
+        indicator: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          color: primaryColor,
+        ),
+        isScrollable: true,
+        controller: store.controller,
+        onTap: (e) {
+          store.setID(store.tabs[e].id);
+          // Future.delayed(const Duration(milliseconds: 100), () {
+          //   // Scrollable.ensureVisible(context);
+          //   RenderBox thisBox =
+          //       orderTabKey.currentContext!.findRenderObject() as RenderBox;
+          //   Offset position = thisBox.localToGlobal(Offset.zero);
+          //   if (context.mounted &&
+          //       position.dy > MediaQuery.of(context).size.height / 2) {
+          //     orderScrollController.animateTo(
+          //       position.dy - kToolbarHeight - 20,
+          //       duration: const Duration(milliseconds: 100),
+          //       curve: Curves.linear,
+          //     );
+          //   }
+          //   // orderScrollController.jumpTo(position.dy);
+          // });
+        },
+        tabs: store.tabs.map((e) {
+          return Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 10,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              // border: Border.all(color: primaryColor, width: 1),
+            ),
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 5,
+              children: [
+                Icon(
+                  Icons.integration_instructions,
+                  size: 20,
+                ),
+                Text(
+                  e.label,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+class OrderTabContent extends StatelessWidget {
+  const OrderTabContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final store = Get.find<OrderTabsController>();
+    final fullWidth = MediaQuery.of(context).size.width;
+    return Obx(() {
+      final pageIsReady = store.pageIsReady.value;
+      late Widget currentTabContent = store.tabs
+              .where((e) => e.id == store.currentID.value)
+              .map((e) => e.child)
+              .firstOrNull ??
+          store.tabs.first.child;
+      if (pageIsReady) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          // color: Colors.white,
+          child: currentTabContent,
+        );
+      }
+      return Padding(
+        padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 15,
+              width: fullWidth / 2,
+              margin: const EdgeInsets.only(bottom: 5),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(7.5),
+              ),
+            ),
+            Container(
+              height: 15,
+              width: fullWidth / 3,
+              margin: const EdgeInsets.only(bottom: 5),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(7.5),
+              ),
+            ),
+            Container(
+              height: 50,
+              width: fullWidth,
+              margin: const EdgeInsets.only(bottom: 5),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(7.5),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+}
