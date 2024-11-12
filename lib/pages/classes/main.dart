@@ -85,7 +85,9 @@ class ClassPage extends StatelessWidget {
                       return Container(
                         padding: const EdgeInsets.only(top: 20),
                         // child: SelectClass(pageIsReady: pageIsReady),
-                        child: SelectClass(params: {'type': thisClass!.name}),
+                        child: SelectClass(
+                          params: {'type': thisClass?.name ?? ''},
+                        ),
                       );
                     }, childCount: 1),
                   ),

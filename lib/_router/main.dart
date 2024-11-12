@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/pages/classes/detail/main.dart';
 import 'package:pims/pages/classes/main.dart';
+import 'package:pims/pages/classes/payment/confirm.dart';
 import 'package:pims/pages/home/main.dart';
 import 'package:pims/pages/product/detail/main.dart';
 import 'package:pims/pages/product/main.dart';
@@ -106,7 +107,9 @@ List<Route> menusNav = [
         // transition: Transition.fade,
       ),
       GetPage(name: '/services/class', page: () => ClassPage(), children: [
-        GetPage(name: '/detail', page: () => ClassDetailPage()),
+        GetPage(name: '/detail', page: () => ClassDetailPage(), children: [
+          GetPage(name: '/payment', page: () => ClassPaymentConfirmation()),
+        ]),
       ]),
     ],
   ),

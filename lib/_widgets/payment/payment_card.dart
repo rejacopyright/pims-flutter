@@ -10,6 +10,7 @@ class PaymentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: ClampingScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 15),
       shrinkWrap: true,
       children: [

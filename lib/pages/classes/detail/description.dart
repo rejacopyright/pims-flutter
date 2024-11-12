@@ -153,6 +153,7 @@ class ClassDetailDescription extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Padding(padding: EdgeInsets.only(top: 20)),
           Container(
             height: 15,
             width: fullWidth / 2,

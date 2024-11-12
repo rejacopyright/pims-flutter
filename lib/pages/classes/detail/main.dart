@@ -36,6 +36,9 @@ class ClassDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageController = Get.put(ClassDetailImageSliderController());
+    final priceController = Get.put(ClassDetailPriceController());
+    final descriptionController = Get.put(ClassDetailDescriptionController());
     log(Get.rootDelegate.parameters['type'].toString());
     final classType = Get.rootDelegate.parameters['type'];
     final thisClass =
@@ -43,17 +46,17 @@ class ClassDetailPage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: SafeArea(child: ClassBottomNav()),
       body: NestedScrollView(
-        // physics: NeverScrollableScrollPhysics(),
-        // scrollBehavior: MaterialScrollBehavior().copyWith(
-        //   overscroll: false,
-        // ),
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [ClassDetailAppBar()];
         },
         body: RefreshIndicator(
           color: Theme.of(context).primaryColor,
           displacement: 30,
-          onRefresh: () async {},
+          onRefresh: () async {
+            imageController.refresh();
+            priceController.refresh();
+            descriptionController.refresh();
+          },
           child: CustomScrollView(
             controller: classDetailScrollController,
             physics: AlwaysScrollableScrollPhysics(),
