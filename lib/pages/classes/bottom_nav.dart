@@ -9,8 +9,7 @@ import 'package:pims/_widgets/payment/payment_card.dart';
 import 'package:pims/_widgets/payment/payment_data.dart';
 import 'package:pims/_widgets/payment/price_section.dart';
 import 'package:pims/_widgets/payment/voucher_section.dart';
-
-import 'main.dart';
+import 'package:pims/pages/classes/main.dart';
 
 class ClassBottomNavController extends ClassAppController {}
 

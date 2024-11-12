@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/helper.dart';
 
@@ -64,7 +65,7 @@ class ProgramBookingCard extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const Positioned(
+                    Positioned(
                       top: 5,
                       right: 5,
                       child: Icon(
@@ -102,7 +103,7 @@ class ProgramBookingCard extends StatelessWidget {
                                   crossAxisCount) -
                               50,
                         ),
-                        padding: const EdgeInsets.only(
+                        padding: EdgeInsets.only(
                           left: 7.5,
                           right: 7.5,
                           top: 1.5,
@@ -116,7 +117,7 @@ class ProgramBookingCard extends StatelessWidget {
                           '2/10',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -127,26 +128,26 @@ class ProgramBookingCard extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 5, top: 2.5, bottom: 5),
+                  padding:
+                      EdgeInsets.only(left: 10, right: 5, top: 2.5, bottom: 5),
                   child: Text(
                     item.title,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 10, right: 5),
+                  padding: EdgeInsets.only(left: 10, right: 5),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         clipBehavior: Clip.antiAlias,
-                        margin: const EdgeInsets.only(right: 7),
+                        margin: EdgeInsets.only(right: 7),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                         ),
@@ -164,7 +165,7 @@ class ProgramBookingCard extends StatelessWidget {
                           item.userName,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
@@ -175,19 +176,51 @@ class ProgramBookingCard extends StatelessWidget {
                 ),
               ],
             ),
-            item.price != null
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 5,
-                          horizontal: 10,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 7.5,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                        color: Color(0xfff5f5f5),
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(width: 1, color: Color(0xffdddddd))),
+                    child: Wrap(
+                      spacing: 5,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Icon(
+                          Iconsax.clock5,
+                          size: 14,
+                          color: primaryColor,
                         ),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                        Text(
+                          '06:00 - 7:30',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 10,
+                  ),
+                  child: item.price != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                               FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Row(
@@ -206,10 +239,10 @@ class ProgramBookingCard extends StatelessWidget {
                                             style: TextStyle(
                                               color: primaryColor,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16,
+                                              fontSize: 14,
                                             ),
                                           )
-                                        : const SizedBox.shrink(),
+                                        : SizedBox.shrink(),
                                   ],
                                 ),
                               ),
@@ -219,7 +252,7 @@ class ProgramBookingCard extends StatelessWidget {
                                           crossAxisCount) -
                                       50,
                                 ),
-                                padding: const EdgeInsets.only(
+                                padding: EdgeInsets.only(
                                   left: 7.5,
                                   right: 7.5,
                                   top: 1.5,
@@ -231,15 +264,15 @@ class ProgramBookingCard extends StatelessWidget {
                                 ),
                                 child: Image.asset(
                                   'assets/icons/gender.png',
-                                  height: 17.5,
+                                  height: 15,
                                   fit: BoxFit.contain,
                                 ),
                               ),
-                            ]),
-                      ),
-                    ],
-                  )
-                : const SizedBox.shrink(),
+                            ])
+                      : SizedBox.shrink(),
+                ),
+              ],
+            ),
           ],
         ),
       ),

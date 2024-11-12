@@ -45,9 +45,9 @@ class VisitPage extends StatelessWidget {
         () {
           final pageIsReady = visitController.pageIsReady.value;
           return NestedScrollView(
-            physics: const ClampingScrollPhysics(),
-            scrollBehavior:
-                const MaterialScrollBehavior().copyWith(overscroll: false),
+            // physics: const ClampingScrollPhysics(),
+            // scrollBehavior:
+            //     const MaterialScrollBehavior().copyWith(overscroll: false),
             floatHeaderSlivers: true,
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
@@ -56,40 +56,32 @@ class VisitPage extends StatelessWidget {
                 // DaysWidget(),
               ];
             },
-            body: Column(
-              children: [
-                Padding(padding: EdgeInsets.only(bottom: 10)),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: RefreshIndicator(
-                      color: Theme.of(context).primaryColor,
-                      displacement: 10,
-                      onRefresh: () async {
-                        visitController.refresh();
-                        // selectDaysController.refresh();
-                      },
-                      child: CustomScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        scrollBehavior: const MaterialScrollBehavior().copyWith(
-                          overscroll: false,
-                        ),
-                        slivers: [
-                          SliverList(
-                            delegate:
-                                SliverChildBuilderDelegate((context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: SelectTimes(pageIsReady: pageIsReady),
-                              );
-                            }, childCount: 1),
-                          ),
-                        ],
-                      ),
+            body: RefreshIndicator(
+              color: Theme.of(context).primaryColor,
+              displacement: 10,
+              onRefresh: () async {
+                visitController.refresh();
+                // selectDaysController.refresh();
+              },
+              child: CustomScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollBehavior: const MaterialScrollBehavior().copyWith(
+                  overscroll: false,
+                ),
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 20,
+                    ),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        return SelectTimes(pageIsReady: pageIsReady);
+                      }, childCount: 1),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

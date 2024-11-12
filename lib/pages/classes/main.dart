@@ -47,14 +47,15 @@ class ClassPage extends StatelessWidget {
     final thisClass =
         classesList.firstWhereOrNull((item) => item.name == classType);
     return Scaffold(
+      bottomNavigationBar: SafeArea(child: SizedBox.shrink()),
       // bottomNavigationBar: SafeArea(child: ClassBottomNav()),
       body: Obx(
         () {
           final pageIsReady = classController.pageIsReady.value;
           return NestedScrollView(
-            physics: const ClampingScrollPhysics(),
-            scrollBehavior:
-                const MaterialScrollBehavior().copyWith(overscroll: false),
+            // physics: const ClampingScrollPhysics(),
+            // scrollBehavior:
+            //     const MaterialScrollBehavior().copyWith(overscroll: false),
             floatHeaderSlivers: true,
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
@@ -66,34 +67,30 @@ class ClassPage extends StatelessWidget {
                 // DaysWidget(),
               ];
             },
-            body: CustomScrollView(
-              controller: classScrollController,
-              physics: const NeverScrollableScrollPhysics(),
-              scrollBehavior:
-                  const MaterialScrollBehavior().copyWith(overscroll: false),
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    return RefreshIndicator(
-                      color: Theme.of(context).primaryColor,
-                      displacement: 50,
-                      onRefresh: () async {
-                        classController.refresh();
-                        selectClassController.refresh();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 20,
-                          // left: 15,
-                          // right: 15,
-                        ),
+            body: RefreshIndicator(
+              color: Theme.of(context).primaryColor,
+              displacement: 50,
+              onRefresh: () async {
+                classController.refresh();
+                selectClassController.refresh();
+              },
+              child: CustomScrollView(
+                controller: classScrollController,
+                physics: const AlwaysScrollableScrollPhysics(),
+                scrollBehavior:
+                    const MaterialScrollBehavior().copyWith(overscroll: false),
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      return Container(
+                        padding: const EdgeInsets.only(top: 20),
                         // child: SelectClass(pageIsReady: pageIsReady),
                         child: SelectClass(params: {'type': thisClass!.name}),
-                      ),
-                    );
-                  }, childCount: 1),
-                ),
-              ],
+                      );
+                    }, childCount: 1),
+                  ),
+                ],
+              ),
             ),
           );
         },

@@ -70,7 +70,7 @@ class SelectClass extends StatelessWidget {
       final pageIsReady = classController.pageIsReady.value;
       return GridView.count(
         clipBehavior: Clip.antiAlias,
-        childAspectRatio: pageIsReady ? 0.75 : 1,
+        childAspectRatio: pageIsReady ? 0.65 : 1,
         crossAxisCount: crossAxisCount,
         padding: const EdgeInsets.only(top: 0, bottom: 15, left: 15, right: 15),
         physics: const NeverScrollableScrollPhysics(),
@@ -92,11 +92,12 @@ class SelectClass extends StatelessWidget {
             : List.generate(
                 4,
                 (index) => Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.05),
-                        borderRadius: BorderRadius.circular(7.5),
-                      ),
-                    )),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(7.5),
+                  ),
+                ),
+              ),
       );
     });
   }
