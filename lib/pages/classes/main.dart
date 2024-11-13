@@ -53,7 +53,7 @@ class ClassPage extends StatelessWidget {
         () {
           final pageIsReady = classController.pageIsReady.value;
           return NestedScrollView(
-            // physics: const ClampingScrollPhysics(),
+            // physics: const AlwaysScrollableScrollPhysics(),
             // scrollBehavior:
             //     const MaterialScrollBehavior().copyWith(overscroll: false),
             floatHeaderSlivers: true,
@@ -69,14 +69,14 @@ class ClassPage extends StatelessWidget {
             },
             body: RefreshIndicator(
               color: Theme.of(context).primaryColor,
-              displacement: 50,
+              displacement: 20,
               onRefresh: () async {
                 classController.refresh();
                 selectClassController.refresh();
               },
               child: CustomScrollView(
-                controller: classScrollController,
-                physics: const AlwaysScrollableScrollPhysics(),
+                // controller: classScrollController,
+                physics: const NeverScrollableScrollPhysics(),
                 scrollBehavior:
                     const MaterialScrollBehavior().copyWith(overscroll: false),
                 slivers: [
