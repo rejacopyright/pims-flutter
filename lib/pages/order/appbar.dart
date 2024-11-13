@@ -27,12 +27,12 @@ class OrderAppBar extends StatelessWidget implements PreferredSizeWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 15),
+              padding: const EdgeInsets.only(top: 20, bottom: 10),
               child: Text(
-                'Pesanan Saya',
+                'Riwayat Pesanan',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: 18,
                   color: Colors.white,
                 ),
               ),

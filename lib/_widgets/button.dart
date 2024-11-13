@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/route_manager.dart';
 import 'package:pims/_router/main.dart';
 
@@ -45,6 +46,39 @@ class BackWell extends StatelessWidget {
         });
       },
       child: child,
+    );
+  }
+}
+
+class QRButton extends StatelessWidget {
+  const QRButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 65,
+      height: 65,
+      child: FittedBox(
+        child: FloatingActionButton(
+          elevation: 1.5,
+          shape: CircleBorder(),
+          backgroundColor: Colors.white,
+          onPressed: () {
+            Future.delayed(const Duration(milliseconds: 200), () {
+              // Get.rootDelegate.popRoute();
+            });
+          },
+          child: SvgPicture.asset(
+            'assets/icons/qr.svg',
+            width: 40,
+            height: 40,
+            colorFilter: ColorFilter.mode(
+              Theme.of(context).primaryColor.withOpacity(1),
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

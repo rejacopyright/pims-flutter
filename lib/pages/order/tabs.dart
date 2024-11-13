@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:pims/pages/order/main.dart';
 
 import 'pages/unpaid.dart';
@@ -7,10 +8,12 @@ import 'pages/unpaid.dart';
 class TabList {
   String id;
   String label;
+  IconData? icon;
   Widget child;
   TabList({
     required this.id,
     required this.label,
+    this.icon,
     required this.child,
   });
 }
@@ -22,21 +25,25 @@ class OrderTabsController extends OrderController
     TabList(
       id: 'unpaid',
       label: 'Belum Bayar',
+      icon: Iconsax.empty_wallet_time4,
       child: UnpaidPage(),
     ),
     TabList(
       id: 'active',
-      label: 'Berlangsung',
-      child: Text('Berlangsung'),
+      label: 'Berjalan',
+      icon: Iconsax.calendar_tick5,
+      child: Text('Berjalan'),
     ),
     TabList(
       id: 'done',
       label: 'Selesai',
+      icon: Iconsax.location_tick5,
       child: Text('Selesai'),
     ),
     TabList(
       id: 'cancel',
       label: 'Dibatalkan',
+      icon: Iconsax.close_circle5,
       child: Text('Dibatalkan'),
     ),
   ];
@@ -48,6 +55,9 @@ class OrderTabsController extends OrderController
   void onInit() {
     super.onInit();
     controller = TabController(vsync: this, length: tabs.length);
+    // Future.delayed(Duration(microseconds: 200), () {
+    //   controller.animateTo(2);
+    // });
   }
 
   @override
@@ -86,7 +96,7 @@ class OrderTabs extends StatelessWidget {
         ),
         isScrollable: true,
         controller: store.controller,
-        onTap: (e) {
+        onTap: (e) async {
           store.setID(store.tabs[e].id);
           // Future.delayed(const Duration(milliseconds: 100), () {
           //   // Scrollable.ensureVisible(context);
@@ -118,10 +128,12 @@ class OrderTabs extends StatelessWidget {
               crossAxisAlignment: WrapCrossAlignment.center,
               spacing: 5,
               children: [
-                Icon(
-                  Icons.integration_instructions,
-                  size: 20,
-                ),
+                e.icon != null
+                    ? Icon(
+                        e.icon,
+                        size: 20,
+                      )
+                    : SizedBox.shrink(),
                 Text(
                   e.label,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),

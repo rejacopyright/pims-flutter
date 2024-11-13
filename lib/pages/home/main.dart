@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/navbar.dart';
 import 'package:pims/_widgets/title_show_all.dart';
 import 'package:pims/pages/home/banner_promo.dart';
@@ -66,7 +67,10 @@ class Homepage extends StatelessWidget {
     final bannerController = Get.put(BannerPromoController());
     final programController = Get.put(ProgramSectionController());
     return Scaffold(
-      bottomNavigationBar: SafeArea(child: NavbarWidget(name: '/app')),
+      bottomNavigationBar: NavbarWidget(name: '/app'),
+      extendBody: true,
+      floatingActionButton: QRButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Obx(() {
         final pageIsReady = homeController.loadingPage.value;
         return NestedScrollView(
@@ -106,6 +110,7 @@ class Homepage extends StatelessWidget {
                     childCount: 1,
                   ),
                 ),
+                SliverPadding(padding: EdgeInsets.only(bottom: 100))
               ],
             ),
           ),

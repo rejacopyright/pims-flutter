@@ -8,7 +8,7 @@ class UnpaidController extends GetxController {
 
   @override
   void onReady() {
-    Future.delayed(const Duration(milliseconds: 1000), () {
+    Future.delayed(const Duration(milliseconds: 300), () {
       isReady.value = true;
     });
     super.onReady();
@@ -31,9 +31,7 @@ class UnpaidController extends GetxController {
 }
 
 class UnpaidPage extends StatelessWidget {
-  const UnpaidPage({
-    super.key,
-  });
+  const UnpaidPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +44,9 @@ class UnpaidPage extends StatelessWidget {
         child: isReady
             ? ListView.builder(
                 physics: ClampingScrollPhysics(),
-                itemCount: 5,
-                itemBuilder: (ctx, index) => Text('Tab ${index + 1}'),
+                itemCount: 70,
+                itemBuilder: (ctx, index) =>
+                    Text('Tab Lorem ipsum dolor sit amet ${index + 1}'),
               )
             : Text('Loading...'),
       );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/form.dart';
 import 'package:pims/_widgets/navbar.dart';
 import 'package:pims/_widgets/program_card.dart';
@@ -78,7 +79,10 @@ class ProductApp extends StatelessWidget {
     ];
 
     return Scaffold(
-      bottomNavigationBar: SafeArea(child: NavbarWidget(name: '/product')),
+      bottomNavigationBar: NavbarWidget(name: '/product'),
+      extendBody: true,
+      floatingActionButton: QRButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Obx(() {
         final pageIsReady = store.pageIsReady.value;
         if (pageIsReady) {
@@ -158,6 +162,7 @@ class ProductApp extends StatelessWidget {
                     );
                   }, childCount: 1),
                 ),
+                SliverPadding(padding: EdgeInsets.only(bottom: 100))
               ],
             ),
           );

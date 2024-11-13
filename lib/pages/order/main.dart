@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/navbar.dart';
 import 'package:pims/pages/order/appbar.dart';
 import 'package:pims/pages/order/tabs.dart';
@@ -34,7 +35,10 @@ class OrderPage extends StatelessWidget {
     final tabx = Get.put(OrderTabsController());
     return Scaffold(
       appBar: OrderAppBar(),
-      bottomNavigationBar: SafeArea(child: NavbarWidget(name: '/order')),
+      bottomNavigationBar: NavbarWidget(name: '/order'),
+      extendBody: true,
+      floatingActionButton: QRButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: TabBarView(
         controller: tabx.controller,
         children: tabx.tabs.map((item) => item.child).toList(),
