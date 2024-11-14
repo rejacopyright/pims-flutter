@@ -62,7 +62,7 @@ class Scoper extends StatelessWidget {
             // : Get.rootDelegate
             //     .backUntil(prevRoute, popMode: PopMode.History);
           } else if (isNavMenu) {
-            Get.rootDelegate.offNamed(homeRoute);
+            // Get.rootDelegate.offNamed(homeRoute);
           }
         }
       },
