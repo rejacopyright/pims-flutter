@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_widgets/order_item_card.dart';
 
-class UnpaidOrderController extends GetxController {
+class ActiveOrderController extends GetxController {
   RxBool isReady = false.obs;
 
   @override
@@ -26,18 +26,18 @@ class UnpaidOrderController extends GetxController {
 
   @override
   void onClose() {
-    log('dispose');
+    log('active dispose');
     isReady.value = false;
     super.onClose();
   }
 }
 
-class UnpaidOrderPage extends StatelessWidget {
-  const UnpaidOrderPage({super.key});
+class ActiveOrderPage extends StatelessWidget {
+  const ActiveOrderPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final store = Get.put(UnpaidOrderController());
+    final store = Get.put(ActiveOrderController());
     return Obx(() {
       final isReady = store.isReady.value;
       return RefreshIndicator(

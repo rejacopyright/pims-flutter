@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/pages/order/main.dart';
+import 'package:pims/pages/order/pages/active.dart';
+import 'package:pims/pages/order/pages/cancel.dart';
+import 'package:pims/pages/order/pages/done.dart';
 
 import 'pages/unpaid.dart';
 
@@ -26,25 +29,25 @@ class OrderTabsController extends OrderController
       id: 'unpaid',
       label: 'Belum Bayar',
       icon: Iconsax.empty_wallet_time4,
-      child: UnpaidPage(),
+      child: UnpaidOrderPage(),
     ),
     TabList(
       id: 'active',
       label: 'Berjalan',
       icon: Iconsax.calendar_tick5,
-      child: Text('Berjalan'),
+      child: ActiveOrderPage(),
     ),
     TabList(
       id: 'done',
       label: 'Selesai',
       icon: Iconsax.location_tick5,
-      child: Text('Selesai'),
+      child: DoneOrderPage(),
     ),
     TabList(
       id: 'cancel',
       label: 'Dibatalkan',
       icon: Iconsax.close_circle5,
-      child: Text('Dibatalkan'),
+      child: CancelOrderPage(),
     ),
   ];
 
@@ -81,15 +84,15 @@ class OrderTabs extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
       ),
       child: TabBar(
-        physics: const ClampingScrollPhysics(),
+        physics: ClampingScrollPhysics(),
         tabAlignment: TabAlignment.start,
         splashFactory: NoSplash.splashFactory,
         dividerColor: Colors.transparent,
         unselectedLabelColor: primaryColor,
         labelColor: Colors.white,
         indicatorColor: primaryColor,
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        labelPadding: const EdgeInsets.symmetric(horizontal: 5),
+        padding: EdgeInsets.symmetric(vertical: 5),
+        labelPadding: EdgeInsets.symmetric(horizontal: 5),
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           color: primaryColor,
@@ -98,7 +101,7 @@ class OrderTabs extends StatelessWidget {
         controller: store.controller,
         onTap: (e) async {
           store.setID(store.tabs[e].id);
-          // Future.delayed(const Duration(milliseconds: 100), () {
+          // Future.delayed(Duration(milliseconds: 100), () {
           //   // Scrollable.ensureVisible(context);
           //   RenderBox thisBox =
           //       orderTabKey.currentContext!.findRenderObject() as RenderBox;
@@ -107,7 +110,7 @@ class OrderTabs extends StatelessWidget {
           //       position.dy > MediaQuery.of(context).size.height / 2) {
           //     orderScrollController.animateTo(
           //       position.dy - kToolbarHeight - 20,
-          //       duration: const Duration(milliseconds: 100),
+          //       duration: Duration(milliseconds: 100),
           //       curve: Curves.linear,
           //     );
           //   }
@@ -116,7 +119,7 @@ class OrderTabs extends StatelessWidget {
         },
         tabs: store.tabs.map((e) {
           return Container(
-            padding: const EdgeInsets.symmetric(
+            padding: EdgeInsets.symmetric(
               horizontal: 15,
               vertical: 10,
             ),
@@ -136,7 +139,10 @@ class OrderTabs extends StatelessWidget {
                     : SizedBox.shrink(),
                 Text(
                   e.label,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -163,20 +169,20 @@ class OrderTabContent extends StatelessWidget {
           store.tabs.first.child;
       if (pageIsReady) {
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           // color: Colors.white,
           child: currentTabContent,
         );
       }
       return Padding(
-        padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
+        padding: EdgeInsets.only(top: 15, left: 10, right: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               height: 15,
               width: fullWidth / 2,
-              margin: const EdgeInsets.only(bottom: 5),
+              margin: EdgeInsets.only(bottom: 5),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(7.5),
@@ -185,7 +191,7 @@ class OrderTabContent extends StatelessWidget {
             Container(
               height: 15,
               width: fullWidth / 3,
-              margin: const EdgeInsets.only(bottom: 5),
+              margin: EdgeInsets.only(bottom: 5),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(7.5),
@@ -194,7 +200,7 @@ class OrderTabContent extends StatelessWidget {
             Container(
               height: 50,
               width: fullWidth,
-              margin: const EdgeInsets.only(bottom: 5),
+              margin: EdgeInsets.only(bottom: 5),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(7.5),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_widgets/order_item_card.dart';
 
-class UnpaidOrderController extends GetxController {
+class CancelOrderController extends GetxController {
   RxBool isReady = false.obs;
 
   @override
@@ -32,12 +32,12 @@ class UnpaidOrderController extends GetxController {
   }
 }
 
-class UnpaidOrderPage extends StatelessWidget {
-  const UnpaidOrderPage({super.key});
+class CancelOrderPage extends StatelessWidget {
+  const CancelOrderPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final store = Get.put(UnpaidOrderController());
+    final store = Get.put(CancelOrderController());
     return Obx(() {
       final isReady = store.isReady.value;
       return RefreshIndicator(

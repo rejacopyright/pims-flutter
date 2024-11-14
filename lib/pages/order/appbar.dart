@@ -7,7 +7,7 @@ class OrderAppBar extends StatelessWidget implements PreferredSizeWidget {
   const OrderAppBar({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(100);
+  Size get preferredSize => Size.fromHeight(120);
 
   @override
   Widget build(BuildContext context) {
