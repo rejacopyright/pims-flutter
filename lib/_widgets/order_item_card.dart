@@ -3,7 +3,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:pims/_widgets/button.dart';
 
 class OrderItem extends StatelessWidget {
-  const OrderItem({super.key});
+  const OrderItem({super.key, this.params});
+  final Map<String, String>? params;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class OrderItem extends StatelessWidget {
         elevation: 1,
         child: LinkWell(
           to: '/order/detail',
+          params: params,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -43,109 +45,130 @@ class OrderItem extends StatelessWidget {
                   opacity: AlwaysStoppedAnimation(1),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 5,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Text(
-                        'Taichi',
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 5,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 5,
+                          horizontal: 10,
+                        ),
+                        margin: EdgeInsets.only(bottom: 5),
+                        decoration: BoxDecoration(
+                          color: primaryColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Text(
+                          'Gym Visit',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: primaryColor,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          'Progressive Overload Strength & Conditioning by Reja Jamil',
+                          maxLines: 2,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 15),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              clipBehavior: Clip.antiAlias,
+                              margin: EdgeInsets.only(right: 7),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              width: 20,
+                              height: 20,
+                              child: Image.asset(
+                                'assets/avatar/4.png',
+                                fit: BoxFit.cover,
+                                opacity: AlwaysStoppedAnimation(1),
+                              ),
+                            ),
+                            Text(
+                              'Reja Jamil',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: Wrap(
+                          spacing: 5,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Icon(
+                              Iconsax.calendar5,
+                              size: 16,
+                              color: primaryColor,
+                            ),
+                            Text(
+                              'Senin, 18 Mei 1992',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 15),
+                        child: Wrap(
+                          spacing: 5,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Icon(
+                              Iconsax.clock5,
+                              size: 16,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            Text(
+                              '06:00 - 7:30',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff777777),
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        'Rp. 50.000',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 15),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            clipBehavior: Clip.antiAlias,
-                            margin: EdgeInsets.only(right: 7),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            width: 20,
-                            height: 20,
-                            child: Image.asset(
-                              'assets/avatar/4.png',
-                              fit: BoxFit.cover,
-                              opacity: AlwaysStoppedAnimation(1),
-                            ),
-                          ),
-                          Text(
-                            'Reja Jamil',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Wrap(
-                        spacing: 5,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Icon(
-                            Iconsax.calendar5,
-                            size: 16,
-                            color: primaryColor,
-                          ),
-                          Text(
-                            'Senin, 18 Mei 1992',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 15),
-                      child: Wrap(
-                        spacing: 5,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Icon(
-                            Iconsax.clock5,
-                            size: 16,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          Text(
-                            '06:00 - 7:30',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff777777),
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      'Rp. 50.000',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

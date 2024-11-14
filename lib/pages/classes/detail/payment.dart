@@ -76,6 +76,10 @@ class BookingClassPaymentCard extends StatelessWidget {
                             .withOpacity(paymentIsSelected ? 1 : 0.5),
                         child: LinkWell(
                           to: '/order/detail',
+                          params: {
+                            'status': 'unpaid',
+                            'provider': selectedPayment.toString()
+                          },
                           child: Container(
                             height: 50,
                             alignment: Alignment.center,
@@ -119,7 +123,7 @@ class ClassFinalPrice extends StatelessWidget {
       final voucherIsSelected = selectedVoucher != null;
       final paymentIsSelected = selectedPayment != null;
       final paymentDetail =
-          paymentData.firstWhereOrNull((item) => item.id == selectedPayment);
+          paymentData.firstWhereOrNull((item) => item.name == selectedPayment);
       final discount = voucherIsSelected ? 5000 : 0;
       final fee = paymentIsSelected && paymentDetail!.fee != null
           ? paymentDetail.fee

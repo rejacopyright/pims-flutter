@@ -89,12 +89,12 @@ class PaymentItem extends StatelessWidget {
     final paymentController = Get.put(PaymentController());
     return Obx(() {
       final thisPaymentIsChecked =
-          item.id == paymentController.selectedPayment.value;
+          item.name == paymentController.selectedPayment.value;
       return InkWell(
         splashColor: Colors.transparent,
         onTap: () {
           paymentController
-              .setSelectedPayment(thisPaymentIsChecked ? null : item.id);
+              .setSelectedPayment(thisPaymentIsChecked ? null : item.name);
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 20),
@@ -132,7 +132,7 @@ class PaymentItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              item.name,
+                              item.label,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,

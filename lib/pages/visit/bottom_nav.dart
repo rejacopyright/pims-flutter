@@ -322,7 +322,7 @@ class VisitFinalPrice extends StatelessWidget {
       final voucherIsSelected = selectedVoucher != null;
       final paymentIsSelected = selectedPayment != null;
       final paymentDetail =
-          paymentData.firstWhereOrNull((item) => item.id == selectedPayment);
+          paymentData.firstWhereOrNull((item) => item.name == selectedPayment);
       final discount = voucherIsSelected ? 5000 : 0;
       final fee = paymentIsSelected && paymentDetail!.fee != null
           ? paymentDetail.fee

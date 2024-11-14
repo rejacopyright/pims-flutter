@@ -10,6 +10,7 @@ class CancelOrderController extends GetxController {
   @override
   void onReady() {
     Future.delayed(Duration(milliseconds: 300), () {
+      log('cancel ready');
       isReady.value = true;
     });
     super.onReady();
@@ -26,7 +27,7 @@ class CancelOrderController extends GetxController {
 
   @override
   void onClose() {
-    log('dispose');
+    log('cancel dispose');
     isReady.value = false;
     super.onClose();
   }
@@ -38,20 +39,21 @@ class CancelOrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = Get.put(CancelOrderController());
+    final primaryColor = Theme.of(context).primaryColor;
     return Obx(() {
       final isReady = store.isReady.value;
       return RefreshIndicator(
+        color: primaryColor,
         displacement: 20,
         onRefresh: () async {
           store.refresh();
         },
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-          child: ListView.builder(
-            itemCount: 3,
-            itemBuilder: (ctx, index) =>
-                isReady ? OrderItem() : OrderItemLoader(),
-          ),
+        child: ListView.builder(
+          padding: EdgeInsets.only(top: 15, bottom: 150, left: 15, right: 15),
+          itemCount: 4,
+          itemBuilder: (ctx, index) => isReady
+              ? OrderItem(params: {'status': 'cancel'})
+              : OrderItemLoader(),
         ),
       );
     });
