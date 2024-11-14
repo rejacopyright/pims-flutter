@@ -27,7 +27,7 @@ class OrderAppBar extends StatelessWidget implements PreferredSizeWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 10),
+              padding: EdgeInsets.only(top: 20, bottom: 10),
               child: Text(
                 'Riwayat Pesanan',
                 style: TextStyle(
@@ -83,7 +83,7 @@ class HeaderBackgroundOrder extends StatelessWidget {
               'assets/images/shape-2.png',
               fit: BoxFit.fitHeight,
               color: Colors.black,
-              opacity: const AlwaysStoppedAnimation(0.05),
+              opacity: AlwaysStoppedAnimation(0.05),
             ),
           ),
         ),
@@ -97,7 +97,7 @@ class HeaderBackgroundOrder extends StatelessWidget {
               'assets/images/shape-2.png',
               fit: BoxFit.fitHeight,
               color: Colors.black,
-              opacity: const AlwaysStoppedAnimation(0.05),
+              opacity: AlwaysStoppedAnimation(0.05),
             ),
           ),
         ),

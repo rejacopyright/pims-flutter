@@ -34,8 +34,8 @@ class ServiceCard extends StatelessWidget {
         children: [
           Container(
             width: 75,
-            padding: const EdgeInsets.all(12.5),
-            margin: const EdgeInsets.only(bottom: 10),
+            padding: EdgeInsets.all(12.5),
+            margin: EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
                 color: primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(25),
@@ -43,11 +43,11 @@ class ServiceCard extends StatelessWidget {
             child: Image.asset(icon ?? 'logo.png'),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 1.5),
+            padding: EdgeInsets.symmetric(horizontal: 1.5),
             child: Text(
               label,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
@@ -77,9 +77,8 @@ class ServiceSection extends StatelessWidget {
           child: GridView.count(
             restorationId: 'home_menu',
             crossAxisCount: 3,
-            padding:
-                const EdgeInsets.only(top: 15, bottom: 5, left: 20, right: 20),
-            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.only(top: 15, bottom: 5, left: 20, right: 20),
+            physics: NeverScrollableScrollPhysics(),
             childAspectRatio: 0.9,
             shrinkWrap: true,
             // controller:
@@ -102,7 +101,7 @@ class ServiceSection extends StatelessWidget {
         );
       }
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
@@ -110,7 +109,7 @@ class ServiceSection extends StatelessWidget {
             (index) => Container(
               width: gridSize,
               height: gridSize,
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(15),

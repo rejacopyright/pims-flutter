@@ -22,9 +22,9 @@ class SelectDays extends StatelessWidget {
       final selectedDate = selectDaysController.selectedDate.value;
       if (pageIsReady) {
         return Container(
-          constraints: const BoxConstraints(maxHeight: 100),
+          constraints: BoxConstraints(maxHeight: 100),
           child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             scrollDirection: Axis.horizontal,
             children: days.map((e) {
               final thisDate = DateTime(e.year, e.month, e.day);
@@ -56,8 +56,8 @@ class SelectDays extends StatelessWidget {
                   Container(
                     width: 52.5,
                     height: 52.5,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 7.5, vertical: 7.5),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
                     child: Material(
                       color: isSelected ? primaryColor : Colors.white,
                       clipBehavior: Clip.antiAlias,
@@ -111,7 +111,7 @@ class SelectDays extends StatelessWidget {
         );
       }
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15),
+        margin: EdgeInsets.symmetric(horizontal: 15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(

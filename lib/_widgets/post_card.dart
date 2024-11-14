@@ -66,7 +66,7 @@ class PostCard extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const Positioned(
+                    Positioned(
                       top: 5,
                       right: 5,
                       child: Icon(
@@ -85,7 +85,7 @@ class PostCard extends StatelessWidget {
                                   crossAxisCount) -
                               50,
                         ),
-                        padding: const EdgeInsets.only(
+                        padding: EdgeInsets.only(
                           left: 7.5,
                           right: 7.5,
                           top: 1.5,
@@ -99,7 +99,7 @@ class PostCard extends StatelessWidget {
                           item.category ?? 'Lainnya',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -109,13 +109,13 @@ class PostCard extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.all(5),
+                  padding: EdgeInsets.all(5),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         clipBehavior: Clip.antiAlias,
-                        margin: const EdgeInsets.only(right: 5),
+                        margin: EdgeInsets.only(right: 5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                         ),
@@ -133,7 +133,7 @@ class PostCard extends StatelessWidget {
                           item.userName,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
@@ -143,12 +143,12 @@ class PostCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
                     item.title,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                    style: const TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 12),
                   ),
                 ),
               ],
@@ -160,13 +160,12 @@ class PostCard extends StatelessWidget {
                     bottom: 25,
                     child: Container(
                       alignment: Alignment.centerLeft,
-                      padding:
-                          const EdgeInsets.only(left: 5, right: 10, top: 5),
+                      padding: EdgeInsets.only(left: 5, right: 10, top: 5),
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Row(
                           children: [
-                            const Text(
+                            Text(
                               'Rp. ',
                               style: TextStyle(
                                 color: Colors.black,
@@ -177,15 +176,15 @@ class PostCard extends StatelessWidget {
                             item.priceFrom != null
                                 ? Text(
                                     currency.format(item.priceFrom),
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
                                     ),
                                   )
-                                : const SizedBox.shrink(),
+                                : SizedBox.shrink(),
                             item.priceFrom != null && item.priceTo != null
-                                ? const Text(
+                                ? Text(
                                     ' - ',
                                     style: TextStyle(
                                       color: Colors.black,
@@ -193,47 +192,47 @@ class PostCard extends StatelessWidget {
                                       fontSize: 15,
                                     ),
                                   )
-                                : const SizedBox.shrink(),
+                                : SizedBox.shrink(),
                             item.priceTo != null
                                 ? Text(
                                     currency.format(item.priceTo),
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
                                     ),
                                   )
-                                : const SizedBox.shrink(),
+                                : SizedBox.shrink(),
                             item.duration != null
                                 ? Text(
                                     ' / ${item.duration}',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 11,
                                     ),
                                   )
-                                : const SizedBox.shrink(),
+                                : SizedBox.shrink(),
                           ],
                         ),
                       ),
                     ),
                   )
-                : const SizedBox.shrink(),
+                : SizedBox.shrink(),
             Positioned(
               bottom: 5,
               left: 0,
               right: 5,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
+                padding: EdgeInsets.symmetric(horizontal: 5),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
                       child: RatingBarIndicator(
                         rating: Random().nextInt(5) + 2,
-                        unratedColor: const Color(0xffdddddd),
-                        itemBuilder: (context, index) => const Icon(
+                        unratedColor: Color(0xffdddddd),
+                        itemBuilder: (context, index) => Icon(
                           Icons.star,
                           color: Colors.amber,
                         ),
@@ -245,23 +244,22 @@ class PostCard extends StatelessWidget {
                     Wrap(
                       spacing: 2,
                       children: [
-                        const Icon(Iconsax.heart5, size: 12, color: Colors.red),
+                        Icon(Iconsax.heart5, size: 12, color: Colors.red),
                         Text(
                           '${((Random().nextDouble() * 9) + 1).toStringAsFixed(1)}K',
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: 10, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
-                    const Padding(padding: EdgeInsets.only(right: 10)),
+                    Padding(padding: EdgeInsets.only(right: 10)),
                     Wrap(
                       spacing: 2,
                       children: [
-                        const Icon(Icons.check_circle,
-                            size: 12, color: Colors.green),
+                        Icon(Icons.check_circle, size: 12, color: Colors.green),
                         Text(
                           '${((Random().nextDouble() * 9) + 1).toStringAsFixed(1)}K',
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: 10, fontWeight: FontWeight.bold),
                         ),
                       ],

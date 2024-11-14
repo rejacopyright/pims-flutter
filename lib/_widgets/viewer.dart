@@ -12,7 +12,7 @@ class ImageViewer extends StatelessWidget {
     return Dialog(
       surfaceTintColor: Colors.transparent,
       backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.all(0),
+      insetPadding: EdgeInsets.all(0),
       child: Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.center,
@@ -53,9 +53,9 @@ class ImageViewer extends StatelessWidget {
             child: GestureDetector(
               onTap: () => Get.rootDelegate.popRoute(),
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: EdgeInsets.all(10),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 5,
                     vertical: 5,
                   ),
@@ -63,7 +63,7 @@ class ImageViewer extends StatelessWidget {
                     color: Colors.black.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.close,
                     size: 20,
                     color: Colors.white,

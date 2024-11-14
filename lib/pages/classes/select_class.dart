@@ -72,8 +72,8 @@ class SelectClass extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         childAspectRatio: pageIsReady ? 0.65 : 1,
         crossAxisCount: crossAxisCount,
-        padding: const EdgeInsets.only(top: 0, bottom: 15, left: 15, right: 15),
-        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.only(top: 0, bottom: 15, left: 15, right: 15),
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         // controller:
         //     ScrollController(keepScrollOffset: false),

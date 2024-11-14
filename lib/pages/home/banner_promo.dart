@@ -51,10 +51,10 @@ class BannerPromo extends StatelessWidget {
                         builder: (BuildContext context) {
                           return Container(
                             width: MediaQuery.of(context).size.width,
-                            // margin: const EdgeInsets.symmetric(horizontal: 0.0),
+                            // margin: EdgeInsets.symmetric(horizontal: 0.0),
                             clipBehavior: Clip.antiAlias,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(31, 125, 125, 125),
+                              color: Color.fromARGB(31, 125, 125, 125),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Center(
@@ -69,7 +69,7 @@ class BannerPromo extends StatelessWidget {
                     }).toList(),
                   ),
                   Container(
-                    padding: const EdgeInsets.all(5.0),
+                    padding: EdgeInsets.all(5.0),
                     alignment: Alignment.bottomCenter,
                     child: AnimatedSmoothIndicator(
                       // controller: controller,
@@ -80,7 +80,7 @@ class BannerPromo extends StatelessWidget {
                         dotWidth: 5,
                         spacing: 3,
                         strokeWidth: 0,
-                        dotColor: const Color.fromARGB(150, 255, 255, 255),
+                        dotColor: Color.fromARGB(150, 255, 255, 255),
                         activeDotColor: Theme.of(context).primaryColor,
                         // type: WormType.thin,
                       ),
@@ -89,7 +89,7 @@ class BannerPromo extends StatelessWidget {
                 ],
               )
             : Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15),
+                margin: EdgeInsets.symmetric(horizontal: 15),
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.05),
                   borderRadius: BorderRadius.circular(10),

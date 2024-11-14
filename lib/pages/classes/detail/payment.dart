@@ -31,7 +31,7 @@ class BookingClassPaymentCard extends StatelessWidget {
               Container(
                 height: 7.5,
                 width: 75,
-                margin: const EdgeInsets.symmetric(
+                margin: EdgeInsets.symmetric(
                   vertical: 20,
                 ),
                 decoration: BoxDecoration(
@@ -41,7 +41,7 @@ class BookingClassPaymentCard extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 10,
                   ),
                   child: PaymentCard(),
@@ -49,7 +49,7 @@ class BookingClassPaymentCard extends StatelessWidget {
               ),
               SafeArea(
                 child: Container(
-                  padding: const EdgeInsets.only(
+                  padding: EdgeInsets.only(
                     top: 20,
                     bottom: 15,
                     left: 20,
@@ -60,7 +60,7 @@ class BookingClassPaymentCard extends StatelessWidget {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.05),
-                        offset: const Offset(0, -5),
+                        offset: Offset(0, -5),
                         blurRadius: 5,
                       ),
                     ],
@@ -195,7 +195,7 @@ class ClassFinalPrice extends StatelessWidget {
                 ),
                 SizedBox(width: 20),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
                     'Rp. ${currency.format((50000 - discount) + (fee ?? 0))}',
                     style: TextStyle(

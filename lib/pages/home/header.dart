@@ -11,8 +11,8 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double expandedHeight = 100;
-    const double toolbarHeight = 65;
+    double expandedHeight = 100;
+    double toolbarHeight = 65;
     return SliverLayoutBuilder(
         builder: (BuildContext context, sliverConstraints) {
       final bool isCollapsed =
@@ -34,17 +34,17 @@ class HomeHeader extends StatelessWidget {
         surfaceTintColor: Colors.transparent,
         centerTitle: false,
         flexibleSpace: FlexibleSpaceBar(
-          stretchModes: const [
+          stretchModes: [
             StretchMode.zoomBackground,
             StretchMode.blurBackground,
           ],
           expandedTitleScale: 1,
           centerTitle: true,
-          titlePadding: const EdgeInsets.all(0.0),
+          titlePadding: EdgeInsets.all(0.0),
           title: Container(
             width: MediaQuery.of(context).size.width * 0.8,
-            margin: const EdgeInsetsDirectional.only(bottom: 15),
-            child: const SearchField(),
+            margin: EdgeInsetsDirectional.only(bottom: 15),
+            child: SearchField(),
           ),
           background: pageIsReady
               ? Image.asset(
@@ -57,7 +57,7 @@ class HomeHeader extends StatelessWidget {
                     children: List.generate(
                       3,
                       (index) => Container(
-                        margin: const EdgeInsets.only(top: 35),
+                        margin: EdgeInsets.only(top: 35),
                         width: 10,
                         height: 10,
                         decoration: BoxDecoration(

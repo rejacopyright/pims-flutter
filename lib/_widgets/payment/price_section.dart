@@ -24,7 +24,7 @@ class PriceSection extends StatelessWidget {
               children: [
                 Text(
                   'Rp.',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -32,7 +32,7 @@ class PriceSection extends StatelessWidget {
                 ),
                 Text(
                   currency.format(voucherIsSelected ? 45000 : 50000),
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,

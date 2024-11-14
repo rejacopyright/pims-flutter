@@ -9,7 +9,7 @@ class ProductController extends GetxController {
   RxBool pageIsReady = false.obs;
   @override
   void onReady() {
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future.delayed(Duration(milliseconds: 100), () {
       pageIsReady.value = true;
     });
     super.onReady();
@@ -23,9 +23,9 @@ class ProductApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = Get.put(ProductController());
-    const double searchPadding = 15;
-    const double expandedHeight = 100;
-    const double toolbarHeight = kToolbarHeight + searchPadding;
+    double searchPadding = 15;
+    double expandedHeight = 100;
+    double toolbarHeight = kToolbarHeight + searchPadding;
 
     List<ProgramState> programData = [
       ProgramState(
@@ -91,12 +91,12 @@ class ProductApp extends StatelessWidget {
             displacement: 75,
             onRefresh: () async {
               store.pageIsReady.value = false;
-              return Future.delayed(const Duration(milliseconds: 300), () {
+              return Future.delayed(Duration(milliseconds: 300), () {
                 store.pageIsReady.value = true;
               });
             },
             child: CustomScrollView(
-              physics: const BouncingScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               slivers: [
                 SliverLayoutBuilder(
                   builder: (context, sliverConstraints) {
@@ -121,12 +121,12 @@ class ProductApp extends StatelessWidget {
                       flexibleSpace: FlexibleSpaceBar(
                         expandedTitleScale: 1.15,
                         centerTitle: true,
-                        titlePadding: const EdgeInsets.all(0.0),
+                        titlePadding: EdgeInsets.all(0.0),
                         title: Container(
                           width: MediaQuery.of(context).size.width * 0.8,
-                          margin: const EdgeInsetsDirectional.only(
-                              bottom: searchPadding),
-                          child: const SearchField(),
+                          margin:
+                              EdgeInsetsDirectional.only(bottom: searchPadding),
+                          child: SearchField(),
                         ),
                         background: Image.asset(
                           'assets/images/header-gym-1.jpg',
@@ -139,15 +139,15 @@ class ProductApp extends StatelessWidget {
                 SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                     return Container(
-                      padding: const EdgeInsetsDirectional.symmetric(
+                      padding: EdgeInsetsDirectional.symmetric(
                           horizontal: 0, vertical: searchPadding),
                       child: GridView.count(
                         clipBehavior: Clip.antiAlias,
                         childAspectRatio: 5 / 6,
                         crossAxisCount: crossAxisCount,
-                        padding: const EdgeInsets.only(
+                        padding: EdgeInsets.only(
                             top: 0, bottom: 15, left: 15, right: 15),
-                        physics: const NeverScrollableScrollPhysics(),
+                        physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         // controller:
                         //     ScrollController(keepScrollOffset: false),
@@ -174,16 +174,15 @@ class ProductApp extends StatelessWidget {
           children: [
             Container(
               height: 125,
-              margin: const EdgeInsets.only(bottom: 20),
+              margin: EdgeInsets.only(bottom: 20),
               color: Colors.black.withOpacity(0.05),
             ),
             GridView.count(
               clipBehavior: Clip.antiAlias,
               childAspectRatio: 1,
               crossAxisCount: crossAxisCount,
-              padding: const EdgeInsets.only(
-                  top: 0, bottom: 15, left: 15, right: 15),
-              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.only(top: 0, bottom: 15, left: 15, right: 15),
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               // controller:
               //     ScrollController(keepScrollOffset: false),

@@ -23,13 +23,13 @@ class ClassBottomNav extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     return Container(
       width: Get.width,
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
-            offset: const Offset(0, -5),
+            offset: Offset(0, -5),
             blurRadius: 5,
           ),
         ],
@@ -145,7 +145,7 @@ class BookingClassButton extends StatelessWidget {
               Container(
                 height: 7.5,
                 width: 75,
-                margin: const EdgeInsets.symmetric(
+                margin: EdgeInsets.symmetric(
                   vertical: 20,
                 ),
                 decoration: BoxDecoration(
@@ -155,7 +155,7 @@ class BookingClassButton extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 10,
                   ),
                   child: PaymentCard(),
@@ -163,7 +163,7 @@ class BookingClassButton extends StatelessWidget {
               ),
               SafeArea(
                 child: Container(
-                  padding: const EdgeInsets.only(
+                  padding: EdgeInsets.only(
                     top: 20,
                     bottom: 15,
                     left: 20,
@@ -174,7 +174,7 @@ class BookingClassButton extends StatelessWidget {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.05),
-                        offset: const Offset(0, -5),
+                        offset: Offset(0, -5),
                         blurRadius: 5,
                       ),
                     ],
@@ -193,8 +193,7 @@ class BookingClassButton extends StatelessWidget {
                           highlightColor: Colors.transparent,
                           onTap: () {
                             if (paymentIsSelected) {
-                              Future.delayed(const Duration(milliseconds: 200),
-                                  () {
+                              Future.delayed(Duration(milliseconds: 200), () {
                                 Get.rootDelegate.popRoute();
                               });
                             }
@@ -297,9 +296,7 @@ class ClassSection extends StatelessWidget {
 }
 
 class ClassFinalPrice extends StatelessWidget {
-  const ClassFinalPrice({
-    super.key,
-  });
+  const ClassFinalPrice({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -386,7 +383,7 @@ class ClassFinalPrice extends StatelessWidget {
                 ),
                 SizedBox(width: 20),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
                     'Rp. ${currency.format((50000 - discount) + (fee ?? 0))}',
                     style: TextStyle(

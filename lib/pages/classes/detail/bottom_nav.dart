@@ -15,7 +15,7 @@ class ClassBottomNav extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     return Container(
       width: Get.width,
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [

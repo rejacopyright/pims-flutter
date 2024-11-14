@@ -13,10 +13,10 @@ ThemeData themeConfig() {
       seedColor: primaryColor,
       // brightness: Brightness.dark,
     ),
-    cardTheme: const CardTheme(
+    cardTheme: CardTheme(
       color: Colors.white,
     ),
-    textTheme: const TextTheme(
+    textTheme: TextTheme(
       displayLarge: TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.bold,

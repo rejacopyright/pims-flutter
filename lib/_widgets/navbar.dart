@@ -24,7 +24,7 @@ class NavbarWidget extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.05),
-                  offset: const Offset(0, -5),
+                  offset: Offset(0, -5),
                   blurRadius: 5,
                   spreadRadius: -2.5,
                 ),
@@ -65,7 +65,7 @@ class NavbarWidget extends StatelessWidget {
                                     ? Theme.of(context).primaryColor
                                     : Colors.black,
                                 size: 22.5),
-                            const Padding(
+                            Padding(
                                 padding: EdgeInsets.symmetric(vertical: 1.5)),
                             Text(
                               menu.label ?? '',
@@ -85,7 +85,7 @@ class NavbarWidget extends StatelessWidget {
             ),
           );
         }
-        return const SizedBox.shrink();
+        return SizedBox.shrink();
       },
     );
   }

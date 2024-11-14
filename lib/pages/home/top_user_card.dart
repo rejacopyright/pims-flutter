@@ -24,16 +24,15 @@ class TopUserCard extends StatelessWidget {
       final pageIsReady = topUserController.loadingPage.value;
       if (pageIsReady) {
         return Container(
-          constraints: const BoxConstraints(maxHeight: 140),
+          constraints: BoxConstraints(maxHeight: 140),
           child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             scrollDirection: Axis.horizontal,
             children: imgList
                 .map(
                   (e) => Container(
                     width: (MediaQuery.of(context).size.width / 3) - 15,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     child: Material(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
@@ -46,7 +45,7 @@ class TopUserCard extends StatelessWidget {
                       //   boxShadow: [
                       //     BoxShadow(
                       //       color: Colors.black.withOpacity(0.15),
-                      //       offset: const Offset(1, 1),
+                      //       offset: Offset(1, 1),
                       //       blurRadius: 10,
                       //       spreadRadius: -5,
                       //     )
@@ -63,14 +62,14 @@ class TopUserCard extends StatelessWidget {
         );
       }
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           children: List.generate(
             3,
             (index) => Container(
               width: (MediaQuery.of(context).size.width / 3) - 17.5,
               height: 125,
-              margin: const EdgeInsets.symmetric(horizontal: 5),
+              margin: EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(7.5),

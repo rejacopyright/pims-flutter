@@ -28,7 +28,7 @@ class ClassAppController extends GetxController {
   @override
   void refresh() {
     pageIsReady.value = false;
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future.delayed(Duration(milliseconds: 100), () {
       onReady();
     });
     super.refresh();
@@ -53,9 +53,9 @@ class ClassPage extends StatelessWidget {
         () {
           final pageIsReady = classController.pageIsReady.value;
           return NestedScrollView(
-            // physics: const AlwaysScrollableScrollPhysics(),
+            // physics: AlwaysScrollableScrollPhysics(),
             // scrollBehavior:
-            //     const MaterialScrollBehavior().copyWith(overscroll: false),
+            //     MaterialScrollBehavior().copyWith(overscroll: false),
             floatHeaderSlivers: true,
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
@@ -76,14 +76,14 @@ class ClassPage extends StatelessWidget {
               },
               child: CustomScrollView(
                 // controller: classScrollController,
-                physics: const NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 scrollBehavior:
-                    const MaterialScrollBehavior().copyWith(overscroll: false),
+                    MaterialScrollBehavior().copyWith(overscroll: false),
                 slivers: [
                   SliverList(
                     delegate: SliverChildBuilderDelegate((context, index) {
                       return Container(
-                        padding: const EdgeInsets.only(top: 20),
+                        padding: EdgeInsets.only(top: 20),
                         // child: SelectClass(pageIsReady: pageIsReady),
                         child: SelectClass(
                           params: {'type': thisClass?.name ?? ''},

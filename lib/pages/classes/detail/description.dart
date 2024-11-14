@@ -120,7 +120,7 @@ class ClassDetailDescription extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              padding: EdgeInsets.only(top: 10, bottom: 10),
               child: ClassDesciptionBadges(thisClass: thisClass),
             ),
             Container(

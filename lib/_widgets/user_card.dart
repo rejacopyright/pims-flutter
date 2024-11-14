@@ -20,17 +20,17 @@ class UserCard extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: const Color.fromARGB(31, 125, 125, 125),
+              color: Color.fromARGB(31, 125, 125, 125),
             ),
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
             child: Center(child: Text(description ?? 'description')),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 1.5),
+            padding: EdgeInsets.symmetric(horizontal: 1.5),
             child: Text(
               label ?? 'Title',
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 10.5),
+              style: TextStyle(fontSize: 10.5),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
@@ -53,7 +53,7 @@ class StackedUserCard extends StatelessWidget {
       children: [
         Container(
           clipBehavior: Clip.antiAlias,
-          margin: const EdgeInsets.symmetric(vertical: 10),
+          margin: EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
           ),
@@ -72,8 +72,8 @@ class StackedUserCard extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: const Text(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
                   'Reja Jamil',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -85,22 +85,22 @@ class StackedUserCard extends StatelessWidget {
                 ),
               ),
               // Container(
-              //   padding: const EdgeInsets.symmetric(horizontal: 20),
+              //   padding: EdgeInsets.symmetric(horizontal: 20),
               //   child: Text(
               //     servicesList[Random().nextInt(2) + 1].label,
               //     maxLines: 1,
               //     overflow: TextOverflow.ellipsis,
               //     textAlign: TextAlign.center,
-              //     style: const TextStyle(fontSize: 10),
+              //     style: TextStyle(fontSize: 10),
               //   ),
               // ),
               Container(
-                margin: const EdgeInsets.only(top: 5),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                margin: EdgeInsets.only(top: 5),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: RatingBarIndicator(
                   rating: Random().nextInt(5) + 1,
-                  unratedColor: const Color(0xffdddddd),
-                  itemBuilder: (context, index) => const Icon(
+                  unratedColor: Color(0xffdddddd),
+                  itemBuilder: (context, index) => Icon(
                     Icons.star,
                     color: Colors.amber,
                   ),
@@ -110,14 +110,13 @@ class StackedUserCard extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 2.5),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                margin: EdgeInsets.only(top: 2.5),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Wrap(spacing: 2, children: [
-                  const Icon(Icons.check_circle, size: 9, color: Colors.green),
+                  Icon(Icons.check_circle, size: 9, color: Colors.green),
                   Text(
                     '${((Random().nextDouble() * 99) + 1).toStringAsFixed(1)}K',
-                    style: const TextStyle(
-                        fontSize: 9, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
                   ),
                 ]),
               ),
@@ -143,8 +142,8 @@ class UserReview extends StatelessWidget {
     return LinkWell(
       to: '',
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12.5),
-        // margin: const EdgeInsets.only(bottom: 5),
+        padding: EdgeInsets.symmetric(vertical: 12.5),
+        // margin: EdgeInsets.only(bottom: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -154,7 +153,7 @@ class UserReview extends StatelessWidget {
                 Container(
                   width: 25,
                   height: 25,
-                  margin: const EdgeInsets.only(right: 5),
+                  margin: EdgeInsets.only(right: 5),
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
@@ -168,7 +167,7 @@ class UserReview extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(left: 2, bottom: 5),
                         child: Text(
                           'Reja Jamil',
@@ -185,8 +184,8 @@ class UserReview extends StatelessWidget {
                               children: [
                                 RatingBarIndicator(
                                   rating: rate,
-                                  unratedColor: const Color(0xffdddddd),
-                                  itemBuilder: (context, index) => const Icon(
+                                  unratedColor: Color(0xffdddddd),
+                                  itemBuilder: (context, index) => Icon(
                                     Icons.star,
                                     color: Colors.amber,
                                   ),
@@ -196,7 +195,7 @@ class UserReview extends StatelessWidget {
                                 ),
                                 Text(
                                   rate.toString(),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -218,8 +217,8 @@ class UserReview extends StatelessWidget {
                 ),
               ],
             ),
-            const Padding(padding: EdgeInsets.only(top: 5)),
-            const Text(
+            Padding(padding: EdgeInsets.only(top: 5)),
+            Text(
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab consequatur ut nihil neque labore totam perferendis.'),
           ],
         ),

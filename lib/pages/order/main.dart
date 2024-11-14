@@ -20,7 +20,7 @@ class OrderController extends GetxController {
   @override
   void refresh() {
     pageIsReady.value = false;
-    Future.delayed(const Duration(milliseconds: 200), () {
+    Future.delayed(Duration(milliseconds: 200), () {
       onReady();
     });
     super.refresh();

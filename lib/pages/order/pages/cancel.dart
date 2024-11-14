@@ -9,7 +9,7 @@ class CancelOrderController extends GetxController {
 
   @override
   void onReady() {
-    Future.delayed(const Duration(milliseconds: 300), () {
+    Future.delayed(Duration(milliseconds: 300), () {
       isReady.value = true;
     });
     super.onReady();
@@ -18,7 +18,7 @@ class CancelOrderController extends GetxController {
   @override
   void refresh() {
     isReady.value = false;
-    Future.delayed(const Duration(milliseconds: 200), () {
+    Future.delayed(Duration(milliseconds: 200), () {
       onReady();
     });
     super.refresh();

@@ -17,7 +17,7 @@ class LinkWell extends StatelessWidget {
       highlightColor: Colors.transparent,
       onTap: () {
         if (to != null && to != '') {
-          Future.delayed(const Duration(milliseconds: 200), () {
+          Future.delayed(Duration(milliseconds: 200), () {
             Get.rootDelegate.toNamed(
               '${homeRoute != '/' ? '$homeRoute/' : ''}${to ?? homeRoute}',
               arguments: true,
@@ -41,7 +41,7 @@ class BackWell extends StatelessWidget {
       splashFactory: InkSplash.splashFactory,
       highlightColor: Colors.transparent,
       onTap: () {
-        Future.delayed(const Duration(milliseconds: 200), () {
+        Future.delayed(Duration(milliseconds: 200), () {
           Get.rootDelegate.popRoute();
         });
       },
@@ -64,7 +64,7 @@ class QRButton extends StatelessWidget {
           shape: CircleBorder(),
           backgroundColor: Colors.white,
           onPressed: () {
-            Future.delayed(const Duration(milliseconds: 200), () {
+            Future.delayed(Duration(milliseconds: 200), () {
               // Get.rootDelegate.popRoute();
             });
           },

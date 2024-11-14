@@ -14,24 +14,24 @@ class HomeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Homepage();
+    return Homepage();
   }
 }
 
 List<Widget> content = [
   Container(
-    margin: const EdgeInsets.symmetric(vertical: 10.0),
+    margin: EdgeInsets.symmetric(vertical: 10.0),
     child: BannerPromo(),
   ),
-  // const TitleShowAll(title: 'Temukan Tukang'),
-  const ServiceSection(),
-  const TitleShowAll(
+  // TitleShowAll(title: 'Temukan Tukang'),
+  ServiceSection(),
+  TitleShowAll(
     title: 'Trainers',
     margin: EdgeInsets.only(top: 5, bottom: 5),
   ),
   TopUserCard(),
-  const Padding(padding: EdgeInsets.only(bottom: 5)),
-  const TitleShowAll(
+  Padding(padding: EdgeInsets.only(bottom: 5)),
+  TitleShowAll(
     title: 'Programs',
     margin: EdgeInsets.only(top: 10),
   ),
@@ -49,7 +49,7 @@ class HomepageController extends GetxController {
   @override
   void refresh() {
     loadingPage.value = false;
-    Future.delayed(const Duration(milliseconds: 400), () {
+    Future.delayed(Duration(milliseconds: 400), () {
       onReady();
     });
     super.refresh();
@@ -88,8 +88,8 @@ class Homepage extends StatelessWidget {
               programController.refresh();
             },
             child: CustomScrollView(
-              physics: const BouncingScrollPhysics(),
-              scrollBehavior: const MaterialScrollBehavior().copyWith(
+              physics: BouncingScrollPhysics(),
+              scrollBehavior: MaterialScrollBehavior().copyWith(
                 overscroll: false,
               ),
               slivers: [
@@ -104,8 +104,8 @@ class Homepage extends StatelessWidget {
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) => Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: const ProgramSection(),
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      child: ProgramSection(),
                     ),
                     childCount: 1,
                   ),

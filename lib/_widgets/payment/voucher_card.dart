@@ -27,7 +27,7 @@ class VoucherCard extends StatelessWidget {
                   .setSelectedVoucher(thisVoucherIsChecked ? null : item);
             },
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 7.5),
+              padding: EdgeInsets.symmetric(vertical: 7.5),
               child: CouponCard(
                 border: BorderSide(
                   width: 1.5,
@@ -102,7 +102,7 @@ class VoucherCard extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 10),
+                              padding: EdgeInsets.only(top: 10),
                               child: Wrap(
                                 children: [
                                   Text(
@@ -127,7 +127,7 @@ class VoucherCard extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Icon(
                           Iconsax.tick_circle5,
                           color: thisVoucherIsChecked

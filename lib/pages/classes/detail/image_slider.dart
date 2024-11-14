@@ -62,8 +62,8 @@ class ClassDetailImageSlider extends StatelessWidget {
                   right: 10,
                   bottom: 10,
                   child: Container(
-                    constraints: const BoxConstraints(minWidth: 50),
-                    padding: const EdgeInsets.symmetric(
+                    constraints: BoxConstraints(minWidth: 50),
+                    padding: EdgeInsets.symmetric(
                       horizontal: 10,
                       vertical: 3.5,
                     ),
@@ -74,7 +74,7 @@ class ClassDetailImageSlider extends StatelessWidget {
                     child: Text(
                       '${(store.currentIndex.value + 1).toString()} / ${imgList.length}',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -84,11 +84,11 @@ class ClassDetailImageSlider extends StatelessWidget {
               ],
             ),
             Container(
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-              constraints: const BoxConstraints(maxHeight: 50),
+              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+              constraints: BoxConstraints(maxHeight: 50),
               child: ListView(
                 shrinkWrap: false,
-                padding: const EdgeInsets.symmetric(horizontal: 5),
+                padding: EdgeInsets.symmetric(horizontal: 5),
                 scrollDirection: Axis.horizontal,
                 children: imgList.asMap().entries.map((e) {
                   final activeIndex = e.key == store.currentIndex.value;
@@ -96,13 +96,13 @@ class ClassDetailImageSlider extends StatelessWidget {
                     onTap: () {
                       _controller.animateToPage(
                         e.key,
-                        duration: const Duration(milliseconds: 200),
+                        duration: Duration(milliseconds: 200),
                         curve: Curves.linear,
                       );
                       store.setCurrenIndex(e.key);
                     },
                     child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                      margin: EdgeInsets.symmetric(horizontal: 5),
                       clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
@@ -135,7 +135,7 @@ class ClassDetailImageSlider extends StatelessWidget {
             decoration: BoxDecoration(color: Colors.black.withOpacity(0.05)),
           ),
           Container(
-            margin: const EdgeInsets.symmetric(
+            margin: EdgeInsets.symmetric(
               horizontal: 5,
               vertical: 10,
             ),
@@ -145,7 +145,7 @@ class ClassDetailImageSlider extends StatelessWidget {
                 (index) => Container(
                   width: 50,
                   height: 50,
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  margin: EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.05),
                     borderRadius: BorderRadius.circular(7.5),

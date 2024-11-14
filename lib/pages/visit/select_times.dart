@@ -36,8 +36,8 @@ class SelectTimes extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         childAspectRatio: 10 / 5,
         crossAxisCount: 4,
-        padding: const EdgeInsets.only(top: 0, bottom: 15, left: 0, right: 0),
-        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.only(top: 0, bottom: 15, left: 0, right: 0),
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         // controller:
         //     ScrollController(keepScrollOffset: false),

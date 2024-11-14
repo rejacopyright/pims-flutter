@@ -15,7 +15,7 @@ class PaymentCard extends StatelessWidget {
       shrinkWrap: true,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
+          padding: EdgeInsets.symmetric(vertical: 5),
           child: Text(
             'Transfer Bank',
             style: TextStyle(
@@ -29,7 +29,7 @@ class PaymentCard extends StatelessWidget {
             .map((item) => PaymentItem(item: item)),
         SizedBox(height: 20),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
+          padding: EdgeInsets.symmetric(vertical: 5),
           child: Text(
             'E - Wallets',
             style: TextStyle(
@@ -43,7 +43,7 @@ class PaymentCard extends StatelessWidget {
             .map((item) => PaymentItem(item: item)),
         SizedBox(height: 20),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
+          padding: EdgeInsets.symmetric(vertical: 5),
           child: Text(
             'Bayar di Konter',
             style: TextStyle(
@@ -57,7 +57,7 @@ class PaymentCard extends StatelessWidget {
             .map((item) => PaymentItem(item: item)),
         SizedBox(height: 20),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
+          padding: EdgeInsets.symmetric(vertical: 5),
           child: Text(
             'Metode Lainnya',
             style: TextStyle(
@@ -97,7 +97,7 @@ class PaymentItem extends StatelessWidget {
               .setSelectedPayment(thisPaymentIsChecked ? null : item.id);
         },
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: EdgeInsets.symmetric(vertical: 20),
           margin: EdgeInsets.symmetric(vertical: 5),
           // height: 100,
           decoration: BoxDecoration(
@@ -154,7 +154,7 @@ class PaymentItem extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Icon(
                           Iconsax.tick_circle5,
                           color: thisPaymentIsChecked

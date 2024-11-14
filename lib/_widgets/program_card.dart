@@ -58,7 +58,7 @@ class ProgramCard extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const Positioned(
+                    Positioned(
                       top: 5,
                       right: 5,
                       child: Icon(
@@ -77,7 +77,7 @@ class ProgramCard extends StatelessWidget {
                                   crossAxisCount) -
                               50,
                         ),
-                        padding: const EdgeInsets.only(
+                        padding: EdgeInsets.only(
                           left: 7.5,
                           right: 7.5,
                           top: 1.5,
@@ -91,7 +91,7 @@ class ProgramCard extends StatelessWidget {
                           item.category ?? 'Lainnya',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -101,26 +101,26 @@ class ProgramCard extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 5, top: 10, bottom: 5),
+                  padding:
+                      EdgeInsets.only(left: 10, right: 5, top: 10, bottom: 5),
                   child: Text(
                     item.title,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 10, right: 5),
+                  padding: EdgeInsets.only(left: 10, right: 5),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         clipBehavior: Clip.antiAlias,
-                        margin: const EdgeInsets.only(right: 7),
+                        margin: EdgeInsets.only(right: 7),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                         ),
@@ -138,7 +138,7 @@ class ProgramCard extends StatelessWidget {
                           item.userName,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 11,
                           ),
@@ -156,8 +156,7 @@ class ProgramCard extends StatelessWidget {
                     bottom: 5,
                     child: Container(
                       alignment: Alignment.centerLeft,
-                      padding:
-                          const EdgeInsets.only(left: 10, right: 10, top: 5),
+                      padding: EdgeInsets.only(left: 10, right: 10, top: 5),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -165,7 +164,7 @@ class ProgramCard extends StatelessWidget {
                               fit: BoxFit.scaleDown,
                               child: Row(
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Rp. ',
                                     style: TextStyle(
                                       color: Colors.black,
@@ -176,13 +175,13 @@ class ProgramCard extends StatelessWidget {
                                   item.price != null
                                       ? Text(
                                           currency.format(item.price),
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
                                           ),
                                         )
-                                      : const SizedBox.shrink(),
+                                      : SizedBox.shrink(),
                                 ],
                               ),
                             ),
@@ -192,7 +191,7 @@ class ProgramCard extends StatelessWidget {
                                         crossAxisCount) -
                                     50,
                               ),
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                 left: 7.5,
                                 right: 7.5,
                                 top: 1.5,
@@ -211,7 +210,7 @@ class ProgramCard extends StatelessWidget {
                           ]),
                     ),
                   )
-                : const SizedBox.shrink(),
+                : SizedBox.shrink(),
           ],
         ),
       ),

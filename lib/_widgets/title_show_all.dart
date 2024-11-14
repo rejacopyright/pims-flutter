@@ -20,15 +20,15 @@ class TitleShowAll extends StatelessWidget {
     final Color primary = Theme.of(context).primaryColor;
     return Container(
       alignment: Alignment.center,
-      padding: const EdgeInsets.only(left: 15, right: 10),
-      margin: margin ?? const EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.only(left: 15, right: 10),
+      margin: margin ?? EdgeInsets.symmetric(vertical: 10),
       child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               title ?? 'Title',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
               ),
@@ -37,9 +37,8 @@ class TitleShowAll extends StatelessWidget {
               onTap: () {},
               borderRadius: BorderRadius.circular(5),
               child: Container(
-                padding: const EdgeInsets.only(
-                    top: 5, bottom: 5, left: 10, right: 5),
-                // margin: const EdgeInsets.only(top: 3),
+                padding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 5),
+                // margin: EdgeInsets.only(top: 3),
                 child: Wrap(
                   spacing: 2,
                   crossAxisAlignment: WrapCrossAlignment.center,

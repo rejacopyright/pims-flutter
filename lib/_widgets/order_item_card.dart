@@ -9,7 +9,7 @@ class OrderItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     return Container(
-      constraints: const BoxConstraints(minHeight: 75),
+      constraints: BoxConstraints(minHeight: 75),
       margin: EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -31,8 +31,7 @@ class OrderItem extends StatelessWidget {
             children: [
               Container(
                 clipBehavior: Clip.antiAlias,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -45,7 +44,7 @@ class OrderItem extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   vertical: 10,
                   horizontal: 5,
                 ),
@@ -54,7 +53,7 @@ class OrderItem extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
+                      padding: EdgeInsets.only(bottom: 5),
                       child: Text(
                         'Taichi',
                         style: TextStyle(
@@ -64,7 +63,7 @@ class OrderItem extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
+                      padding: EdgeInsets.only(bottom: 15),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -95,7 +94,7 @@ class OrderItem extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
+                      padding: EdgeInsets.only(bottom: 5),
                       child: Wrap(
                         spacing: 5,
                         crossAxisAlignment: WrapCrossAlignment.center,
@@ -116,7 +115,7 @@ class OrderItem extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
+                      padding: EdgeInsets.only(bottom: 15),
                       child: Wrap(
                         spacing: 5,
                         crossAxisAlignment: WrapCrossAlignment.center,

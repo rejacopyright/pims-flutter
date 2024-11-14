@@ -6,7 +6,7 @@ import '_config/theme.dart';
 import '_router/main.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
             //                   : name,
             //             ),
             //           )
-            //         : const SafeArea(
+            //         : SafeArea(
             //             child: SizedBox.shrink(),
             //           ),
           );

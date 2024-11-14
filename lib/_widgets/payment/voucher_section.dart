@@ -72,7 +72,7 @@ class VoucherSection extends StatelessWidget {
                               Container(
                                 height: 7.5,
                                 width: 75,
-                                margin: const EdgeInsets.symmetric(
+                                margin: EdgeInsets.symmetric(
                                   vertical: 20,
                                 ),
                                 decoration: BoxDecoration(
@@ -95,7 +95,7 @@ class VoucherSection extends StatelessWidget {
                               ),
                               SafeArea(
                                 child: Container(
-                                  padding: const EdgeInsets.only(
+                                  padding: EdgeInsets.only(
                                     top: 20,
                                     bottom: 15,
                                     left: 20,
@@ -106,7 +106,7 @@ class VoucherSection extends StatelessWidget {
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.05),
-                                        offset: const Offset(0, -5),
+                                        offset: Offset(0, -5),
                                         blurRadius: 5,
                                       ),
                                     ],
@@ -145,7 +145,7 @@ class VoucherSection extends StatelessWidget {
                 splashFactory: InkSplash.splashFactory,
                 highlightColor: Colors.transparent,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                  padding: EdgeInsets.only(top: 5, bottom: 5, left: 10),
                   child: Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
                     spacing: 5,

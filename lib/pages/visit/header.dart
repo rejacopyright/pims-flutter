@@ -9,8 +9,8 @@ class VisitHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double expandedHeight = 225;
-    const double toolbarHeight = 150;
+    double expandedHeight = 225;
+    double toolbarHeight = 150;
     return SliverLayoutBuilder(
         builder: (BuildContext context, sliverConstraints) {
       final bool isCollapsed =
@@ -62,12 +62,12 @@ class HeaderTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsetsDirectional.only(bottom: 10),
+      margin: EdgeInsetsDirectional.only(bottom: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 10),
+            padding: EdgeInsets.only(left: 10),
             child: Material(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50),
@@ -151,7 +151,7 @@ class HeaderBackgroundVisit extends StatelessWidget {
               'assets/images/shape-2.png',
               fit: BoxFit.fitHeight,
               color: Colors.black,
-              opacity: const AlwaysStoppedAnimation(0.05),
+              opacity: AlwaysStoppedAnimation(0.05),
             ),
           ),
         ),
@@ -165,7 +165,7 @@ class HeaderBackgroundVisit extends StatelessWidget {
               'assets/images/shape-2.png',
               fit: BoxFit.fitHeight,
               color: Colors.black,
-              opacity: const AlwaysStoppedAnimation(0.05),
+              opacity: AlwaysStoppedAnimation(0.05),
             ),
           ),
         ),

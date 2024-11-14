@@ -75,9 +75,8 @@ class ProgramSection extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             childAspectRatio: 0.75,
             crossAxisCount: crossAxisCount,
-            padding:
-                const EdgeInsets.only(top: 0, bottom: 15, left: 15, right: 15),
-            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.only(top: 0, bottom: 15, left: 15, right: 15),
+            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             // controller:
             //     ScrollController(keepScrollOffset: false),
@@ -91,14 +90,14 @@ class ProgramSection extends StatelessWidget {
         );
       }
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           children: List.generate(
             2,
             (index) => Container(
               width: (MediaQuery.of(context).size.width / 2) - 20,
               height: 175,
-              margin: const EdgeInsets.symmetric(horizontal: 5),
+              margin: EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(7.5),

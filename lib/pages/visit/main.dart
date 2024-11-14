@@ -24,7 +24,7 @@ class VisitAppController extends GetxController {
   @override
   void refresh() {
     pageIsReady.value = false;
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future.delayed(Duration(milliseconds: 100), () {
       onReady();
     });
     super.refresh();
@@ -45,9 +45,9 @@ class VisitPage extends StatelessWidget {
         () {
           final pageIsReady = visitController.pageIsReady.value;
           return NestedScrollView(
-            // physics: const ClampingScrollPhysics(),
+            // physics: ClampingScrollPhysics(),
             // scrollBehavior:
-            //     const MaterialScrollBehavior().copyWith(overscroll: false),
+            //     MaterialScrollBehavior().copyWith(overscroll: false),
             floatHeaderSlivers: true,
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
@@ -64,13 +64,13 @@ class VisitPage extends StatelessWidget {
                 // selectDaysController.refresh();
               },
               child: CustomScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                scrollBehavior: const MaterialScrollBehavior().copyWith(
+                physics: NeverScrollableScrollPhysics(),
+                scrollBehavior: MaterialScrollBehavior().copyWith(
                   overscroll: false,
                 ),
                 slivers: [
                   SliverPadding(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 15,
                       vertical: 20,
                     ),
