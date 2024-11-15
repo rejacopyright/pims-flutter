@@ -44,10 +44,7 @@ class ClassDetailDescription extends StatelessWidget {
                       ),
                       Text(
                         'Senin, 18 Mei 1992',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -62,10 +59,7 @@ class ClassDetailDescription extends StatelessWidget {
                       ),
                       Text(
                         '06:00 - 7:30',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -135,7 +129,7 @@ class ClassDetailDescription extends StatelessWidget {
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                 ),
               ),
             ),

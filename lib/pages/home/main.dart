@@ -18,25 +18,6 @@ class HomeApp extends StatelessWidget {
   }
 }
 
-List<Widget> content = [
-  Container(
-    margin: EdgeInsets.symmetric(vertical: 10.0),
-    child: BannerPromo(),
-  ),
-  // TitleShowAll(title: 'Temukan Tukang'),
-  ServiceSection(),
-  TitleShowAll(
-    title: 'Trainers',
-    margin: EdgeInsets.only(top: 5, bottom: 5),
-  ),
-  TopUserCard(),
-  Padding(padding: EdgeInsets.only(bottom: 5)),
-  TitleShowAll(
-    title: 'Programs',
-    margin: EdgeInsets.only(top: 10),
-  ),
-];
-
 class HomepageController extends GetxController {
   RxBool loadingPage = false.obs;
 
@@ -61,6 +42,25 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> content = [
+      Container(
+        margin: EdgeInsets.symmetric(vertical: 10.0),
+        child: BannerPromo(),
+      ),
+      // TitleShowAll(title: 'Temukan Tukang'),
+      ServiceSection(),
+      // TitleShowAll(
+      //   title: 'Trainers',
+      //   margin: EdgeInsets.only(top: 5, bottom: 5),
+      // ),
+      // TopUserCard(),
+      // Padding(padding: EdgeInsets.only(bottom: 5)),
+      // TitleShowAll(
+      //   title: 'Programs',
+      //   margin: EdgeInsets.only(top: 10),
+      // ),
+    ];
+
     final homeController = Get.put(HomepageController());
     final topUserController = Get.put(TopUserCardController());
     final serviceController = Get.put(ServiceSectionController());
@@ -101,15 +101,15 @@ class Homepage extends StatelessWidget {
                     childCount: 1,
                   ),
                 ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) => Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      child: ProgramSection(),
-                    ),
-                    childCount: 1,
-                  ),
-                ),
+                // SliverList(
+                //   delegate: SliverChildBuilderDelegate(
+                //     (context, index) => Container(
+                //       margin: EdgeInsets.symmetric(vertical: 10),
+                //       child: ProgramSection(),
+                //     ),
+                //     childCount: 1,
+                //   ),
+                // ),
                 SliverPadding(padding: EdgeInsets.only(bottom: 100))
               ],
             ),

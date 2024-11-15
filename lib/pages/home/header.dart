@@ -1,5 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:pims/_widgets/form.dart';
+import 'package:iconsax/iconsax.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
@@ -11,8 +13,8 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double expandedHeight = 100;
-    double toolbarHeight = 65;
+    double expandedHeight = 125;
+    double toolbarHeight = 70;
     return SliverLayoutBuilder(
         builder: (BuildContext context, sliverConstraints) {
       final bool isCollapsed =
@@ -38,19 +40,12 @@ class HomeHeader extends StatelessWidget {
             StretchMode.zoomBackground,
             StretchMode.blurBackground,
           ],
-          expandedTitleScale: 1,
+          expandedTitleScale: 1.1,
           centerTitle: true,
           titlePadding: EdgeInsets.all(0.0),
-          title: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            margin: EdgeInsetsDirectional.only(bottom: 15),
-            child: SearchField(),
-          ),
+          title: HomeHeaderContent(),
           background: pageIsReady
-              ? Image.asset(
-                  'assets/images/header-gym-3.jpg',
-                  fit: BoxFit.cover,
-                )
+              ? HomeHeaderBackground()
               : Center(
                   child: Wrap(
                     spacing: 5,
@@ -71,5 +66,234 @@ class HomeHeader extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class HomeHeaderContent extends StatelessWidget {
+  const HomeHeaderContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+    return Container(
+      // width: double.infinity,
+      margin: EdgeInsets.only(bottom: 5, left: 15, right: 15),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 60,
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Material(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              clipBehavior: Clip.antiAlias,
+              shadowColor: Colors.black.withOpacity(0.75),
+              elevation: 1,
+              child: InkWell(
+                splashFactory: InkSplash.splashFactory,
+                highlightColor: Colors.transparent,
+                onTap: () {},
+                child: Row(
+                  children: [
+                    Container(
+                      clipBehavior: Clip.antiAlias,
+                      margin: EdgeInsets.symmetric(horizontal: 7.5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      width: 35,
+                      height: 35,
+                      child: Image.asset(
+                        'assets/avatar/3.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 2.5),
+                            child: Text(
+                              'Reja Jamil',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                          Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            spacing: 2.5,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(2.5),
+                                margin: EdgeInsets.only(right: 5),
+                                decoration: BoxDecoration(
+                                  color: primaryColor.withOpacity(0.15),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Icon(
+                                  Iconsax.empty_wallet5,
+                                  size: 16,
+                                  color: primaryColor,
+                                ),
+                              ),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Wrap(
+                                  children: [
+                                    Text(
+                                      'Rp. ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    Text(
+                                      '1.500.000',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    VerticalDivider(
+                      indent: 10,
+                      endIndent: 10,
+                      color: Color(0xffdddddd),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        log('GestureDetector');
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          // color: Color(0xfff1f1f1),
+                          borderRadius: BorderRadius.circular(7.5),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 3.5,
+                          horizontal: 6,
+                        ),
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(3.5),
+                              margin: EdgeInsets.only(right: 5),
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: Icon(
+                                Iconsax.crown5,
+                                size: 18,
+                              ),
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Membership',
+                                  style: TextStyle(
+                                    // fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                Text(
+                                  'Miliki Sekarang',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // SearchField(),
+        ],
+      ),
+    );
+  }
+}
+
+class HomeHeaderBackground extends StatelessWidget {
+  const HomeHeaderBackground({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+    return Stack(
+      fit: StackFit.expand,
+      clipBehavior: Clip.antiAlias,
+      children: [
+        DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                // primaryColor.withOpacity(0),
+                primaryColor.withOpacity(0.5),
+                primaryColor.withOpacity(0.75),
+                primaryColor.withOpacity(0.85),
+                primaryColor.withOpacity(1),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          right: -375,
+          top: -10,
+          bottom: -200,
+          child: Transform.rotate(
+            angle: 0.35,
+            child: Image.asset(
+              'assets/images/shape-2.png',
+              fit: BoxFit.fitHeight,
+              color: Colors.black,
+              opacity: AlwaysStoppedAnimation(0.05),
+            ),
+          ),
+        ),
+        Positioned(
+          right: -320,
+          top: 0,
+          bottom: -125,
+          child: Transform.rotate(
+            angle: 0.45,
+            child: Image.asset(
+              'assets/images/shape-2.png',
+              fit: BoxFit.fitHeight,
+              color: Colors.black,
+              opacity: AlwaysStoppedAnimation(0.05),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

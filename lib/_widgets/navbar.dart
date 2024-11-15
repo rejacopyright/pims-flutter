@@ -70,10 +70,12 @@ class NavbarWidget extends StatelessWidget {
                             Text(
                               menu.label ?? '',
                               style: TextStyle(
-                                  fontSize: 10.0,
-                                  color: isCurrentRoute
-                                      ? Theme.of(context).primaryColor
-                                      : Colors.black),
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: isCurrentRoute
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.black,
+                              ),
                             ),
                           ],
                         ),

@@ -5,7 +5,7 @@ ThemeData themeConfig() {
   late Color primaryColor = Colors.green; // 4CAF50
   return ThemeData(
     scaffoldBackgroundColor: Colors.white,
-    fontFamily: GoogleFonts.comfortaa()
+    fontFamily: GoogleFonts.catamaran()
         .fontFamily, // comfortaa, outfit, poiretOne, catamaran, josefinSans, dosis, poppins
     useMaterial3: true,
     primaryColor: primaryColor,
@@ -29,7 +29,7 @@ ThemeData themeConfig() {
         // fontWeight: FontWeight.w600,
       ),
       displaySmall: TextStyle(
-        fontSize: 10,
+        fontSize: 12,
       ),
     ),
   );

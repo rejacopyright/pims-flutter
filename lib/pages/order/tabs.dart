@@ -84,7 +84,7 @@ class OrderTabs extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
       ),
       child: TabBar(
-        physics: ClampingScrollPhysics(),
+        // physics: ClampingScrollPhysics(),
         tabAlignment: TabAlignment.start,
         splashFactory: NoSplash.splashFactory,
         dividerColor: Colors.transparent,

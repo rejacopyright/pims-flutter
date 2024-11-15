@@ -41,7 +41,7 @@ class ClassDetailPrice extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryColor,
-                        fontSize: 18,
+                        fontSize: 20,
                       ),
                     ),
                     Text(
@@ -79,9 +79,9 @@ class ClassDetailPrice extends StatelessWidget {
                 Text(
                   '90 menit',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      color: Color(0xffaaaaaa)),
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xffaaaaaa),
+                  ),
                 ),
               ],
             ),
