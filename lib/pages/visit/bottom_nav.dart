@@ -211,6 +211,10 @@ class BookingVisitPaymentCard extends StatelessWidget {
                             .withOpacity(paymentIsSelected ? 1 : 0.5),
                         child: LinkWell(
                           to: '/order/detail',
+                          params: {
+                            'status': 'unpaid',
+                            'provider': selectedPayment.toString()
+                          },
                           child: Container(
                             height: 50,
                             alignment: Alignment.center,

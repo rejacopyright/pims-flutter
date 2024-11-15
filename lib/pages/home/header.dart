@@ -186,7 +186,7 @@ class HomeHeaderContent extends StatelessWidget {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          // color: Color(0xfff1f1f1),
+                          color: Color(0xfff0f0f0),
                           borderRadius: BorderRadius.circular(7.5),
                         ),
                         padding: EdgeInsets.symmetric(

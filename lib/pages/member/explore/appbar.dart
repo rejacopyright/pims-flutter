@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/_widgets/button.dart';
+import 'package:pims/_widgets/form.dart';
 
-import 'tabs.dart';
+GlobalKey memberExploreTabKey = GlobalKey();
 
-GlobalKey memberTabKey = GlobalKey();
-
-class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MemberAppBar({super.key});
+class MemberExploreAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const MemberExploreAppBar({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(120);
+  Size get preferredSize => Size.fromHeight(100);
 
   @override
   Widget build(BuildContext context) {
@@ -25,77 +25,56 @@ class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         centerTitle: false,
-        background: HeaderBackgroundMember(),
-        title: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12.5),
-              child: BackWell(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 1),
-                      width: 30,
-                      height: 30,
-                      child: Icon(
-                        Iconsax.arrow_left_2,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
-                    Container(
-                      clipBehavior: Clip.antiAlias,
-                      margin: EdgeInsets.only(right: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(width: 2, color: Colors.white),
-                      ),
-                      width: 40,
-                      height: 40,
-                      child: Image.asset(
-                        'assets/avatar/3.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Wrap(
-                      direction: Axis.vertical,
-                      alignment: WrapAlignment.center,
-                      runAlignment: WrapAlignment.center,
+        background: HeaderBackgroundMemberExplore(),
+        title: Padding(
+          padding: EdgeInsets.only(bottom: 5),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: BackWell(
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 10,
                       children: [
-                        Text(
-                          'Reja Jamil',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                        Material(
+                          // color: Theme.of(context).primaryColor.withOpacity(0.1),
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(50),
+                          clipBehavior: Clip.antiAlias,
+                          child: Icon(
+                            Iconsax.arrow_left,
                             color: Colors.white,
-                            fontSize: 14,
                           ),
                         ),
                         Text(
-                          '2 paket aktif',
+                          'Jelajahi Member',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 20,
                           ),
-                        ),
+                        )
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+                SearchField(),
+              ],
             ),
-            MemberTabs(key: memberTabKey),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-class HeaderBackgroundMember extends StatelessWidget {
-  const HeaderBackgroundMember({super.key});
+class HeaderBackgroundMemberExplore extends StatelessWidget {
+  const HeaderBackgroundMemberExplore({super.key});
 
   @override
   Widget build(BuildContext context) {

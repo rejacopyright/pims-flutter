@@ -8,6 +8,33 @@ import 'package:pims/pages/order/pages/done.dart';
 
 import 'pages/unpaid.dart';
 
+final List<TabList> orderTabs = [
+  TabList(
+    id: 'unpaid',
+    label: 'Belum Bayar',
+    icon: Iconsax.empty_wallet_time4,
+    child: UnpaidOrderPage(),
+  ),
+  TabList(
+    id: 'active',
+    label: 'Berjalan',
+    icon: Iconsax.calendar_tick5,
+    child: ActiveOrderPage(),
+  ),
+  TabList(
+    id: 'done',
+    label: 'Selesai',
+    icon: Iconsax.location_tick5,
+    child: DoneOrderPage(),
+  ),
+  TabList(
+    id: 'cancel',
+    label: 'Dibatalkan',
+    icon: Iconsax.close_circle5,
+    child: CancelOrderPage(),
+  ),
+];
+
 class TabList {
   String id;
   String label;
@@ -24,32 +51,6 @@ class TabList {
 class OrderTabsController extends OrderController
     with GetSingleTickerProviderStateMixin {
   late TabController controller;
-  final List<TabList> tabs = [
-    TabList(
-      id: 'unpaid',
-      label: 'Belum Bayar',
-      icon: Iconsax.empty_wallet_time4,
-      child: UnpaidOrderPage(),
-    ),
-    TabList(
-      id: 'active',
-      label: 'Berjalan',
-      icon: Iconsax.calendar_tick5,
-      child: ActiveOrderPage(),
-    ),
-    TabList(
-      id: 'done',
-      label: 'Selesai',
-      icon: Iconsax.location_tick5,
-      child: DoneOrderPage(),
-    ),
-    TabList(
-      id: 'cancel',
-      label: 'Dibatalkan',
-      icon: Iconsax.close_circle5,
-      child: CancelOrderPage(),
-    ),
-  ];
 
   RxString currentID = ''.obs;
   setID(val) => currentID.value = val;
@@ -57,7 +58,7 @@ class OrderTabsController extends OrderController
   @override
   void onInit() {
     super.onInit();
-    controller = TabController(vsync: this, length: tabs.length);
+    controller = TabController(vsync: this, length: orderTabs.length);
     // Future.delayed(Duration(microseconds: 200), () {
     //   controller.animateTo(2);
     // });
@@ -76,7 +77,14 @@ class OrderTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = Get.put(OrderTabsController());
+    final orderTab = Get.rootDelegate.parameters['order_tab'];
     final Color primaryColor = Theme.of(context).primaryColor;
+    final thisTabIndex = orderTabs.indexWhere((item) => item.id == orderTab);
+    if (thisTabIndex > 0) {
+      Future.delayed(Duration(microseconds: 200), () {
+        store.controller.animateTo(thisTabIndex);
+      });
+    }
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -100,7 +108,7 @@ class OrderTabs extends StatelessWidget {
         isScrollable: true,
         controller: store.controller,
         onTap: (e) async {
-          store.setID(store.tabs[e].id);
+          store.setID(orderTabs[e].id);
           // Future.delayed(Duration(milliseconds: 100), () {
           //   // Scrollable.ensureVisible(context);
           //   RenderBox thisBox =
@@ -117,7 +125,7 @@ class OrderTabs extends StatelessWidget {
           //   // orderScrollController.jumpTo(position.dy);
           // });
         },
-        tabs: store.tabs.map((e) {
+        tabs: orderTabs.map((e) {
           return Container(
             padding: EdgeInsets.symmetric(
               horizontal: 15,
@@ -162,11 +170,11 @@ class OrderTabContent extends StatelessWidget {
     final fullWidth = MediaQuery.of(context).size.width;
     return Obx(() {
       final pageIsReady = store.pageIsReady.value;
-      late Widget currentTabContent = store.tabs
+      late Widget currentTabContent = orderTabs
               .where((e) => e.id == store.currentID.value)
               .map((e) => e.child)
               .firstOrNull ??
-          store.tabs.first.child;
+          orderTabs.first.child;
       if (pageIsReady) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 10),

@@ -371,14 +371,34 @@ class MemberDetailItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: EdgeInsets.only(bottom: 5),
-                child: Text(
-                  'Paket Nasi Kuning & Bebek Bakar Sambal Ijo',
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
+                padding: EdgeInsets.only(bottom: 7.5),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(3.5),
+                      margin: EdgeInsets.only(right: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.amberAccent.shade100,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: Icon(
+                        Iconsax.crown5,
+                        size: 14,
+                        color: Colors.orange.shade900,
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Paket Nasi Kuning & Bebek Bakar Sambal Ijo',
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Wrap(

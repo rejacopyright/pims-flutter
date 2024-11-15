@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/_widgets/button.dart';
 
-class MemberItem extends StatelessWidget {
-  const MemberItem({super.key, this.params});
+class MemberExploreItem extends StatelessWidget {
+  const MemberExploreItem({super.key, this.params});
   final Map<String, String>? params;
 
   @override
@@ -26,7 +26,7 @@ class MemberItem extends StatelessWidget {
         shadowColor: Colors.black.withOpacity(0.75),
         elevation: 1,
         child: LinkWell(
-          to: '/member/detail',
+          to: '/member/explore/detail',
           params: params,
           child: Padding(
             padding: EdgeInsets.all(15),
@@ -107,7 +107,7 @@ class MemberItem extends StatelessWidget {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 5),
+                  padding: EdgeInsets.only(top: 5, bottom: 10),
                   child: Wrap(
                     spacing: 5,
                     crossAxisAlignment: WrapCrossAlignment.center,
@@ -115,20 +115,6 @@ class MemberItem extends StatelessWidget {
                       Text('Masa Berlaku :'),
                       Text(
                         '3 Bulan',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 5),
-                  child: Wrap(
-                    spacing: 5,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Text('Berlaku sampai :'),
-                      Text(
-                        'Senin, 18 Mei 1992',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -153,8 +139,8 @@ class MemberItem extends StatelessWidget {
   }
 }
 
-class MemberItemLoader extends StatelessWidget {
-  const MemberItemLoader({super.key});
+class MemberExploreItemLoader extends StatelessWidget {
+  const MemberExploreItemLoader({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -41,7 +41,7 @@ class OrderPage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: TabBarView(
         controller: tabx.controller,
-        children: tabx.tabs.map((item) => item.child).toList(),
+        children: orderTabs.map((item) => item.child).toList(),
       ),
     );
   }

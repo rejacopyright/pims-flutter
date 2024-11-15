@@ -6,6 +6,8 @@ import 'package:pims/pages/classes/main.dart';
 import 'package:pims/pages/classes/payment/confirm.dart';
 import 'package:pims/pages/home/main.dart';
 import 'package:pims/pages/member/detail/main.dart';
+import 'package:pims/pages/member/explore/detail/main.dart';
+import 'package:pims/pages/member/explore/main.dart';
 import 'package:pims/pages/member/main.dart';
 import 'package:pims/pages/order/detail/main.dart';
 import 'package:pims/pages/order/main.dart';
@@ -113,6 +115,13 @@ List<Route> menusNav = [
       ]),
       GetPage(name: '/member', page: () => MemberPage(), children: [
         GetPage(name: '/detail', page: () => MemberDetailPage()),
+        GetPage(
+          name: '/explore',
+          page: () => MemberExplorePage(),
+          children: [
+            GetPage(name: '/detail', page: () => MemberExploreDetailPage()),
+          ],
+        ),
       ]),
     ],
   ),

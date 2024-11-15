@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pims/_widgets/button.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:pims/_router/main.dart';
 
 import 'appbar.dart';
 import 'tabs.dart';
@@ -33,11 +34,45 @@ class MemberPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tabx = Get.put(MemberTabsController());
+    final primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
       appBar: MemberAppBar(),
       // bottomNavigationBar: NavbarWidget(name: '/member'),
       extendBody: true,
-      floatingActionButton: QRButton(),
+      floatingActionButton: SizedBox(
+        // width: 65,
+        // height: 65,
+        child: FittedBox(
+          child: FloatingActionButton.extended(
+            icon: Icon(
+              Iconsax.add,
+              color: Colors.white,
+              size: 25,
+            ),
+            label: Text(
+              'Tambah Paket',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
+            isExtended: true,
+            // elevation: 1.5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            backgroundColor: primaryColor,
+            onPressed: () {
+              Future.delayed(Duration(milliseconds: 200), () {
+                Get.rootDelegate.toNamed(
+                  '$homeRoute${'/member/explore'}',
+                );
+              });
+            },
+          ),
+        ),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: TabBarView(
         controller: tabx.controller,
