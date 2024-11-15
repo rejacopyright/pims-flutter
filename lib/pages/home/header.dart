@@ -1,7 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pims/_router/main.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
@@ -178,7 +178,11 @@ class HomeHeaderContent extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        log('GestureDetector');
+                        Future.delayed(Duration(milliseconds: 200), () {
+                          Get.rootDelegate.toNamed(
+                            '${homeRoute != '/' ? '$homeRoute/' : ''}${'/member'}',
+                          );
+                        });
                       },
                       child: Container(
                         decoration: BoxDecoration(

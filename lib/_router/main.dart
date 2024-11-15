@@ -5,6 +5,8 @@ import 'package:pims/pages/classes/detail/main.dart';
 import 'package:pims/pages/classes/main.dart';
 import 'package:pims/pages/classes/payment/confirm.dart';
 import 'package:pims/pages/home/main.dart';
+import 'package:pims/pages/member/detail/main.dart';
+import 'package:pims/pages/member/main.dart';
 import 'package:pims/pages/order/detail/main.dart';
 import 'package:pims/pages/order/main.dart';
 import 'package:pims/pages/product/detail/main.dart';
@@ -100,10 +102,6 @@ List<Route> menusNav = [
     activeIcon: Iconsax.home_25,
     children: [
       GetPage(
-        name: '/home/product/detail',
-        page: () => ProductDetailPage(),
-      ),
-      GetPage(
         name: '/services/visit',
         page: () => VisitPage(),
         // transition: Transition.fade,
@@ -112,6 +110,9 @@ List<Route> menusNav = [
         GetPage(name: '/detail', page: () => ClassDetailPage(), children: [
           GetPage(name: '/payment', page: () => ClassPaymentConfirmation()),
         ]),
+      ]),
+      GetPage(name: '/member', page: () => MemberPage(), children: [
+        GetPage(name: '/detail', page: () => MemberDetailPage()),
       ]),
     ],
   ),
