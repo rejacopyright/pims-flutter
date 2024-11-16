@@ -81,7 +81,7 @@ class OrderTabs extends StatelessWidget {
     final Color primaryColor = Theme.of(context).primaryColor;
     final thisTabIndex = orderTabs.indexWhere((item) => item.id == orderTab);
     if (thisTabIndex > 0) {
-      Future.delayed(Duration(microseconds: 200), () {
+      Future.delayed(Duration(microseconds: 100), () {
         store.controller.animateTo(thisTabIndex);
       });
     }
