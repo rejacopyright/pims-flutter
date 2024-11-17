@@ -9,7 +9,7 @@ class OrderDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    final params = Get.rootDelegate.parameters;
+    final params = Get.parameters;
     final status = params['status'];
     final provider = params['provider'] ?? 'bca';
 

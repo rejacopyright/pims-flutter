@@ -19,7 +19,7 @@ class ImageViewer extends StatelessWidget {
         children: [
           GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTap: () => Get.rootDelegate.popRoute(),
+            onTap: () => Get.back(),
             // onDoubleTapDown: (d) => doubleTapDetails = d,
             child: SizedBox.expand(),
           ),
@@ -51,7 +51,7 @@ class ImageViewer extends StatelessWidget {
             top: 5,
             right: 5,
             child: GestureDetector(
-              onTap: () => Get.rootDelegate.popRoute(),
+              onTap: () => Get.back(),
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Container(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_controller/payment_controller.dart';
+import 'package:pims/_router/main.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/payment/payment_card.dart';
 
@@ -69,10 +70,12 @@ class MemberExploreDetailPaymentCard extends StatelessWidget {
                     color:
                         primaryColor.withOpacity(paymentIsSelected ? 1 : 0.5),
                     child: LinkWell(
-                      to: '/member/detail',
+                      method: 'offAllNamed',
+                      to: '$homeRoute/member/detail',
                       params: {
                         'status': 'unpaid',
-                        'provider': selectedPayment.toString()
+                        'provider': selectedPayment.toString(),
+                        'origin': 'confirm',
                       },
                       child: Container(
                         height: 50,

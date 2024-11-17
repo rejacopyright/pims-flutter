@@ -194,7 +194,7 @@ class BookingClassButton extends StatelessWidget {
                           onTap: () {
                             if (paymentIsSelected) {
                               Future.delayed(Duration(milliseconds: 200), () {
-                                Get.rootDelegate.popRoute();
+                                Get.back();
                               });
                             }
                           },

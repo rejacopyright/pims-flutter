@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_config/services.dart';
@@ -39,8 +37,7 @@ class ClassDetailPage extends StatelessWidget {
     final imageController = Get.put(ClassDetailImageSliderController());
     final priceController = Get.put(ClassDetailPriceController());
     final descriptionController = Get.put(ClassDetailDescriptionController());
-    log(Get.rootDelegate.parameters['type'].toString());
-    final classType = Get.rootDelegate.parameters['type'];
+    final classType = Get.parameters['type'];
     final thisClass =
         classesList.firstWhereOrNull((item) => item.name == classType);
     return Scaffold(

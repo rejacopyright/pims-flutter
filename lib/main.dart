@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:pims/pages/home/main.dart';
 import '_config/theme.dart';
 import '_router/main.dart';
 
@@ -31,9 +32,9 @@ class MyApp extends State<AppState> {
         hasToken = false;
       });
       if (box.read('token') == null) {
-        Get.rootDelegate.toNamed('/login');
+        Get.offAllNamed('/login');
       } else {
-        Get.rootDelegate.toNamed(homeRoute);
+        Get.offAllNamed(homeRoute);
       }
     });
     return GetMaterialApp(
@@ -46,35 +47,39 @@ class MyApp extends State<AppState> {
       opaqueRoute: true,
       enableLog: false,
       getPages: routes(),
-      builder: (ctxParent, state) => GetRouterOutlet.builder(
-        routerDelegate: Get.rootDelegate,
-        // key: navKey,
-        builder: (ctx, delegate, currentRoute) {
-          // final String name =
-          //     currentRoute != null ? currentRoute.currentPage!.name : homeRoute;
-          // final NavStore navController = Get.put(NavStore());
-          return Scaffold(
-            body: GetRouterOutlet(
-              navigatorKey: delegate.navigatorKey,
-              delegate: delegate,
-              initialRoute: homeRoute,
-              anchorRoute: '/',
-            ),
-            // bottomNavigationBar:
-            //     pageHasNav.contains(name) || navController.nav.value
-            //         ? SafeArea(
-            //             child: NavbarWidget(
-            //               name: name != homeRoute
-            //                   ? name.replaceAll(homeRoute, '')
-            //                   : name,
-            //             ),
-            //           )
-            //         : SafeArea(
-            //             child: SizedBox.shrink(),
-            //           ),
-          );
-        },
-      ),
+      // routes: routes(),
+      home: HomeApp(),
+      // routes: ,
+      // builder: (ctxParent, state) => GetRouterOutlet.builder(
+      //   routerDelegate: Get.rootDelegate,
+      //   // key: navKey,
+      //   builder: (ctx, delegate, currentRoute) {
+      //     // final String name =
+      //     //     currentRoute != null ? currentRoute.currentPage!.name : homeRoute;
+      //     // final NavStore navController = Get.put(NavStore());
+      //     return Scaffold(
+      //       body: GetRouterOutlet(
+      //         navigatorKey: delegate.navigatorKey,
+      //         delegate: delegate,
+      //         // initialRoute: homeRoute,
+      //         initialRoute: hasToken ? homeRoute : '/login',
+      //         anchorRoute: '/',
+      //       ),
+      //       // bottomNavigationBar:
+      //       //     pageHasNav.contains(name) || navController.nav.value
+      //       //         ? SafeArea(
+      //       //             child: NavbarWidget(
+      //       //               name: name != homeRoute
+      //       //                   ? name.replaceAll(homeRoute, '')
+      //       //                   : name,
+      //       //             ),
+      //       //           )
+      //       //         : SafeArea(
+      //       //             child: SizedBox.shrink(),
+      //       //           ),
+      //     );
+      //   },
+      // ),
     );
   }
 }

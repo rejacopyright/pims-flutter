@@ -65,7 +65,7 @@ class MemberPage extends StatelessWidget {
             backgroundColor: primaryColor,
             onPressed: () {
               Future.delayed(Duration(milliseconds: 200), () {
-                Get.rootDelegate.toNamed(
+                Get.toNamed(
                   '$homeRoute${'/member/explore'}',
                 );
               });

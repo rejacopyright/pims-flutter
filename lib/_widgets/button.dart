@@ -4,10 +4,16 @@ import 'package:get/route_manager.dart';
 import 'package:pims/_router/main.dart';
 
 class LinkWell extends StatelessWidget {
-  const LinkWell(
-      {super.key, required this.to, this.params, required this.child});
+  const LinkWell({
+    super.key,
+    required this.to,
+    this.params,
+    this.method = 'toNamed',
+    required this.child,
+  });
   final String? to;
   final Map<String, String>? params;
+  final String? method;
   final Widget child;
 
   @override
@@ -18,11 +24,20 @@ class LinkWell extends StatelessWidget {
       onTap: () {
         if (to != null && to != '') {
           Future.delayed(Duration(milliseconds: 200), () {
-            Get.rootDelegate.toNamed(
-              '${homeRoute != '/' ? '$homeRoute/' : ''}${to ?? homeRoute}',
-              arguments: true,
-              parameters: params,
-            );
+            if (method == 'toNamed') {
+              Get.toNamed(
+                to ?? homeRoute,
+                arguments: true,
+                parameters: params,
+              );
+            }
+            if (method == 'offAllNamed') {
+              Get.offAllNamed(
+                to ?? homeRoute,
+                arguments: true,
+                parameters: params,
+              );
+            }
           });
         }
       },
@@ -42,7 +57,7 @@ class BackWell extends StatelessWidget {
       highlightColor: Colors.transparent,
       onTap: () {
         Future.delayed(Duration(milliseconds: 200), () {
-          Get.rootDelegate.popRoute();
+          Get.back();
         });
       },
       child: child,
@@ -65,7 +80,7 @@ class QRButton extends StatelessWidget {
           backgroundColor: Colors.white,
           onPressed: () {
             Future.delayed(Duration(milliseconds: 200), () {
-              // Get.rootDelegate.popRoute();
+              // Get.back();
             });
           },
           child: SvgPicture.asset(

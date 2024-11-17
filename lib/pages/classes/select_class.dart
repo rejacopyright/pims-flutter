@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_router/main.dart';
 import 'package:pims/_widgets/program_booking_card.dart';
 
 import 'main.dart';
@@ -83,7 +84,7 @@ class SelectClass extends StatelessWidget {
         children: pageIsReady
             ? programData.map((item) {
                 return ProgramBookingCard(
-                  to: '/services/class/detail',
+                  to: '$homeRoute/services/class/detail',
                   params: params,
                   item: item,
                   crossAxisCount: crossAxisCount,

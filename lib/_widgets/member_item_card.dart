@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pims/_router/main.dart';
 import 'package:pims/_widgets/button.dart';
 
 class MemberItem extends StatelessWidget {
@@ -26,7 +27,7 @@ class MemberItem extends StatelessWidget {
         shadowColor: Colors.black.withOpacity(0.75),
         elevation: 1,
         child: LinkWell(
-          to: '/member/detail',
+          to: '$homeRoute/member/detail',
           params: params,
           child: Padding(
             padding: EdgeInsets.all(15),

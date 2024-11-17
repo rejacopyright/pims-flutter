@@ -56,6 +56,7 @@ class NavbarWidget extends StatelessWidget {
                     }
                     return Expanded(
                       child: LinkWell(
+                        method: 'offAllNamed',
                         to: menu.name,
                         params: menu.name == '/order'
                             ? {'order_tab': 'active'}

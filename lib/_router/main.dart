@@ -43,7 +43,6 @@ class AuthMiddleware extends GetMiddleware {
   RouteSettings? redirect(route) {
     bool hasToken = box.hasData('token');
     if (!hasToken) {
-      // Get.offAllNamed('/login');
       return RouteSettings(name: '/login');
     }
     return null;
@@ -55,37 +54,40 @@ const String homeRoute = '/app';
 class Scoper extends StatelessWidget {
   const Scoper({
     super.key,
-    required this.name,
     required this.child,
   });
-  final String name;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        final history = Get.rootDelegate.history;
+      onPopInvokedWithResult: (didPop, result) async {
+        // final history = Get.rootDelegate.history;
         // final prevRoute = history.length < 2
         //     ? history.last.currentTreeBranch.firstOrNull!.name
         //     // ? history.last.currentPage!.name
         //     : history[history.length - 2].currentPage!.name;
 
-        final bool isNavMenu = menusNav.map((m) => m.name).contains(name);
-
-        if (!['/', homeRoute].contains(name)) {
-          if (!isNavMenu) {
-            history.isEmpty
-                ? Get.rootDelegate.offNamed(homeRoute)
-                // : Get.rootDelegate.offNamed(prevRoute);
-                : Get.rootDelegate.popRoute(popMode: PopMode.Page);
-            // : Get.rootDelegate
-            //     .backUntil(prevRoute, popMode: PopMode.History);
-          } else if (isNavMenu) {
-            // Get.rootDelegate.offNamed(homeRoute);
-          }
+        // final bool isNavMenu = menusNav.map((m) => m.name).contains(name);
+        // log(Get.currentRoute);
+        if (didPop) {
+          // Navigator.pushNamedAndRemoveUntil(context, homeRoute, predicate)
+          // Get.offAllNamed('/home', predicate: (route) => Get.currentRoute == '/home');
+          // return;
         }
+
+        // if (!['/', homeRoute].contains(name)) {
+        //   if (!isNavMenu) {
+        //     history.isEmpty
+        //         ? Get.offNamed(homeRoute)
+        //         // : Get.offNamed(prevRoute);
+        //         : Get.back();
+        //     // : Get.backUntil(prevRoute, popMode: PopMode.History);
+        //   } else if (isNavMenu) {
+        //     // Get.offNamed(homeRoute);
+        //   }
+        // }
       },
       child: child,
     );
@@ -115,7 +117,7 @@ class Route {
 List<Route> menusNav = [
   Route(
     name: homeRoute,
-    page: Scoper(name: homeRoute, child: HomeApp()),
+    page: Scoper(child: HomeApp()),
     label: 'Beranda',
     icon: Iconsax.home_2,
     activeIcon: Iconsax.home_25,
@@ -144,7 +146,8 @@ List<Route> menusNav = [
   ),
   Route(
     name: '/product',
-    page: Scoper(name: '/product', child: ProductApp()),
+    page: Scoper(child: ProductApp()),
+    // page: ProductApp(),
     label: 'Program',
     icon: Iconsax.search_status,
     activeIcon: Iconsax.search_status4,
@@ -159,23 +162,30 @@ List<Route> menusNav = [
   ),
   Route(
     name: '/spacer',
-    page: Scoper(name: '/spacer', child: ProductApp()),
+    page: Scoper(child: ProductApp()),
   ),
   Route(
       name: '/order',
-      page: Scoper(name: '/order', child: OrderPage()),
+      page: Scoper(child: OrderPage()),
       label: 'Pesanan',
       icon: Iconsax.shopping_cart,
       activeIcon: Iconsax.shopping_cart5,
+      middlewares: [
+        AuthMiddleware()
+      ],
       children: [
-        GetPage(name: '/detail', page: () => OrderDetailPage()),
+        GetPage(
+          name: '/detail',
+          page: () => OrderDetailPage(),
+          participatesInRootNavigator: true,
+        ),
       ]),
   Route(
-    name: '/account',
-    page: Scoper(name: '/account', child: ProductApp()),
+    name: '/profile',
+    page: Scoper(child: ProfilePage()),
     label: 'Akun',
     icon: Iconsax.profile_circle,
-    activeIcon: Iconsax.profile_circle5,
+    activeIcon: Iconsax.profile_tick5,
   ),
 ];
 
@@ -184,46 +194,33 @@ List<String> pageHasNav = [
   ...(menusNav.map((e) => e.name)),
 ].map((e) => e != homeRoute ? '$homeRoute$e' : e).toList();
 
-List<GetPage> routes() {
+List<GetPage> publicRoutes() {
   return [
     GetPage(
-      name: '/',
+      name: '/login',
       preventDuplicates: true,
       participatesInRootNavigator: true,
-      page: () => Scoper(name: '/', child: HomeApp()),
-      children: [
-        GetPage(
-          name: homeRoute,
-          preventDuplicates: true,
-          participatesInRootNavigator: true,
-          page: () => Scoper(name: homeRoute, child: HomeApp()),
-          children: [
-            ...(menusNav
-                    .firstWhereOrNull((e) => e.name == homeRoute)!
-                    .children ??
-                []),
-            ...menusNav.where((e) => e.name != homeRoute).map((e) => GetPage(
-                  name: e.name,
-                  preventDuplicates: true,
-                  participatesInRootNavigator: true,
-                  page: () => e.page,
-                  transition: Transition.noTransition,
-                  transitionDuration: Duration.zero,
-                  // middlewares: e.middlewares,
-                  children: e.children ?? [],
-                )),
-            // GetPage(
-            //   name: '/services/visit',
-            //   preventDuplicates: true,
-            //   participatesInRootNavigator: true,
-            //   page: () => Scoper(
-            //     name: '/services/visit',
-            //     child: ProductApp(),
-            //   ),
-            // ),
-          ],
-        ),
-      ],
-    )
+      transition: Transition.noTransition,
+      transitionDuration: Duration.zero,
+      page: () => Scoper(child: LoginPage()),
+    ),
+  ];
+}
+
+List<GetPage> routes() {
+  return [
+    ...publicRoutes(),
+    ...menusNav.map(
+      (e) => GetPage(
+        name: e.name,
+        preventDuplicates: true,
+        participatesInRootNavigator: true,
+        page: () => e.page,
+        transition: Transition.noTransition,
+        transitionDuration: Duration.zero,
+        middlewares: e.middlewares,
+        children: e.children ?? [],
+      ),
+    ),
   ];
 }

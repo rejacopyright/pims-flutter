@@ -77,7 +77,7 @@ class OrderTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = Get.put(OrderTabsController());
-    final orderTab = Get.rootDelegate.parameters['order_tab'];
+    final orderTab = Get.parameters['order_tab'];
     final Color primaryColor = Theme.of(context).primaryColor;
     final thisTabIndex = orderTabs.indexWhere((item) => item.id == orderTab);
     if (thisTabIndex > 0) {
