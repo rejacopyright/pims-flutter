@@ -35,6 +35,7 @@ class HomeHeader extends StatelessWidget {
         toolbarHeight: toolbarHeight,
         surfaceTintColor: Colors.transparent,
         centerTitle: false,
+        automaticallyImplyLeading: false,
         flexibleSpace: FlexibleSpaceBar(
           stretchModes: [
             StretchMode.zoomBackground,

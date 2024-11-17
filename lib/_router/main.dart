@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pims/pages/auth/login/main.dart';
 import 'package:pims/pages/classes/detail/main.dart';
 import 'package:pims/pages/classes/main.dart';
 import 'package:pims/pages/classes/payment/confirm.dart';
@@ -13,6 +15,7 @@ import 'package:pims/pages/order/detail/main.dart';
 import 'package:pims/pages/order/main.dart';
 import 'package:pims/pages/product/detail/main.dart';
 import 'package:pims/pages/product/main.dart';
+import 'package:pims/pages/profile/main.dart';
 import 'package:pims/pages/visit/main.dart';
 
 // class PageMiddelware extends GetMiddleware {
@@ -32,6 +35,20 @@ import 'package:pims/pages/visit/main.dart';
 //     return super.onPageCalled(page);
 //   }
 // }
+
+class AuthMiddleware extends GetMiddleware {
+  final box = GetStorage();
+
+  @override
+  RouteSettings? redirect(route) {
+    bool hasToken = box.hasData('token');
+    if (!hasToken) {
+      // Get.offAllNamed('/login');
+      return RouteSettings(name: '/login');
+    }
+    return null;
+  }
+}
 
 const String homeRoute = '/app';
 

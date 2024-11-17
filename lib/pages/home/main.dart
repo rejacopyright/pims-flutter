@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/navbar.dart';
 import 'package:pims/pages/home/banner_promo.dart';
@@ -65,6 +68,11 @@ class Homepage extends StatelessWidget {
     final serviceController = Get.put(ServiceSectionController());
     final bannerController = Get.put(BannerPromoController());
     final programController = Get.put(ProgramSectionController());
+
+    final box = GetStorage();
+    final token = box.read('token');
+    log('token is = ${token.toString()}');
+
     return Scaffold(
       bottomNavigationBar: NavbarWidget(name: '/app'),
       extendBody: true,

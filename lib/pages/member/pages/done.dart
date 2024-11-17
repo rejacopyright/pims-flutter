@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_widgets/member_item_card.dart';
@@ -10,7 +8,6 @@ class DoneMemberController extends GetxController {
   @override
   void onReady() {
     Future.delayed(Duration(milliseconds: 300), () {
-      log('done ready');
       isReady.value = true;
     });
     super.onReady();
@@ -27,7 +24,6 @@ class DoneMemberController extends GetxController {
 
   @override
   void onClose() {
-    log('done dispose');
     isReady.value = false;
     super.onClose();
   }
