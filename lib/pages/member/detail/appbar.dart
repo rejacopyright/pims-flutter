@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:pims/_router/main.dart';
 import 'package:pims/_widgets/button.dart';
 
 class MemberDetailAppBar extends StatelessWidget
@@ -13,10 +11,6 @@ class MemberDetailAppBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    final params = Get.parameters;
-    final status = params['status'];
-    final origin = params['origin'];
-    bool isConfirm = origin == 'confirm';
     return AppBar(
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
@@ -31,14 +25,7 @@ class MemberDetailAppBar extends StatelessWidget
           color: Colors.white,
           borderRadius: BorderRadius.circular(50),
           clipBehavior: Clip.antiAlias,
-          child: isConfirm
-              ? LinkWell(
-                  // method: 'offAllNamed',
-                  to: homeRoute,
-                  params: {'status': status ?? 'active'},
-                  child: Icon(Iconsax.arrow_left),
-                )
-              : BackWell(child: Icon(Iconsax.arrow_left)),
+          child: BackWell(child: Icon(Iconsax.arrow_left)),
         ),
       ),
       title: Text(

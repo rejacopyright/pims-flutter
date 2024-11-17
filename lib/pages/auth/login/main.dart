@@ -32,10 +32,22 @@ class LoginPage extends StatelessWidget {
               height: 50,
               width: 100,
               child: Material(
-                color: Colors.blue,
+                color: Colors.red,
                 child: LinkWell(
                   to: '/order',
-                  child: Center(child: Text('Pesanan')),
+                  child: Center(child: Text('Pesanan (Protected)')),
+                ),
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(bottom: 10)),
+            SizedBox(
+              height: 50,
+              width: 100,
+              child: Material(
+                color: Colors.amber,
+                child: LinkWell(
+                  to: '/profile',
+                  child: Center(child: Text('Profile (Unprotected)')),
                 ),
               ),
             ),

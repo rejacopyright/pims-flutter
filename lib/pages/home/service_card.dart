@@ -24,8 +24,9 @@ class ServiceCard extends StatelessWidget {
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       onTap: () {
-        Get.toNamed('$homeRoute${name ?? '/'}', parameters: {'type': type});
-        // Get.toNamed('$homeRoute${name ?? '/'}');
+        Get.rootDelegate
+            .toNamed('$homeRoute${name ?? '/'}', parameters: {'type': type});
+        // Get.rootDelegate.toNamed('$homeRoute${name ?? '/'}');
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

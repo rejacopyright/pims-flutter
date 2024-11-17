@@ -37,7 +37,7 @@ class ClassDetailPage extends StatelessWidget {
     final imageController = Get.put(ClassDetailImageSliderController());
     final priceController = Get.put(ClassDetailPriceController());
     final descriptionController = Get.put(ClassDetailDescriptionController());
-    final classType = Get.parameters['type'];
+    final classType = Get.rootDelegate.parameters['type'];
     final thisClass =
         classesList.firstWhereOrNull((item) => item.name == classType);
     return Scaffold(

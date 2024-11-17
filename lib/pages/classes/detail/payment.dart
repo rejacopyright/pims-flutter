@@ -75,7 +75,7 @@ class BookingClassPaymentCard extends StatelessWidget {
                         color: primaryColor
                             .withOpacity(paymentIsSelected ? 1 : 0.5),
                         child: LinkWell(
-                          method: 'offAllNamed',
+                          // method: 'offAllNamed',
                           to: '/order/detail',
                           params: {
                             'status': 'unpaid',

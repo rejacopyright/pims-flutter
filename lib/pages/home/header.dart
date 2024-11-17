@@ -180,7 +180,7 @@ class HomeHeaderContent extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Future.delayed(Duration(milliseconds: 200), () {
-                          Get.toNamed(
+                          Get.rootDelegate.toNamed(
                             '${homeRoute != '/' ? '$homeRoute/' : ''}${'/member'}',
                           );
                         });

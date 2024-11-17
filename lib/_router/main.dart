@@ -40,12 +40,12 @@ class AuthMiddleware extends GetMiddleware {
   final box = GetStorage();
 
   @override
-  RouteSettings? redirect(route) {
+  Future<GetNavConfig?> redirectDelegate(route) async {
     bool hasToken = box.hasData('token');
     if (!hasToken) {
-      return RouteSettings(name: '/login');
+      return Get.rootDelegate.toNamed('/login');
     }
-    return null;
+    return await super.redirectDelegate(route);
   }
 }
 
@@ -209,18 +209,27 @@ List<GetPage> publicRoutes() {
 
 List<GetPage> routes() {
   return [
-    ...publicRoutes(),
-    ...menusNav.map(
-      (e) => GetPage(
-        name: e.name,
+    GetPage(
+        name: '/',
         preventDuplicates: true,
         participatesInRootNavigator: true,
-        page: () => e.page,
+        page: () => HomeApp(),
         transition: Transition.noTransition,
         transitionDuration: Duration.zero,
-        middlewares: e.middlewares,
-        children: e.children ?? [],
-      ),
-    ),
+        children: [
+          ...publicRoutes(),
+          ...menusNav.map(
+            (e) => GetPage(
+              name: e.name,
+              preventDuplicates: true,
+              participatesInRootNavigator: true,
+              page: () => e.page,
+              transition: Transition.noTransition,
+              transitionDuration: Duration.zero,
+              middlewares: e.middlewares,
+              children: e.children ?? [],
+            ),
+          ),
+        ]),
   ];
 }

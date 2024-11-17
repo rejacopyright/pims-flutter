@@ -43,7 +43,7 @@ class ClassPage extends StatelessWidget {
     final classController = Get.put(ClassAppController());
     final selectClassController = Get.put(SelectClassController());
     // final selectDaysController = Get.put(SelectDaysController());
-    final classType = Get.parameters['type'];
+    final classType = Get.rootDelegate.parameters['type'];
     final thisClass =
         classesList.firstWhereOrNull((item) => item.name == classType);
     return Scaffold(

@@ -70,7 +70,7 @@ class MemberExploreDetailPaymentCard extends StatelessWidget {
                     color:
                         primaryColor.withOpacity(paymentIsSelected ? 1 : 0.5),
                     child: LinkWell(
-                      method: 'offAllNamed',
+                      // method: 'offAllNamed',
                       to: '$homeRoute/member/detail',
                       params: {
                         'status': 'unpaid',

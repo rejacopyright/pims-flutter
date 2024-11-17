@@ -25,14 +25,14 @@ class LinkWell extends StatelessWidget {
         if (to != null && to != '') {
           Future.delayed(Duration(milliseconds: 200), () {
             if (method == 'toNamed') {
-              Get.toNamed(
+              Get.rootDelegate.toNamed(
                 to ?? homeRoute,
                 arguments: true,
                 parameters: params,
               );
             }
             if (method == 'offAllNamed') {
-              Get.offAllNamed(
+              Get.rootDelegate.offAndToNamed(
                 to ?? homeRoute,
                 arguments: true,
                 parameters: params,
@@ -57,7 +57,7 @@ class BackWell extends StatelessWidget {
       highlightColor: Colors.transparent,
       onTap: () {
         Future.delayed(Duration(milliseconds: 200), () {
-          Get.back();
+          Get.rootDelegate.popRoute();
         });
       },
       child: child,
