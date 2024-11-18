@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/pages/auth/login/main.dart';
+import 'package:pims/pages/auth/register/main.dart';
 import 'package:pims/pages/classes/detail/main.dart';
 import 'package:pims/pages/classes/main.dart';
 import 'package:pims/pages/classes/payment/confirm.dart';
@@ -203,6 +204,12 @@ List<GetPage> publicRoutes() {
       transition: Transition.noTransition,
       transitionDuration: Duration.zero,
       page: () => Scoper(child: LoginPage()),
+    ),
+    GetPage(
+      name: '/register',
+      preventDuplicates: true,
+      participatesInRootNavigator: true,
+      page: () => Scoper(child: RegisterPage()),
     ),
   ];
 }
