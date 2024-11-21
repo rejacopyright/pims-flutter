@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_config/services.dart';
 import 'package:pims/_router/main.dart';
-import 'package:pims/pages/home/main.dart';
 
 class ServiceCard extends StatelessWidget {
   const ServiceCard({
@@ -58,7 +57,31 @@ class ServiceCard extends StatelessWidget {
   }
 }
 
-class ServiceSectionController extends HomepageController {}
+class ServiceSectionController extends GetxController {
+  RxBool pageIsReady = true.obs;
+
+  setPageIsReady(val) {
+    pageIsReady.value = val;
+  }
+
+  @override
+  void onReady() {
+    // pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 200), () {
+      pageIsReady.value = true;
+    });
+    super.onReady();
+  }
+
+  @override
+  void refresh() {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 400), () {
+      onReady();
+    });
+    super.refresh();
+  }
+}
 
 class ServiceSection extends StatelessWidget {
   const ServiceSection({super.key});
@@ -68,7 +91,7 @@ class ServiceSection extends StatelessWidget {
     final store = Get.put(ServiceSectionController());
     final Color primary = Theme.of(context).primaryColor;
     return Obx(() {
-      final pageIsReady = store.loadingPage.value;
+      final pageIsReady = store.pageIsReady.value;
       final gridCount = 4;
       final gridSize = (MediaQuery.of(context).size.width / gridCount) - 30;
       if (pageIsReady) {

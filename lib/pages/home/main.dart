@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pims/_config/dio.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/navbar.dart';
 import 'package:pims/pages/home/banner_promo.dart';
@@ -19,25 +18,25 @@ class HomeApp extends StatelessWidget {
 }
 
 class HomepageController extends GetxController {
-  RxBool loadingPage = false.obs;
+  RxBool pageIsReady = true.obs;
 
-  @override
-  void onReady() async {
-    try {
-      final api = await API().get('/me');
-      api;
-    } catch (e) {
-      e;
-    }
-    loadingPage.value = true;
-    super.onReady();
-  }
+  // @override
+  // void onInit() async {
+  //   try {
+  //     final api = await API().get('/me');
+  //     api;
+  //   } catch (e) {
+  //     e;
+  //   }
+  //   pageIsReady.value = true;
+  //   super.onInit();
+  // }
 
   @override
   void refresh() {
-    loadingPage.value = false;
+    pageIsReady.value = false;
     Future.delayed(Duration(milliseconds: 400), () {
-      onReady();
+      onInit();
     });
     super.refresh();
   }
@@ -67,7 +66,7 @@ class Homepage extends StatelessWidget {
       // ),
     ];
 
-    final homeController = Get.put(HomepageController());
+    final homeHeaderController = Get.put(HomeHeaderController());
     final topUserController = Get.put(TopUserCardController());
     final serviceController = Get.put(ServiceSectionController());
     final bannerController = Get.put(BannerPromoController());
@@ -78,51 +77,49 @@ class Homepage extends StatelessWidget {
       extendBody: true,
       floatingActionButton: QRButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: Obx(() {
-        final pageIsReady = homeController.loadingPage.value;
-        return NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [HomeHeader(pageIsReady: pageIsReady)];
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [HomeHeader()];
+        },
+        body: RefreshIndicator(
+          color: Theme.of(context).primaryColor,
+          displacement: 30,
+          onRefresh: () async {
+            homeHeaderController.refresh();
+            bannerController.refresh();
+            serviceController.refresh();
+            topUserController.refresh();
+            programController.refresh();
           },
-          body: RefreshIndicator(
-            color: Theme.of(context).primaryColor,
-            displacement: 30,
-            onRefresh: () async {
-              bannerController.refresh();
-              serviceController.refresh();
-              topUserController.refresh();
-              programController.refresh();
-            },
-            child: CustomScrollView(
-              physics: BouncingScrollPhysics(),
-              scrollBehavior: MaterialScrollBehavior().copyWith(
-                overscroll: false,
-              ),
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return Column(children: content);
-                    },
-                    childCount: 1,
-                  ),
-                ),
-                // SliverList(
-                //   delegate: SliverChildBuilderDelegate(
-                //     (context, index) => Container(
-                //       margin: EdgeInsets.symmetric(vertical: 10),
-                //       child: ProgramSection(),
-                //     ),
-                //     childCount: 1,
-                //   ),
-                // ),
-                SliverPadding(padding: EdgeInsets.only(bottom: 100))
-              ],
+          child: CustomScrollView(
+            physics: BouncingScrollPhysics(),
+            scrollBehavior: MaterialScrollBehavior().copyWith(
+              overscroll: false,
             ),
+            slivers: [
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Column(children: content);
+                  },
+                  childCount: 1,
+                ),
+              ),
+              // SliverList(
+              //   delegate: SliverChildBuilderDelegate(
+              //     (context, index) => Container(
+              //       margin: EdgeInsets.symmetric(vertical: 10),
+              //       child: ProgramSection(),
+              //     ),
+              //     childCount: 1,
+              //   ),
+              // ),
+              SliverPadding(padding: EdgeInsets.only(bottom: 100))
+            ],
           ),
-        );
-      }),
+        ),
+      ),
     );
   }
 }

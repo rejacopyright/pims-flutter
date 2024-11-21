@@ -2,9 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/user_card.dart';
-import 'package:pims/pages/home/main.dart';
 
-class TopUserCardController extends HomepageController {}
+class TopUserCardController extends GetxController {
+  RxBool pageIsReady = true.obs;
+
+  setPageIsReady(val) {
+    pageIsReady.value = val;
+  }
+
+  @override
+  void onReady() {
+    // pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 200), () {
+      pageIsReady.value = true;
+    });
+    super.onReady();
+  }
+
+  @override
+  void refresh() {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 400), () {
+      onReady();
+    });
+    super.refresh();
+  }
+}
 
 class TopUserCard extends StatelessWidget {
   TopUserCard({super.key});
@@ -21,7 +44,7 @@ class TopUserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final topUserController = Get.put(TopUserCardController());
     return Obx(() {
-      final pageIsReady = topUserController.loadingPage.value;
+      final pageIsReady = topUserController.pageIsReady.value;
       if (pageIsReady) {
         return Container(
           constraints: BoxConstraints(maxHeight: 140),

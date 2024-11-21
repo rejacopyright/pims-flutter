@@ -1,9 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_widgets/program_card.dart';
-import 'package:pims/pages/home/main.dart';
 
-class ProgramSectionController extends HomepageController {}
+class ProgramSectionController extends GetxController {
+  RxBool pageIsReady = true.obs;
+
+  setPageIsReady(val) {
+    pageIsReady.value = val;
+  }
+
+  @override
+  void onReady() {
+    // pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 200), () {
+      pageIsReady.value = true;
+    });
+    super.onReady();
+  }
+
+  @override
+  void refresh() {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 400), () {
+      onReady();
+    });
+    super.refresh();
+  }
+}
 
 class ProgramSection extends StatelessWidget {
   const ProgramSection({super.key});
@@ -65,7 +88,7 @@ class ProgramSection extends StatelessWidget {
     ];
 
     return Obx(() {
-      final pageIsReady = store.loadingPage.value;
+      final pageIsReady = store.pageIsReady.value;
       if (pageIsReady) {
         return NotificationListener<ScrollNotification>(
           onNotification: (e) {

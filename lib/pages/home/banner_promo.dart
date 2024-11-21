@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
-import 'package:pims/pages/home/main.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class BannerPromoController extends HomepageController {
+class BannerPromoController extends GetxController {
   RxInt currentPage = 0.obs;
+  RxBool pageIsReady = true.obs;
+
   setCurrenPage(val) {
     currentPage.value = val;
+  }
+
+  setPageIsReady(val) {
+    pageIsReady.value = val;
+  }
+
+  @override
+  void onReady() {
+    // pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 200), () {
+      pageIsReady.value = true;
+    });
+    super.onReady();
+  }
+
+  @override
+  void refresh() {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 400), () {
+      onReady();
+    });
+    super.refresh();
   }
 }
 
@@ -26,7 +49,7 @@ class BannerPromo extends StatelessWidget {
     final store = Get.put(BannerPromoController());
     return Obx(() {
       final currentPage = store.currentPage.value;
-      final pageIsReady = store.loadingPage.value;
+      final pageIsReady = store.pageIsReady.value;
       return SizedBox(
         height: 125,
         child: pageIsReady
