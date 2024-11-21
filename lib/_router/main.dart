@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/pages/auth/login/main.dart';
+import 'package:pims/pages/auth/register/confirm.dart';
 import 'package:pims/pages/auth/register/main.dart';
 import 'package:pims/pages/classes/detail/main.dart';
 import 'package:pims/pages/classes/main.dart';
@@ -71,7 +72,6 @@ class Scoper extends StatelessWidget {
         //     : history[history.length - 2].currentPage!.name;
 
         // final bool isNavMenu = menusNav.map((m) => m.name).contains(name);
-        // log(Get.currentRoute);
         if (didPop) {
           // Navigator.pushNamedAndRemoveUntil(context, homeRoute, predicate)
           // Get.offAllNamed('/home', predicate: (route) => Get.currentRoute == '/home');
@@ -206,11 +206,16 @@ List<GetPage> publicRoutes() {
       page: () => Scoper(child: LoginPage()),
     ),
     GetPage(
-      name: '/register',
-      preventDuplicates: true,
-      participatesInRootNavigator: true,
-      page: () => Scoper(child: RegisterPage()),
-    ),
+        name: '/register',
+        preventDuplicates: true,
+        participatesInRootNavigator: true,
+        page: () => Scoper(child: RegisterPage()),
+        children: [
+          GetPage(
+            name: '/confirm',
+            page: () => Scoper(child: RegisterConfirmPage()),
+          ),
+        ]),
   ];
 }
 

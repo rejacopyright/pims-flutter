@@ -1,11 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pims/_config/dio.dart';
 
 class RegisterController extends GetxController {
   RxString username = ''.obs;
@@ -14,11 +12,42 @@ class RegisterController extends GetxController {
   RxString password = ''.obs;
   RxString password_confirm = ''.obs;
 
+  final errorMessage = Rxn<dynamic>(null);
+  RxBool showPassword1 = false.obs;
+  RxBool showPassword2 = false.obs;
+  RxBool registerBtnIsLoading = false.obs;
+
   setUsername(e) => username.value = e;
   setEmail(e) => email.value = e;
   setPhone(e) => phone.value = e;
   setPassword(e) => password.value = e;
   setPasswordConfirm(e) => password_confirm.value = e;
+  setShowPassword1(e) => showPassword1.value = e;
+  setShowPassword2(e) => showPassword2.value = e;
+
+  rergisterFn() async {
+    registerBtnIsLoading.value = true;
+    final params = {
+      'username': username.value,
+      'email': email.value,
+      'phone': phone.value,
+      'password': password_confirm.value,
+    };
+    try {
+      final api = await API().post('auth/register', data: params);
+      errorMessage.value = null;
+      if (api.data['status'] == 'success') {
+        Get.rootDelegate.offNamed('/register/confirm');
+      }
+    } catch (e) {
+      dynamic err = e;
+      // dynamic error = err?.response?.data['message'];
+      dynamic error = err?.response?.data['message'] ?? err?.error?.message;
+      errorMessage.value = error;
+    } finally {
+      registerBtnIsLoading.value = false;
+    }
+  }
 }
 
 class RegisterPage extends StatelessWidget {
@@ -49,60 +78,83 @@ class RegisterPage extends StatelessWidget {
         surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: false,
       ),
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                children: [
-                  SizedBox(height: 50),
-                  // Image.network(
-                  //   "https://i.postimg.cc/nz0YBQcH/Logo-light.png",
-                  //   height: 100,
-                  // ),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child: Image.asset(
-                          'assets/icons/logo.png',
-                          height: 35,
+      body: Obx(() {
+        final password = state.password.value;
+        final showPassword1 = state.showPassword1.value;
+        final showPassword2 = state.showPassword2.value;
+        final registerBtnIsLoading = state.registerBtnIsLoading.value;
+        final errorMessage = state.errorMessage.value.toString();
+        return SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  children: [
+                    SizedBox(height: 50),
+                    // Image.network(
+                    //   "https://i.postimg.cc/nz0YBQcH/Logo-light.png",
+                    //   height: 100,
+                    // ),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 5),
+                          child: Image.asset(
+                            'assets/icons/logo.png',
+                            height: 35,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'PIMS',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          color: primaryColor,
+                        Text(
+                          'PIMS',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                            color: primaryColor,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                        child: VerticalDivider(
-                          color: Color(0xffcccccc),
-                          indent: 1,
-                          endIndent: 1,
+                        SizedBox(
+                          height: 15,
+                          child: VerticalDivider(
+                            color: Color(0xffcccccc),
+                            indent: 1,
+                            endIndent: 1,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Daftar',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                        Text(
+                          'Daftar',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Obx(() {
-                    final username = state.username.value;
-                    final email = state.email.value;
-                    final phone = state.phone.value;
-                    final password = state.password.value;
-                    final password_confirm = state.password_confirm.value;
-                    return Form(
+                      ],
+                    ),
+                    errorMessage != '' && errorMessage != 'null'
+                        ? Container(
+                            width: double.infinity,
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.only(top: 15),
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            decoration: BoxDecoration(
+                              color: Colors.red.withOpacity(0.025),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                width: 1,
+                                color: Colors.red.withOpacity(0.25),
+                              ),
+                            ),
+                            child: Text(
+                              errorMessage,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        : SizedBox.shrink(),
+                    Form(
                       key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,9 +181,6 @@ class RegisterPage extends StatelessWidget {
                               if (value!.isEmpty) {
                                 return 'Userrname wajib diisi';
                               }
-                              // if (!value.contains('.')) {
-                              //   return 'Email is invalid, must contain .';
-                              // }
                               return null;
                             },
                             onTapOutside: (e) {
@@ -163,6 +212,12 @@ class RegisterPage extends StatelessWidget {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Email wajib diisi';
+                              }
+                              const pattern =
+                                  r"^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$";
+                              final regex = RegExp(pattern);
+                              if (!regex.hasMatch(value)) {
+                                return 'Mohon masukan format email yang benar';
                               }
                               return null;
                             },
@@ -208,7 +263,7 @@ class RegisterPage extends StatelessWidget {
                           ),
                           SizedBox(height: 25),
                           TextFormField(
-                            obscureText: true,
+                            obscureText: !showPassword1,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               hintText: 'Buat kata sandi baru',
@@ -220,7 +275,16 @@ class RegisterPage extends StatelessWidget {
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 24,
                               ),
-                              suffix: Icon(Iconsax.lock, size: 16),
+                              suffix: GestureDetector(
+                                onTap: () =>
+                                    state.setShowPassword1(!showPassword1),
+                                child: Icon(
+                                  showPassword1
+                                      ? Iconsax.eye_slash
+                                      : Iconsax.eye,
+                                  size: 18,
+                                ),
+                              ),
                               border: outlineInputBorder,
                               enabledBorder: outlineInputBorder,
                               focusedBorder: focusedBorder,
@@ -241,7 +305,7 @@ class RegisterPage extends StatelessWidget {
                           ),
                           SizedBox(height: 25),
                           TextFormField(
-                            obscureText: true,
+                            obscureText: !showPassword2,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               hintText: 'Konfirmasi kata sandi baru',
@@ -253,7 +317,16 @@ class RegisterPage extends StatelessWidget {
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 24,
                               ),
-                              suffix: Icon(Iconsax.lock, size: 16),
+                              suffix: GestureDetector(
+                                onTap: () =>
+                                    state.setShowPassword2(!showPassword2),
+                                child: Icon(
+                                  showPassword2
+                                      ? Iconsax.eye_slash
+                                      : Iconsax.eye,
+                                  size: 18,
+                                ),
+                              ),
                               border: outlineInputBorder,
                               enabledBorder: outlineInputBorder,
                               focusedBorder: focusedBorder,
@@ -278,28 +351,22 @@ class RegisterPage extends StatelessWidget {
                           Padding(padding: EdgeInsets.symmetric(vertical: 20)),
                           ElevatedButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
+                              if (_formKey.currentState!.validate() &&
+                                  !registerBtnIsLoading) {
                                 _formKey.currentState!.save();
-                                inspect({
-                                  'username': username,
-                                  'email': email,
-                                  'phone': phone,
-                                  'password': password,
-                                  'password_confirm': password_confirm,
-                                });
-                                final box = GetStorage();
-                                box.write('token', 'abcEFG');
+                                state.rergisterFn();
                               }
                             },
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
-                              backgroundColor: primaryColor,
+                              backgroundColor: primaryColor
+                                  .withOpacity(registerBtnIsLoading ? 0.5 : 1),
                               foregroundColor: Colors.white,
                               minimumSize: Size(double.infinity, 48),
                               shape: StadiumBorder(),
                             ),
                             child: Text(
-                              'Daftar',
+                              registerBtnIsLoading ? 'Waiting...' : 'Daftar',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
@@ -343,14 +410,14 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                    );
-                  }),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      }),
     );
   }
 }
