@@ -3,11 +3,12 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/_config/dio.dart';
+import 'package:pims/_router/main.dart';
 
 class LoginController extends GetxController {
   RxString username = ''.obs;
   RxString password = ''.obs;
-  RxString errorMessage = ''.obs;
+  final errorMessage = Rxn<String>();
   RxBool showPassword = false.obs;
   RxBool signinBtnIsLoading = false.obs;
 
@@ -21,10 +22,12 @@ class LoginController extends GetxController {
       final api = await API().post('auth/login',
           data: {'username': username.value, 'password': password.value});
       final box = GetStorage();
-      box.write('token', api.data['token']);
-      box.write('user', api.data['user']);
-      box.write('exp', api.data['exp']);
+      await box.write('token', api.data['token']);
+      await box.write('refresh_token', api.data['refresh_token']);
+      await box.write('user', api.data['user']);
+      await box.write('exp', api.data['exp']);
       errorMessage.value = '';
+      Get.rootDelegate.toNamed(homeRoute);
     } catch (e) {
       dynamic err = e;
       // dynamic error = err?.response?.data['message'];
@@ -99,7 +102,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    errorMessage != ''
+                    errorMessage != null
                         ? Container(
                             width: double.infinity,
                             alignment: Alignment.center,
@@ -114,7 +117,7 @@ class LoginPage extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              errorMessage,
+                              errorMessage.toString(),
                               style: TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold,

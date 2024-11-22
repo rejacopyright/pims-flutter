@@ -33,7 +33,9 @@ class MyApp extends State<AppState> {
       if (box.read('token') == null) {
         Get.rootDelegate.toNamed('/login');
       } else {
-        Get.rootDelegate.toNamed(homeRoute);
+        // Get.rootDelegate.toNamed(homeRoute);
+        // Get.rootDelegate
+        //     .toNamed(Get.rootDelegate.currentConfiguration!.locationString);
       }
     });
     return GetMaterialApp(
