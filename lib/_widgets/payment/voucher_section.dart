@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -13,9 +15,12 @@ class VoucherSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final paymentController = Get.put(PaymentController());
+    final voucherController = Get.put(VoucherCardController());
     return Obx(() {
       final selectedVoucher = paymentController.selectedVoucher.value;
       final voucherIsSelected = selectedVoucher != null;
+      final voucher = selectedVoucher?['value'] ?? 0;
+      final voucher_total = voucherController.count.value;
       return Container(
         padding: EdgeInsets.only(bottom: 10),
         child: Row(
@@ -68,6 +73,7 @@ class VoucherSection extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Column(
+                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Container(
                                 height: 7.5,
@@ -83,7 +89,7 @@ class VoucherSection extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.symmetric(vertical: 5),
                                 child: Text(
-                                  'Tersedia 3 Voucher',
+                                  'Tersedia ${currency.format(voucher_total)} Voucher',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: primaryColor,
@@ -153,11 +159,12 @@ class VoucherSection extends StatelessWidget {
                       Container(
                         child: voucherIsSelected
                             ? Text(
-                                '-Rp. ${currency.format(5000)}',
+                                '-Rp. ${currency.format(voucher)}',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    color: Colors.red),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.red,
+                                ),
                               )
                             : Text(
                                 'Gunakan Voucher',
