@@ -1,5 +1,8 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_controller/config_controller.dart';
 import 'package:pims/_controller/payment_controller.dart';
 import 'package:pims/_widgets/helper.dart';
 
@@ -9,9 +12,12 @@ class PriceSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paymentController = Get.put(PaymentController());
+    final configController = Get.put(ConfigController());
     return Obx(() {
       final selectedVoucher = paymentController.selectedVoucher.value;
       final voucherIsSelected = selectedVoucher != null;
+      final visit_fee = configController.visit_fee.value;
+      final voucher_fee = selectedVoucher?['value'] ?? 0;
       return Container(
         padding: EdgeInsets.only(top: 10, bottom: 15),
         alignment: Alignment.centerRight,
@@ -31,7 +37,8 @@ class PriceSection extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  currency.format(voucherIsSelected ? 45000 : 50000),
+                  currency.format(
+                      voucherIsSelected ? visit_fee - voucher_fee : visit_fee),
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,

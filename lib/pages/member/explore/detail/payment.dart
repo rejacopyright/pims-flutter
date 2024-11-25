@@ -74,7 +74,7 @@ class MemberExploreDetailPaymentCard extends StatelessWidget {
                       to: '$homeRoute/member/detail',
                       params: {
                         'status': 'unpaid',
-                        'provider': selectedPayment.toString(),
+                        'provider': (selectedPayment?.name).toString(),
                         'origin': 'confirm',
                       },
                       child: Container(

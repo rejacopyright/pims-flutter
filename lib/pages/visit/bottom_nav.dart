@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:pims/_controller/config_controller.dart';
 import 'package:pims/_controller/payment_controller.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/helper.dart';
 import 'package:pims/_widgets/payment/payment_card.dart';
-import 'package:pims/_widgets/payment/payment_data.dart';
 import 'package:pims/_widgets/payment/price_section.dart';
 import 'package:pims/_widgets/payment/voucher_section.dart';
 import 'package:pims/pages/visit/main.dart';
-import 'package:pims/pages/visit/select_times.dart';
-
-class VisitBottomNavController extends VisitAppController {}
 
 class VisitBottomNav extends StatelessWidget {
   VisitBottomNav({super.key});
@@ -22,7 +19,7 @@ class VisitBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    final selectTimesController = Get.put(SelectTimesController());
+    final visitController = Get.put(VisitAppController());
     return Container(
       width: Get.width,
       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -38,7 +35,7 @@ class VisitBottomNav extends StatelessWidget {
       ),
       child: Obx(
         () {
-          final selectedTime = selectTimesController.selectedTime.value;
+          final selectedTime = visitController.selectedTime.value;
           final timeIsSelected = selectedTime != null;
           return Column(
             mainAxisSize: MainAxisSize.min,
@@ -209,14 +206,14 @@ class BookingVisitPaymentCard extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         color: primaryColor
                             .withOpacity(paymentIsSelected ? 1 : 0.5),
-                        child: LinkWell(
-                          // method: 'offAllNamed',
-                          to: '/order/detail',
-                          params: {
-                            'status': 'unpaid',
-                            'provider': selectedPayment.toString(),
-                            'origin': 'confirm',
-                          },
+                        child: InkWell(
+                          // to: '/order/detail',
+                          // params: {
+                          //   'status': 'unpaid',
+                          //   'provider': (selectedPayment?.name).toString(),
+                          //   'origin': 'confirm',
+                          // },
+                          onTap: visitTransaction,
                           child: Container(
                             height: 50,
                             alignment: Alignment.center,
@@ -322,14 +319,16 @@ class VisitFinalPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paymentController = Get.put(PaymentController());
+    final configController = Get.put(ConfigController());
     return Obx(() {
       final selectedVoucher = paymentController.selectedVoucher.value;
       final selectedPayment = paymentController.selectedPayment.value;
       final voucherIsSelected = selectedVoucher != null;
       final paymentIsSelected = selectedPayment != null;
-      final paymentDetail =
-          paymentData.firstWhereOrNull((item) => item.name == selectedPayment);
-      final discount = voucherIsSelected ? 5000 : 0;
+      final paymentData = paymentController.paymentData.value;
+      final paymentDetail = paymentData
+          ?.firstWhereOrNull((item) => item.name == selectedPayment?.name);
+      final discount = voucherIsSelected ? selectedVoucher['value'] : 0;
       final fee = paymentIsSelected && paymentDetail!.fee != null
           ? paymentDetail.fee
           : 0;
@@ -349,7 +348,7 @@ class VisitFinalPrice extends StatelessWidget {
                 ),
                 SizedBox(width: 20),
                 Text(
-                  'Rp. ${currency.format(50000)}',
+                  'Rp. ${currency.format(configController.visit_fee.value)}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 13,
@@ -406,7 +405,7 @@ class VisitFinalPrice extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
-                    'Rp. ${currency.format((50000 - discount) + (fee ?? 0))}',
+                    'Rp. ${currency.format((configController.visit_fee.value - discount) + (fee ?? 0))}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,

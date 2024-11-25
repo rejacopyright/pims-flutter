@@ -4,7 +4,6 @@ import 'package:pims/_controller/payment_controller.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/helper.dart';
 import 'package:pims/_widgets/payment/payment_card.dart';
-import 'package:pims/_widgets/payment/payment_data.dart';
 
 class BookingClassPaymentCard extends StatelessWidget {
   const BookingClassPaymentCard({super.key});
@@ -79,7 +78,7 @@ class BookingClassPaymentCard extends StatelessWidget {
                           to: '/order/detail',
                           params: {
                             'status': 'unpaid',
-                            'provider': selectedPayment.toString(),
+                            'provider': (selectedPayment?.name).toString(),
                             'origin': 'confirm',
                           },
                           child: Container(
@@ -124,9 +123,10 @@ class ClassFinalPrice extends StatelessWidget {
       final selectedPayment = paymentController.selectedPayment.value;
       final voucherIsSelected = selectedVoucher != null;
       final paymentIsSelected = selectedPayment != null;
-      final paymentDetail =
-          paymentData.firstWhereOrNull((item) => item.name == selectedPayment);
-      final discount = voucherIsSelected ? 5000 : 0;
+      final paymentData = paymentController.paymentData.value;
+      final paymentDetail = paymentData
+          ?.firstWhereOrNull((item) => item.name == selectedPayment?.name);
+      final discount = voucherIsSelected ? selectedVoucher['value'] : 0;
       final fee = paymentIsSelected && paymentDetail!.fee != null
           ? paymentDetail.fee
           : 0;

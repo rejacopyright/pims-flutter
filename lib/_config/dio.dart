@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:synchronized/synchronized.dart';
 
-String host = 'http://192.168.100.81:4000';
+String host = 'http://10.5.101.115:4000';
 
 class TokenRefreshInterceptor extends QueuedInterceptor {
   final Dio dio;

@@ -38,6 +38,7 @@ class VisitPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final visitController = Get.put(VisitAppController());
     // final selectDaysController = Get.put(SelectDaysController());
+    final selectTimesController = Get.put(SelectTimesController());
     return Scaffold(
       // appBar: VisitAppBar(),
       bottomNavigationBar: SafeArea(child: VisitBottomNav()),
@@ -61,6 +62,7 @@ class VisitPage extends StatelessWidget {
               displacement: 10,
               onRefresh: () async {
                 visitController.refresh();
+                selectTimesController.refresh();
                 // selectDaysController.refresh();
               },
               child: CustomScrollView(
@@ -76,7 +78,7 @@ class VisitPage extends StatelessWidget {
                     ),
                     sliver: SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
-                        return SelectTimes(pageIsReady: pageIsReady);
+                        return SelectTimes();
                       }, childCount: 1),
                     ),
                   ),

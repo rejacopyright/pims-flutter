@@ -3,9 +3,24 @@ import 'package:get/get.dart';
 import 'package:pims/_router/main.dart';
 import 'package:pims/_widgets/program_booking_card.dart';
 
-import 'main.dart';
+class SelectClassController extends GetxController {
+  RxBool pageIsReady = false.obs;
 
-class SelectClassController extends ClassAppController {}
+  @override
+  void onReady() {
+    pageIsReady.value = true;
+    super.onReady();
+  }
+
+  @override
+  void refresh() {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 100), () {
+      onReady();
+    });
+    super.refresh();
+  }
+}
 
 class SelectClass extends StatelessWidget {
   const SelectClass({super.key, this.params});

@@ -3,7 +3,24 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pims/pages/classes/main.dart';
 
-class SelectDaysController extends ClassAppController {}
+class SelectDaysController extends GetxController {
+  RxBool pageIsReady = false.obs;
+
+  @override
+  void onReady() {
+    pageIsReady.value = true;
+    super.onReady();
+  }
+
+  @override
+  void refresh() {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 100), () {
+      onReady();
+    });
+    super.refresh();
+  }
+}
 
 class SelectDays extends StatelessWidget {
   const SelectDays({super.key, this.isCollapsed = false});
@@ -13,12 +30,13 @@ class SelectDays extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final selectDaysController = Get.put(SelectDaysController());
+    final classController = Get.put(ClassAppController());
     final days = List.generate(30, (i) {
       return DateTime.now().add(Duration(days: i));
     });
     return Obx(() {
       final pageIsReady = selectDaysController.pageIsReady.value;
-      final selectedDate = selectDaysController.selectedDate.value;
+      final selectedDate = classController.selectedDate.value;
       if (pageIsReady) {
         return Container(
           constraints: BoxConstraints(maxHeight: 100),
@@ -75,7 +93,7 @@ class SelectDays extends StatelessWidget {
                         splashFactory: InkSplash.splashFactory,
                         highlightColor: Colors.transparent,
                         onTap: () {
-                          selectDaysController.setSelectedDate(e);
+                          classController.setSelectedDate(e);
                         },
                         child: Center(
                           child: Text(

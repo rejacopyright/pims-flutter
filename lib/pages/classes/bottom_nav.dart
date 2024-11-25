@@ -6,12 +6,8 @@ import 'package:pims/_controller/payment_controller.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/helper.dart';
 import 'package:pims/_widgets/payment/payment_card.dart';
-import 'package:pims/_widgets/payment/payment_data.dart';
 import 'package:pims/_widgets/payment/price_section.dart';
 import 'package:pims/_widgets/payment/voucher_section.dart';
-import 'package:pims/pages/classes/main.dart';
-
-class ClassBottomNavController extends ClassAppController {}
 
 class ClassBottomNav extends StatelessWidget {
   ClassBottomNav({super.key});
@@ -306,9 +302,10 @@ class ClassFinalPrice extends StatelessWidget {
       final selectedPayment = paymentController.selectedPayment.value;
       final voucherIsSelected = selectedVoucher != null;
       final paymentIsSelected = selectedPayment != null;
-      final paymentDetail =
-          paymentData.firstWhereOrNull((item) => item.name == selectedPayment);
-      final discount = voucherIsSelected ? 5000 : 0;
+      final paymentData = paymentController.paymentData.value;
+      final paymentDetail = paymentData
+          ?.firstWhereOrNull((item) => item.name == selectedPayment?.name);
+      final discount = voucherIsSelected ? selectedVoucher['value'] : 0;
       final fee = paymentIsSelected && paymentDetail!.fee != null
           ? paymentDetail.fee
           : 0;

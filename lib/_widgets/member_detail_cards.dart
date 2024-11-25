@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pims/_controller/payment_controller.dart';
 import 'package:pims/_widgets/helper.dart';
-import 'package:pims/_widgets/payment/payment_data.dart';
 
 class MemberDetailPageController extends GetxController {
   RxBool isCopied = false.obs;
@@ -24,11 +24,13 @@ class MemberDetailPaymentBank extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = Get.put(MemberDetailPageController());
+    final paymentController = Get.put(PaymentController());
     final primaryColor = Theme.of(context).primaryColor;
-    final payment =
-        paymentData.firstWhereOrNull((item) => item.name == provider);
-    final isPayment = payment != null;
     return Obx(() {
+      final paymentData = paymentController.paymentData.value;
+      final payment =
+          paymentData?.firstWhereOrNull((item) => item.name == provider);
+      final isPayment = payment != null;
       final isCopied = state.isCopied.value;
       return Column(
         children: [
@@ -930,97 +932,101 @@ class MemberDetailPaymentMethod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final payment =
-        paymentData.firstWhereOrNull((item) => item.name == provider);
-    final isPayment = payment != null;
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.only(top: 25),
-      child: Material(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-          side: const BorderSide(
-            color: Color(0xffeeeeee),
-            width: 1,
+    final paymentController = Get.put(PaymentController());
+    return Obx(() {
+      final paymentData = paymentController.paymentData.value;
+      final payment =
+          paymentData?.firstWhereOrNull((item) => item.name == provider);
+      final isPayment = payment != null;
+      return Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 25),
+        child: Material(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+            side: const BorderSide(
+              color: Color(0xffeeeeee),
+              width: 1,
+            ),
+          ),
+          shadowColor: Colors.black.withOpacity(0.25),
+          elevation: 1,
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                height: 35,
+                decoration: BoxDecoration(
+                  color: Color(0xfff7f7f7),
+                  border: Border(
+                    bottom: BorderSide(
+                      width: 1,
+                      color: Color(0xffdddddd),
+                    ),
+                  ),
+                ),
+                child: Text(
+                  'Dibayar Melalui :',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 15),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                height: isPayment ? 35 : 75,
+                child: Image.asset(
+                  payment?.icon ?? 'assets/icons/no-image.png',
+                  fit: BoxFit.contain,
+                  opacity: AlwaysStoppedAnimation(1),
+                ),
+              ),
+              Container(
+                margin: EdgeInsetsDirectional.only(top: 10, bottom: 5),
+                alignment: Alignment.center,
+                child: Text(
+                  'Virtual Account',
+                  style: TextStyle(fontSize: 14),
+                ),
+              ),
+              Divider(height: 15, color: Color(0xffeeeeee)),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
+                child: Wrap(
+                  spacing: 5,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      '18 Mei, 1992',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xffaaaaaa),
+                      ),
+                    ),
+                    Text(
+                      '(19:00)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xffaaaaaa),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
-        shadowColor: Colors.black.withOpacity(0.25),
-        elevation: 1,
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              alignment: Alignment.center,
-              height: 35,
-              decoration: BoxDecoration(
-                color: Color(0xfff7f7f7),
-                border: Border(
-                  bottom: BorderSide(
-                    width: 1,
-                    color: Color(0xffdddddd),
-                  ),
-                ),
-              ),
-              child: Text(
-                'Dibayar Melalui :',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-              ),
-              height: isPayment ? 35 : 75,
-              child: Image.asset(
-                payment?.icon ?? 'assets/icons/no-image.png',
-                fit: BoxFit.contain,
-                opacity: AlwaysStoppedAnimation(1),
-              ),
-            ),
-            Container(
-              margin: EdgeInsetsDirectional.only(top: 10, bottom: 5),
-              alignment: Alignment.center,
-              child: Text(
-                'Virtual Account',
-                style: TextStyle(fontSize: 14),
-              ),
-            ),
-            Divider(height: 15, color: Color(0xffeeeeee)),
-            Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
-              child: Wrap(
-                spacing: 5,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Text(
-                    '18 Mei, 1992',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xffaaaaaa),
-                    ),
-                  ),
-                  Text(
-                    '(19:00)',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xffaaaaaa),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+      );
+    });
   }
 }
 

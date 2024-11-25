@@ -2,76 +2,103 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/_controller/payment_controller.dart';
-import 'package:pims/_widgets/payment/payment_data.dart';
 
 class PaymentCard extends StatelessWidget {
   const PaymentCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      physics: ClampingScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      shrinkWrap: true,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 5),
-          child: Text(
-            'Transfer Bank',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+    final paymentController = Get.put(PaymentController());
+    return Obx(() {
+      final paymentData = paymentController.paymentData.value;
+      return ListView(
+        physics: ClampingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        shrinkWrap: true,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 5),
+            child: Text(
+              'Transfer Bank',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
-        ),
-        ...paymentData
-            .where((item) => item.type == 'bank_transfer')
-            .map((item) => PaymentItem(item: item)),
-        SizedBox(height: 20),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 5),
-          child: Text(
-            'E - Wallets',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+          paymentData != null
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: paymentData
+                      .where((item) => item.type == 1) // bank_transfer
+                      .map((item) => PaymentItem(item: item))
+                      .toList(),
+                )
+              : SizedBox.shrink(),
+          SizedBox(height: 20),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 5),
+            child: Text(
+              'E - Wallets',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
-        ),
-        ...paymentData
-            .where((item) => item.type == 'e_wallet')
-            .map((item) => PaymentItem(item: item)),
-        SizedBox(height: 20),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 5),
-          child: Text(
-            'Bayar di Konter',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+          paymentData != null
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: paymentData
+                      .where((item) => item.type == 2) // e_wallet
+                      .map((item) => PaymentItem(item: item))
+                      .toList(),
+                )
+              : SizedBox.shrink(),
+          SizedBox(height: 20),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 5),
+            child: Text(
+              'Bayar di Konter',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
-        ),
-        ...paymentData
-            .where((item) => item.type == 'counter')
-            .map((item) => PaymentItem(item: item)),
-        SizedBox(height: 20),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 5),
-          child: Text(
-            'Metode Lainnya',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+          paymentData != null
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: paymentData
+                      .where((item) => item.type == 3) // counter
+                      .map((item) => PaymentItem(item: item))
+                      .toList(),
+                )
+              : SizedBox.shrink(),
+          SizedBox(height: 20),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 5),
+            child: Text(
+              'Metode Lainnya',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
-        ),
-        ...paymentData
-            .where((item) => item.type == 'other')
-            .map((item) => PaymentItem(item: item)),
-        SizedBox(height: 20),
-      ],
-    );
+          paymentData != null
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: paymentData
+                      .where((item) => item.type == 5) // other
+                      .map((item) => PaymentItem(item: item))
+                      .toList(),
+                )
+              : SizedBox.shrink(),
+          SizedBox(height: 20),
+        ],
+      );
+    });
   }
 }
 
@@ -89,12 +116,12 @@ class PaymentItem extends StatelessWidget {
     final paymentController = Get.put(PaymentController());
     return Obx(() {
       final thisPaymentIsChecked =
-          item.name == paymentController.selectedPayment.value;
+          item.name == paymentController.selectedPayment.value?.name;
       return InkWell(
         splashColor: Colors.transparent,
         onTap: () {
           paymentController
-              .setSelectedPayment(thisPaymentIsChecked ? null : item.name);
+              .setSelectedPayment(thisPaymentIsChecked ? null : item);
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 20),
@@ -132,7 +159,7 @@ class PaymentItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              item.label,
+                              item.label ?? '',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,

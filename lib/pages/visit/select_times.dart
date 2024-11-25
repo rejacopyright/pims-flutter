@@ -2,31 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pims/pages/visit/main.dart';
-import 'package:pims/pages/visit/select_days.dart';
 
-class SelectTimesController extends VisitAppController {}
+class SelectTimesController extends GetxController {
+  RxBool pageIsReady = false.obs;
+
+  @override
+  void onReady() {
+    pageIsReady.value = true;
+    super.onReady();
+  }
+
+  @override
+  void refresh() {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 100), () {
+      onReady();
+    });
+    super.refresh();
+  }
+}
 
 class SelectTimes extends StatelessWidget {
-  const SelectTimes({
-    super.key,
-    this.pageIsReady,
-  });
-
-  final dynamic pageIsReady;
+  const SelectTimes({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final visitController = Get.put(VisitAppController());
     final selectTimesController = Get.put(SelectTimesController());
-    final selectDaysController = Get.put(SelectDaysController());
     final primaryColor = Theme.of(context).primaryColor;
 
     return Obx(() {
-      final selectedDay = selectDaysController.selectedDate.value;
+      final selectedDay = visitController.selectedDate.value;
+      final pageIsReady = selectTimesController.pageIsReady.value;
       final openHours = selectedDay.copyWith(hour: 6, minute: 0);
       final times = List.generate(32, (i) {
         return openHours.add(Duration(minutes: 30 * i));
       });
-      final selectedValue = selectTimesController.selectedTime.value;
+      final selectedValue = visitController.selectedTime.value;
       final selectedTime = selectedValue != null
           ? DateTime(selectedValue.year, selectedValue.month, selectedValue.day,
               selectedValue.hour, selectedValue.minute)
@@ -71,7 +83,7 @@ class SelectTimes extends StatelessWidget {
                     highlightColor: Colors.transparent,
                     onTap: () {
                       if (!isPastTime) {
-                        selectTimesController
+                        visitController
                             .setSelectedTime(isSelected ? null : item);
                       }
                     },
