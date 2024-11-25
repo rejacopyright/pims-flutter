@@ -11,6 +11,11 @@ import 'package:pims/_widgets/payment/price_section.dart';
 import 'package:pims/_widgets/payment/voucher_section.dart';
 import 'package:pims/pages/visit/main.dart';
 
+class VisitBottomNavController extends GetxController {
+  RxBool submitButtonIsLoading = false.obs;
+  setSubmitButtonIsLoading(e) => submitButtonIsLoading.value = e;
+}
+
 class VisitBottomNav extends StatelessWidget {
   VisitBottomNav({super.key});
 
@@ -145,9 +150,11 @@ class BookingVisitPaymentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final paymentController = Get.put(PaymentController());
+    final state = Get.put(VisitBottomNavController());
     return Obx(() {
       final selectedPayment = paymentController.selectedPayment.value;
       final paymentIsSelected = selectedPayment != null;
+      final submitButtonIsLoading = state.submitButtonIsLoading.value;
       return Material(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -204,16 +211,18 @@ class BookingVisitPaymentCard extends StatelessWidget {
                       Material(
                         borderRadius: BorderRadius.circular(5),
                         clipBehavior: Clip.antiAlias,
-                        color: primaryColor
-                            .withOpacity(paymentIsSelected ? 1 : 0.5),
+                        color: primaryColor.withOpacity(
+                            !submitButtonIsLoading && paymentIsSelected
+                                ? 1
+                                : 0.5),
                         child: InkWell(
-                          // to: '/order/detail',
-                          // params: {
-                          //   'status': 'unpaid',
-                          //   'provider': (selectedPayment?.name).toString(),
-                          //   'origin': 'confirm',
-                          // },
-                          onTap: visitTransaction,
+                          onTap: () async {
+                            if (!submitButtonIsLoading && paymentIsSelected) {
+                              state.setSubmitButtonIsLoading(true);
+                              await visitTransaction();
+                              state.setSubmitButtonIsLoading(false);
+                            }
+                          },
                           child: Container(
                             height: 50,
                             alignment: Alignment.center,

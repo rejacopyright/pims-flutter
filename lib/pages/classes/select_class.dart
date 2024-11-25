@@ -7,6 +7,12 @@ class SelectClassController extends GetxController {
   RxBool pageIsReady = false.obs;
 
   @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+  }
+
+  @override
   void onReady() {
     pageIsReady.value = true;
     super.onReady();

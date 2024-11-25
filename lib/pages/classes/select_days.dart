@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pims/pages/classes/main.dart';
+import 'package:pims/pages/classes/select_class.dart';
 
 class SelectDaysController extends GetxController {
   RxBool pageIsReady = false.obs;
@@ -30,6 +31,7 @@ class SelectDays extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final selectDaysController = Get.put(SelectDaysController());
+    final selectClassController = Get.put(SelectClassController());
     final classController = Get.put(ClassAppController());
     final days = List.generate(30, (i) {
       return DateTime.now().add(Duration(days: i));
@@ -93,7 +95,10 @@ class SelectDays extends StatelessWidget {
                         splashFactory: InkSplash.splashFactory,
                         highlightColor: Colors.transparent,
                         onTap: () {
-                          classController.setSelectedDate(e);
+                          if (!isSelected) {
+                            selectClassController.onInit();
+                            classController.setSelectedDate(e);
+                          }
                         },
                         child: Center(
                           child: Text(

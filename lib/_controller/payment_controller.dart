@@ -1,7 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:pims/_config/dio.dart';
 import 'package:pims/_controller/config_controller.dart';
@@ -149,7 +147,7 @@ class PaymentController extends GetxController {
   }
 }
 
-void visitTransaction() {
+Future visitTransaction() async {
   final paymentController = Get.put(PaymentController());
   final visitController = Get.put(VisitAppController());
   final configController = Get.put(ConfigController());
@@ -162,6 +160,7 @@ void visitTransaction() {
   final end_date = visitTime?.add(Duration(minutes: visitTimeInterval));
 
   final params = {
+    'user_type': 1,
     'payment_id': selectedPayment?.name,
     'service_id': 1,
     'product_fee': visit_fee,
@@ -171,10 +170,26 @@ void visitTransaction() {
     'voucher_id': selectedVoucher?['id'],
     'total_fee': (visit_fee + (selectedPayment?.fee ?? 0) + app_fee) -
         (selectedVoucher?['value'] ?? 0),
-    'start_date': visitTime,
-    'end_date': end_date,
+    'start_date': visitTime?.toString(),
+    'end_date': end_date?.toString(),
     'status': 1,
   };
 
-  inspect(params);
+  // inspect(visitTime?.toUtc().toString());
+  try {
+    final submit = await API().post('transaction/visit', data: params);
+    if (submit.data?['status'] == 'success') {
+      Future.delayed(Duration(milliseconds: 200), () {
+        final redirectParams = {
+          'id': submit.data?['data']?['id'].toString() ?? '',
+          'status': 'unpaid',
+          'provider': (selectedPayment?.name).toString(),
+          'origin': 'confirm',
+        };
+        Get.rootDelegate.toNamed('/order/detail', parameters: redirectParams);
+      });
+    }
+  } catch (e) {
+    //
+  }
 }

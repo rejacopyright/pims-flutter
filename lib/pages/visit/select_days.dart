@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pims/pages/visit/main.dart';
+import 'package:pims/pages/visit/select_times.dart';
 
 class SelectDaysController extends GetxController {
   RxBool pageIsReady = false.obs;
@@ -32,6 +33,7 @@ class SelectDays extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     final visitController = Get.put(VisitAppController());
     final selectDaysController = Get.put(SelectDaysController());
+    final selectTimesController = Get.put(SelectTimesController());
     final days = List.generate(30, (i) {
       return DateTime.now().add(Duration(days: i));
     });
@@ -94,7 +96,10 @@ class SelectDays extends StatelessWidget {
                         splashFactory: InkSplash.splashFactory,
                         highlightColor: Colors.transparent,
                         onTap: () {
-                          visitController.setSelectedDate(e);
+                          if (!isSelected) {
+                            selectTimesController.onInit();
+                            visitController.setSelectedDate(e);
+                          }
                         },
                         child: Center(
                           child: Text(
