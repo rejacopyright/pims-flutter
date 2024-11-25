@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pims/_config/dio.dart';
+import 'package:pims/_config/storage.dart';
 import 'package:pims/pages/visit/main.dart';
 
 // class MyVisits {
@@ -38,6 +39,7 @@ class SelectTimesController extends GetxController {
             api.data?.length ?? 0, (i) => api.data?[i]?['start_date']);
 
         mybookedTimes.value = result;
+        storage.write(selectedDate, result);
         super.onInit();
       } catch (e) {
         //
@@ -83,7 +85,8 @@ class SelectTimes extends StatelessWidget {
           ? DateTime(selectedValue.year, selectedValue.month, selectedValue.day,
               selectedValue.hour, selectedValue.minute)
           : null;
-      final mybookedTimes = selectTimesController.mybookedTimes;
+      final mybookedTimes = storage.read(
+          DateFormat('yyyy-MM-dd').format(visitController.selectedDate.value));
       final now = DateTime.now();
       return GridView.count(
         clipBehavior: Clip.antiAlias,
