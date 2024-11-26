@@ -58,9 +58,9 @@ class NavbarWidget extends StatelessWidget {
                       child: LinkWell(
                         // method: 'offAllNamed',
                         to: menu.name,
-                        params: menu.name == '/order'
-                            ? {'order_tab': 'active'}
-                            : {},
+                        // params: menu.name == '/order'
+                        //     ? {'order_tab': 'active'}
+                        //     : {},
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

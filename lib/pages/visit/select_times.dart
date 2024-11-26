@@ -85,8 +85,7 @@ class SelectTimes extends StatelessWidget {
           ? DateTime(selectedValue.year, selectedValue.month, selectedValue.day,
               selectedValue.hour, selectedValue.minute)
           : null;
-      final mybookedTimes = storage.read(
-          DateFormat('yyyy-MM-dd').format(visitController.selectedDate.value));
+      final mybookedTimes = selectTimesController.mybookedTimes;
       final now = DateTime.now();
       return GridView.count(
         clipBehavior: Clip.antiAlias,
