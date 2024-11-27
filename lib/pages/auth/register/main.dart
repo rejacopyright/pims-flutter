@@ -25,7 +25,7 @@ class RegisterController extends GetxController {
   setShowPassword1(e) => showPassword1.value = e;
   setShowPassword2(e) => showPassword2.value = e;
 
-  rergisterFn() async {
+  registerFn() async {
     registerBtnIsLoading.value = true;
     final params = {
       'username': username.value,
@@ -67,7 +67,7 @@ class RegisterPage extends StatelessWidget {
       borderSide: BorderSide(color: primaryColor),
     );
     final labelStyle = TextStyle(
-      fontSize: 22.5,
+      fontSize: 18,
       fontWeight: FontWeight.bold,
     );
     return Scaffold(
@@ -166,8 +166,7 @@ class RegisterPage extends StatelessWidget {
                               hintText: 'Buat username',
                               labelText: 'Username',
                               labelStyle: labelStyle,
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                              // floatingLabelBehavior: FloatingLabelBehavior.always,
                               hintStyle: TextStyle(color: Color(0xff777777)),
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 24,
@@ -179,7 +178,7 @@ class RegisterPage extends StatelessWidget {
                             // keyboardType: TextInputType.name,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Userrname wajib diisi';
+                                return 'Username wajib diisi';
                               }
                               return null;
                             },
@@ -198,8 +197,7 @@ class RegisterPage extends StatelessWidget {
                               hintText: 'Masukan email',
                               labelText: 'Email',
                               labelStyle: labelStyle,
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                              // floatingLabelBehavior: FloatingLabelBehavior.always,
                               hintStyle: TextStyle(color: Color(0xff777777)),
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 24,
@@ -236,8 +234,7 @@ class RegisterPage extends StatelessWidget {
                               hintText: 'Masukan nomor handphone',
                               labelText: 'No. Handphone',
                               labelStyle: labelStyle,
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                              // floatingLabelBehavior: FloatingLabelBehavior.always,
                               hintStyle: TextStyle(color: Color(0xff777777)),
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 24,
@@ -269,8 +266,7 @@ class RegisterPage extends StatelessWidget {
                               hintText: 'Buat kata sandi baru',
                               labelText: 'Kata Sandi',
                               labelStyle: labelStyle,
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                              // floatingLabelBehavior: FloatingLabelBehavior.always,
                               hintStyle: TextStyle(color: Color(0xff777777)),
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 24,
@@ -311,8 +307,7 @@ class RegisterPage extends StatelessWidget {
                               hintText: 'Konfirmasi kata sandi baru',
                               labelText: 'Ulangi Kata Sandi',
                               labelStyle: labelStyle,
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                              // floatingLabelBehavior: FloatingLabelBehavior.always,
                               hintStyle: TextStyle(color: Color(0xff777777)),
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 24,
@@ -354,7 +349,7 @@ class RegisterPage extends StatelessWidget {
                               if (_formKey.currentState!.validate() &&
                                   !registerBtnIsLoading) {
                                 _formKey.currentState!.save();
-                                state.rergisterFn();
+                                state.registerFn();
                               }
                             },
                             style: ElevatedButton.styleFrom(

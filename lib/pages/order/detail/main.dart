@@ -81,6 +81,34 @@ class OrderDetailPage extends StatelessWidget {
                 .format(DateTime.parse(data?['purchased_at']).toLocal());
           }
 
+          String valid_from_date = '???',
+              valid_from_time = '???',
+              valid_to_date = '???',
+              valid_to_time = '???';
+          if (data?['valid_from'] != null && data?['valid_to'] != null) {
+            valid_from_date = DateFormat('EEEE, dd MMMM yyyy')
+                .format(DateTime.parse(data?['valid_from']).toLocal());
+            valid_from_time = DateFormat('HH:mm')
+                .format(DateTime.parse(data?['valid_from']).toLocal());
+            valid_to_date = DateFormat('EEEE, dd MMMM yyyy')
+                .format(DateTime.parse(data?['valid_to']).toLocal());
+            valid_to_time = DateFormat('HH:mm')
+                .format(DateTime.parse(data?['valid_to']).toLocal());
+          }
+
+          bool cancelable = false;
+          String cancelable_date = '???', cancelable_time = '???';
+          if (data?['cancelable_until'] != null) {
+            cancelable_date = DateFormat('EEEE, dd MMMM yyyy')
+                .format(DateTime.parse(data?['cancelable_until']).toLocal());
+            cancelable_time = DateFormat('HH:mm')
+                .format(DateTime.parse(data?['cancelable_until']).toLocal());
+
+            cancelable = DateTime.parse(data?['cancelable_until'])
+                .toLocal()
+                .isAfter(DateTime.now());
+          }
+
           String cancel_date = '???',
               cancel_time = '???',
               cancel_reason = '???';
@@ -121,7 +149,16 @@ class OrderDetailPage extends StatelessWidget {
                           : [SizedBox.shrink()],
                     ),
                     Container(
-                      child: isActive ? OrderDetailQR() : SizedBox.shrink(),
+                      child: isActive
+                          ? OrderDetailQR(
+                              id: data?['id'] ?? '',
+                              order_no: data?['order_no'] ?? '???',
+                              valid_from_date: valid_from_date,
+                              valid_from_time: valid_from_time,
+                              valid_to_date: valid_to_date,
+                              valid_to_time: valid_to_time,
+                            )
+                          : SizedBox.shrink(),
                     ),
                     Column(
                       children: isDone
@@ -179,7 +216,13 @@ class OrderDetailPage extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: isActive ? OrderDetailRefund() : SizedBox.shrink(),
+                      child: isActive && cancelable
+                          ? OrderDetailRefund(
+                              cancelable: cancelable,
+                              cancelable_date: cancelable_date,
+                              cancelable_time: cancelable_time,
+                            )
+                          : SizedBox.shrink(),
                     ),
                     Padding(padding: EdgeInsets.only(bottom: 50))
                   ],
