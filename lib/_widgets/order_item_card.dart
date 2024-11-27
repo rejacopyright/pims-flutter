@@ -12,6 +12,15 @@ class OrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String start_date = '???', start_time = '???', end_time = '???';
+    if (data?['start_date'] != null) {
+      start_date = DateFormat('EEEE, dd MMMM yyyy')
+          .format(DateTime.parse(data?['start_date']).toLocal());
+      start_time = DateFormat('HH:mm')
+          .format(DateTime.parse(data?['start_date']).toLocal());
+      end_time = DateFormat('HH:mm')
+          .format(DateTime.parse(data?['end_date']).toLocal());
+    }
     return Container(
       constraints: BoxConstraints(minHeight: 25),
       margin: EdgeInsets.symmetric(vertical: 5),
@@ -35,7 +44,11 @@ class OrderItem extends StatelessWidget {
             'id': data?['id'] ?? '',
             'provider': data?['payment_id'] ?? '',
           },
-          child: VisitItem(data: data),
+          child: VisitItem(
+            start_date: start_date,
+            start_time: start_time,
+            end_time: end_time,
+          ),
         ),
       ),
     );
@@ -197,21 +210,19 @@ class ClassItem extends StatelessWidget {
 }
 
 class VisitItem extends StatelessWidget {
-  const VisitItem({super.key, this.data});
-  final Map<String, dynamic>? data;
+  const VisitItem({
+    super.key,
+    this.start_date = '???',
+    this.start_time = '???',
+    this.end_time = '???',
+  });
+  final String start_date;
+  final String start_time;
+  final String end_time;
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    dynamic start_date, start_time, end_time;
-    if (data?['start_date'] != null) {
-      start_date = DateFormat('EEEE, dd MMMM yyyy')
-          .format(DateTime.parse(data?['start_date']).toLocal());
-      start_time = DateFormat('HH:mm')
-          .format(DateTime.parse(data?['start_date']).toLocal());
-      end_time = DateFormat('HH:mm')
-          .format(DateTime.parse(data?['end_date']).toLocal());
-    }
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Row(
@@ -254,14 +265,14 @@ class VisitItem extends StatelessWidget {
                     children: [
                       Icon(
                         Iconsax.calendar5,
-                        size: 16,
+                        size: 20,
                         color: primaryColor,
                       ),
                       Text(
-                        start_date ?? '???',
+                        start_date,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                          fontSize: 16,
                         ),
                       ),
                     ],
@@ -273,15 +284,15 @@ class VisitItem extends StatelessWidget {
                   children: [
                     Icon(
                       Iconsax.clock5,
-                      size: 16,
-                      color: Theme.of(context).primaryColor,
+                      size: 18,
+                      color: Color(0xffdddddd),
                     ),
                     Text(
-                      '${start_time ?? '???'} - ${end_time ?? '???'}',
+                      '$start_time - $end_time',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xff777777),
-                        fontSize: 14,
+                        fontSize: 16,
                       ),
                     ),
                   ],

@@ -90,7 +90,7 @@ class PaymentCard extends StatelessWidget {
               ? Column(
                   mainAxisSize: MainAxisSize.min,
                   children: paymentData
-                      .where((item) => item.type == 5) // other
+                      .where((item) => item.type == 4) // other
                       .map((item) => PaymentItem(item: item))
                       .toList(),
                 )

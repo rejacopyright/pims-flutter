@@ -7,7 +7,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:pims/_controller/payment_controller.dart';
 import 'package:pims/_widgets/helper.dart';
 
-class OrderDetailPageController extends GetxController {
+class OrderDetailCardController extends GetxController {
   RxBool isCopied = false.obs;
   setCopied(e) => isCopied.value = e;
 }
@@ -23,7 +23,7 @@ class OrderDetailPaymentBank extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = Get.put(OrderDetailPageController());
+    final state = Get.put(OrderDetailCardController());
     final paymentController = Get.put(PaymentController());
     final primaryColor = Theme.of(context).primaryColor;
     return Obx(() {
@@ -132,7 +132,10 @@ class OrderDetailPaymentBank extends StatelessWidget {
 }
 
 class OrderDetailPurchaseTime extends StatelessWidget {
-  const OrderDetailPurchaseTime({super.key});
+  const OrderDetailPurchaseTime(
+      {super.key, this.date = '???', this.time = '???'});
+  final String date;
+  final String time;
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +193,7 @@ class OrderDetailPurchaseTime extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
               child: Text(
-                'Pukul 14.50 WIB',
+                'Pukul $time WIB',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -200,7 +203,7 @@ class OrderDetailPurchaseTime extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 15),
               child: Text(
-                'Sabtu, 9 November 2024',
+                date,
                 style: TextStyle(
                   fontSize: 14,
                   color: Color(0xff777777),
@@ -215,7 +218,19 @@ class OrderDetailPurchaseTime extends StatelessWidget {
 }
 
 class OrderDetailPrice extends StatelessWidget {
-  const OrderDetailPrice({super.key});
+  const OrderDetailPrice({
+    super.key,
+    this.order_no = '???',
+    this.product_fee = 0,
+    this.discount_fee = 0,
+    this.service_fee = 0,
+    this.total_fee = 0,
+  });
+  final String order_no;
+  final int product_fee;
+  final int discount_fee;
+  final int service_fee;
+  final int total_fee;
 
   @override
   Widget build(BuildContext context) {
@@ -243,7 +258,7 @@ class OrderDetailPrice extends StatelessWidget {
               height: 35,
               decoration: BoxDecoration(color: primaryColor),
               child: Text(
-                'No. Pesanan: 0-241109-AGWRYDL',
+                'No. Pesanan: $order_no',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -266,7 +281,7 @@ class OrderDetailPrice extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Rp. ${currency.format(50000)}',
+                        'Rp. ${currency.format(product_fee)}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -277,22 +292,24 @@ class OrderDetailPrice extends StatelessWidget {
                     ],
                   ),
                   TableRow(
-                    children: [
-                      Text(
-                        'Diskon :',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        '- Rp. ${currency.format(10000)}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          height: 2,
-                          color: Colors.red,
-                        ),
-                        textAlign: TextAlign.end,
-                      ),
-                    ],
+                    children: discount_fee > 0
+                        ? [
+                            Text(
+                              'Diskon :',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              '- Rp. ${currency.format(discount_fee)}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                height: 2,
+                                color: Colors.red,
+                              ),
+                              textAlign: TextAlign.end,
+                            ),
+                          ]
+                        : List.generate(2, (i) => SizedBox.shrink()),
                   ),
                   TableRow(
                     children: [
@@ -301,7 +318,7 @@ class OrderDetailPrice extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Rp. ${currency.format(5000)}',
+                        'Rp. ${currency.format(service_fee)}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -325,7 +342,7 @@ class OrderDetailPrice extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Text(
-                    'Rp. ${currency.format(45000)}',
+                    'Rp. ${currency.format(total_fee)}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -337,168 +354,6 @@ class OrderDetailPrice extends StatelessWidget {
                 ],
               ),
             )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class OrderDetailItem extends StatelessWidget {
-  const OrderDetailItem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
-    return Container(
-      constraints: BoxConstraints(minHeight: 75),
-      margin: EdgeInsets.only(top: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          width: 1,
-          color: Color(0xfffafafa),
-        ),
-      ),
-      child: Material(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        clipBehavior: Clip.antiAlias,
-        shadowColor: Colors.black.withOpacity(0.75),
-        elevation: 1,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              clipBehavior: Clip.antiAlias,
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              width: 100,
-              height: 100,
-              child: Image.asset(
-                'assets/images/sample/taichi.jpg',
-                fit: BoxFit.cover,
-                opacity: AlwaysStoppedAnimation(1),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 5,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 5,
-                        horizontal: 10,
-                      ),
-                      margin: EdgeInsets.only(bottom: 5),
-                      decoration: BoxDecoration(
-                        color: primaryColor.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text(
-                        'Gym Visit',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Text(
-                        'Progressive Overload Strength & Conditioning by Reja Jamil',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 15),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            clipBehavior: Clip.antiAlias,
-                            margin: EdgeInsets.only(right: 7),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            width: 20,
-                            height: 20,
-                            child: Image.asset(
-                              'assets/avatar/4.png',
-                              fit: BoxFit.cover,
-                              opacity: AlwaysStoppedAnimation(1),
-                            ),
-                          ),
-                          Text(
-                            'Reja Jamil',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Wrap(
-                        spacing: 5,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Icon(
-                            Iconsax.calendar5,
-                            size: 16,
-                            color: primaryColor,
-                          ),
-                          Text(
-                            'Senin, 18 Mei 1992',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 15),
-                      child: Wrap(
-                        spacing: 5,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Icon(
-                            Iconsax.clock5,
-                            size: 16,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          Text(
-                            '06:00 - 7:30',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff777777),
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ],
         ),
       ),
