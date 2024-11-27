@@ -37,7 +37,6 @@ class OrderDetailPage extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     final params = Get.rootDelegate.parameters;
     final status = params['status'];
-    final provider = params['provider'] ?? 'bca';
 
     // VERIFY
     final isUnpaid = status != null && status == 'unpaid';
@@ -54,6 +53,8 @@ class OrderDetailPage extends StatelessWidget {
         },
         child: Obx(() {
           final data = state.data.value;
+          final provider = data?['payment_id'] ?? '';
+
           DateTime expired_at;
           String expired_date = '???', expired_time = '???';
           if (data != null && data['purchase_expired'] != null) {
@@ -70,6 +71,14 @@ class OrderDetailPage extends StatelessWidget {
                 .format(DateTime.parse(data?['start_date']).toLocal());
             end_time = DateFormat('HH:mm')
                 .format(DateTime.parse(data?['end_date']).toLocal());
+          }
+
+          String purchase_date = '???', purchase_time = '???';
+          if (data?['purchased_at'] != null) {
+            purchase_date = DateFormat('EEEE, dd MMMM yyyy')
+                .format(DateTime.parse(data?['purchased_at']).toLocal());
+            purchase_time = DateFormat('HH:mm')
+                .format(DateTime.parse(data?['purchased_at']).toLocal());
           }
 
           String cancel_date = '???',
@@ -117,8 +126,18 @@ class OrderDetailPage extends StatelessWidget {
                     Column(
                       children: isDone
                           ? [
-                              OrderDetailPaymentMethod(provider: provider),
-                              OrderDetailPrice(),
+                              OrderDetailPaymentMethod(
+                                provider: provider,
+                                purchase_date: purchase_date,
+                                purchase_time: purchase_time,
+                              ),
+                              OrderDetailPrice(
+                                order_no: data?['order_no'] ?? '???',
+                                product_fee: data?['product_fee'] ?? 0,
+                                discount_fee: data?['discount_fee'] ?? 0,
+                                service_fee: data?['service_fee'] ?? 0,
+                                total_fee: data?['total_fee'] ?? 0,
+                              ),
                             ]
                           : [SizedBox.shrink()],
                     ),

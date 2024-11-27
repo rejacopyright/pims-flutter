@@ -634,9 +634,13 @@ class OrderDetailPaymentMethod extends StatelessWidget {
   const OrderDetailPaymentMethod({
     super.key,
     required this.provider,
+    this.purchase_date = '???',
+    this.purchase_time = '???',
   });
 
   final String provider;
+  final String purchase_date;
+  final String purchase_time;
 
   @override
   Widget build(BuildContext context) {
@@ -714,14 +718,14 @@ class OrderDetailPaymentMethod extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      '18 Mei, 1992',
+                      purchase_date,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xffaaaaaa),
                       ),
                     ),
                     Text(
-                      '(19:00)',
+                      '($purchase_time)',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xffaaaaaa),

@@ -1,23 +1,45 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_config/dio.dart';
+import 'package:pims/_config/storage.dart';
 import 'package:pims/_widgets/order_item_card.dart';
+
+fetchOrderDone() async {
+// final queryParameters = {'page': 1, 'limit': 2};
+  final api = await API().get('/order/done');
+  // await API().get('/order/done', queryParameters: queryParameters);
+  final result = List.generate(api.data?['data']?.length ?? 0, (i) {
+    return api.data?['data']?[i];
+  });
+  await storage.write('order_done', result);
+  return result;
+}
 
 class DoneOrderController extends GetxController {
   RxBool isReady = false.obs;
+  RxList order_done = [].obs;
 
   @override
-  void onReady() {
-    Future.delayed(Duration(milliseconds: 300), () {
+  void onInit() {
+    Future.delayed(Duration(milliseconds: 100), () async {
       isReady.value = true;
+      try {
+        final res = await fetchOrderDone();
+        order_done.value = res;
+      } catch (e) {
+        //
+      }
     });
-    super.onReady();
+    super.onInit();
   }
 
   @override
   void refresh() {
     isReady.value = false;
     Future.delayed(Duration(milliseconds: 200), () {
-      onReady();
+      onInit();
     });
     super.refresh();
   }
@@ -35,8 +57,10 @@ class DoneOrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = Get.put(DoneOrderController());
+    store.onInit();
     final primaryColor = Theme.of(context).primaryColor;
     return Obx(() {
+      List data = store.order_done;
       final isReady = store.isReady.value;
       return RefreshIndicator(
         color: primaryColor,
@@ -46,9 +70,9 @@ class DoneOrderPage extends StatelessWidget {
         },
         child: ListView.builder(
           padding: EdgeInsets.only(top: 15, bottom: 150, left: 15, right: 15),
-          itemCount: 3,
+          itemCount: data.length,
           itemBuilder: (ctx, index) => isReady
-              ? OrderItem(params: {'status': 'done'})
+              ? OrderItem(params: {'status': 'done'}, data: data[index])
               : OrderItemLoader(),
         ),
       );
