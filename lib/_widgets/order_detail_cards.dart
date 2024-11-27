@@ -739,7 +739,15 @@ class OrderDetailPaymentMethod extends StatelessWidget {
 }
 
 class OrderDetailCancel extends StatelessWidget {
-  const OrderDetailCancel({super.key});
+  const OrderDetailCancel({
+    super.key,
+    this.cancel_date = '???',
+    this.cancel_time = '???',
+    this.cancel_reason = '???',
+  });
+  final String cancel_date;
+  final String cancel_time;
+  final String cancel_reason;
 
   @override
   Widget build(BuildContext context) {
@@ -802,7 +810,7 @@ class OrderDetailCancel extends StatelessWidget {
                         textAlign: TextAlign.end,
                       ),
                       Text(
-                        '13:00',
+                        cancel_time,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -810,7 +818,7 @@ class OrderDetailCancel extends StatelessWidget {
                         textAlign: TextAlign.end,
                       ),
                       Text(
-                        '(18 Mei, 1992)',
+                        '($cancel_date)',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -829,7 +837,7 @@ class OrderDetailCancel extends StatelessWidget {
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 5)),
                   Text(
-                    'Gymers tidak membayar booking melebihi batas akhir pembayaran',
+                    cancel_reason,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

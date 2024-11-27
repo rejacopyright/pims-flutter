@@ -71,6 +71,18 @@ class OrderDetailPage extends StatelessWidget {
             end_time = DateFormat('HH:mm')
                 .format(DateTime.parse(data?['end_date']).toLocal());
           }
+
+          String cancel_date = '???',
+              cancel_time = '???',
+              cancel_reason = '???';
+          if (data?['canceled_at'] != null) {
+            cancel_date = DateFormat('EEEE, dd MMMM yyyy')
+                .format(DateTime.parse(data?['canceled_at']).toLocal());
+            cancel_time = DateFormat('HH:mm')
+                .format(DateTime.parse(data?['canceled_at']).toLocal());
+            cancel_reason = data?['cancel_reason'];
+          }
+
           return ListView.builder(
             itemCount: 1,
             itemBuilder: (BuildContext context, int index) {
@@ -111,7 +123,13 @@ class OrderDetailPage extends StatelessWidget {
                           : [SizedBox.shrink()],
                     ),
                     Container(
-                      child: isCancel ? OrderDetailCancel() : SizedBox.shrink(),
+                      child: isCancel
+                          ? OrderDetailCancel(
+                              cancel_date: cancel_date,
+                              cancel_time: cancel_time,
+                              cancel_reason: cancel_reason,
+                            )
+                          : SizedBox.shrink(),
                     ),
                     // CARD ITEM
                     Container(
@@ -136,7 +154,9 @@ class OrderDetailPage extends StatelessWidget {
                                 start_time: start_time,
                                 end_time: end_time,
                               )
-                            : ClassItem(),
+                            : [2, 3].contains(data?['service_id'])
+                                ? ClassItem()
+                                : SizedBox.shrink(),
                       ),
                     ),
                     Container(
