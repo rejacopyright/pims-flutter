@@ -727,7 +727,7 @@ class CancelFormWidget extends StatelessWidget {
       borderSide: BorderSide(color: primaryColor),
     );
     final labelStyle = TextStyle(
-      fontSize: 18,
+      fontSize: 16,
       fontWeight: FontWeight.bold,
     );
     return Obx(() {
