@@ -24,8 +24,10 @@ class ClassDetailPriceController extends GetxController {
 }
 
 class ClassDetailPrice extends StatelessWidget {
-  ClassDetailPrice({super.key, this.fee = 0, required this.dataIsReady});
+  ClassDetailPrice(
+      {super.key, this.fee = 0, this.duration = 0, required this.dataIsReady});
   final int fee;
+  final int duration;
   final bool dataIsReady;
 
   final store = Get.put(ClassDetailPriceController());
@@ -98,7 +100,7 @@ class ClassDetailPrice extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '90 menit',
+                  '$duration menit',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xffaaaaaa),

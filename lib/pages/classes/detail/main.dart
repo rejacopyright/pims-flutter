@@ -101,6 +101,7 @@ class ClassDetailPage extends StatelessWidget {
                       images = gallery;
                     }
                     String? start_date, start_time, end_time;
+                    int? duration;
                     if (detail?['start_date'] != null) {
                       start_date = DateFormat('EEEE, dd MMMM yyyy').format(
                           DateTime.parse(detail?['start_date']).toLocal());
@@ -111,6 +112,12 @@ class ClassDetailPage extends StatelessWidget {
                       end_time = DateFormat('HH:mm').format(
                           DateTime.parse(detail?['end_date']).toLocal());
                     }
+                    if (detail?['start_date'] != null &&
+                        detail?['end_date'] != null) {
+                      duration = DateTime.parse(detail?['end_date'])
+                          .difference(DateTime.parse(detail?['start_date']))
+                          .inMinutes;
+                    }
                     final gender = detail?['class']?['gender'] ?? 3;
                     return Column(
                       children: [
@@ -120,6 +127,7 @@ class ClassDetailPage extends StatelessWidget {
                           margin: EdgeInsets.only(left: 15, right: 15, top: 10),
                           child: ClassDetailPrice(
                             fee: detail?['fee'] ?? 0,
+                            duration: duration ?? 0,
                             dataIsReady: dataIsReady,
                           ),
                         ),
