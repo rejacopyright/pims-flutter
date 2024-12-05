@@ -16,7 +16,8 @@ class ProductService {
 class ClassItem {
   final String name;
   final String label;
-  ClassItem({required this.name, required this.label});
+  final int type;
+  ClassItem({required this.name, required this.label, this.type = 2});
 }
 
 List<ProductService> servicesList = [
@@ -44,10 +45,12 @@ List<ProductService> servicesList = [
 
 List<ClassItem> classesList = [
   ClassItem(
+    type: 2,
     name: 'studio',
     label: 'Studio',
   ),
   ClassItem(
+    type: 3,
     name: 'functional',
     label: 'Fungsional',
   ),

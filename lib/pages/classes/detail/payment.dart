@@ -1,9 +1,16 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_controller/payment_controller.dart';
-import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/helper.dart';
 import 'package:pims/_widgets/payment/payment_card.dart';
+import 'package:pims/pages/classes/detail/main.dart';
+
+class BookingClassPaymentController extends GetxController {
+  RxBool submitButtonIsLoading = false.obs;
+  setSubmitButtonIsLoading(e) => submitButtonIsLoading.value = e;
+}
 
 class BookingClassPaymentCard extends StatelessWidget {
   const BookingClassPaymentCard({super.key});
@@ -12,9 +19,11 @@ class BookingClassPaymentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final paymentController = Get.put(PaymentController());
+    final state = Get.put(BookingClassPaymentController());
     return Obx(() {
       final selectedPayment = paymentController.selectedPayment.value;
       final paymentIsSelected = selectedPayment != null;
+      final submitButtonIsLoading = state.submitButtonIsLoading.value;
       return Material(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -73,13 +82,19 @@ class BookingClassPaymentCard extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         color: primaryColor
                             .withOpacity(paymentIsSelected ? 1 : 0.5),
-                        child: LinkWell(
-                          // method: 'offAllNamed',
-                          to: '/order/detail',
-                          params: {
-                            'status': 'unpaid',
-                            'provider': (selectedPayment?.name).toString(),
-                            'origin': 'confirm',
+                        child: InkWell(
+                          // to: '/order/detail',
+                          // params: {
+                          //   'status': 'unpaid',
+                          //   'provider': (selectedPayment?.name).toString(),
+                          //   'origin': 'confirm',
+                          // },
+                          onTap: () async {
+                            if (!submitButtonIsLoading && paymentIsSelected) {
+                              state.setSubmitButtonIsLoading(true);
+                              await classTransaction();
+                              state.setSubmitButtonIsLoading(false);
+                            }
                           },
                           child: Container(
                             height: 50,
@@ -118,7 +133,10 @@ class ClassFinalPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paymentController = Get.put(PaymentController());
+    final classDetailController = Get.put(ClassDetailController());
     return Obx(() {
+      final detailClass = classDetailController.detailClass.value;
+      final product_fee = detailClass?['fee'] ?? 0;
       final selectedVoucher = paymentController.selectedVoucher.value;
       final selectedPayment = paymentController.selectedPayment.value;
       final voucherIsSelected = selectedVoucher != null;
@@ -146,7 +164,7 @@ class ClassFinalPrice extends StatelessWidget {
                 ),
                 SizedBox(width: 20),
                 Text(
-                  'Rp. ${currency.format(50000)}',
+                  'Rp. ${currency.format(product_fee)}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 13,
@@ -203,7 +221,7 @@ class ClassFinalPrice extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
-                    'Rp. ${currency.format((50000 - discount) + (fee ?? 0))}',
+                    'Rp. ${currency.format((product_fee - discount) + (fee ?? 0))}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,

@@ -1,8 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pims/_config/dio.dart';
+import 'package:pims/_config/services.dart';
 import 'package:pims/_controller/config_controller.dart';
+import 'package:pims/pages/classes/detail/main.dart';
 import 'package:pims/pages/visit/main.dart';
 
 class PaymentData {
@@ -177,11 +180,68 @@ Future visitTransaction() async {
 
   // inspect(visitTime?.toUtc().toString());
   try {
-    final submit = await API().post('transaction/visit', data: params);
-    if (submit.data?['status'] == 'success') {
+    final api = await API().post('transaction/visit', data: params);
+    if (api.data?['status'] == 'success') {
       Future.delayed(Duration(milliseconds: 200), () {
         final redirectParams = {
-          'id': submit.data?['data']?['id'].toString() ?? '',
+          'id': api.data?['data']?['id'].toString() ?? '',
+          'status': 'unpaid',
+          'provider': (selectedPayment?.name).toString(),
+          'origin': 'confirm',
+        };
+        Get.rootDelegate.toNamed('/order/detail', parameters: redirectParams);
+      });
+    }
+  } catch (e) {
+    //
+  }
+}
+
+Future classTransaction() async {
+  final classDetailController = Get.put(ClassDetailController());
+  final paymentController = Get.put(PaymentController());
+  final configController = Get.put(ConfigController());
+  final selectedVoucher = paymentController.selectedVoucher.value;
+  final selectedPayment = paymentController.selectedPayment.value;
+  final app_fee = configController.app_fee.value;
+  final thisService = classesList.firstWhereOrNull(
+      (item) => item.name == Get.rootDelegate.parameters['type']);
+
+  final detailClass = classDetailController.detailClass.value;
+  final product_fee = detailClass?['fee'] ?? 0;
+  String? start_date, end_date;
+  if (detailClass?['start_date'] != null) {
+    start_date = DateFormat('yyyy-MM-dd HH:mm')
+        .format(DateTime.parse(detailClass?['start_date']).toLocal());
+  }
+  if (detailClass?['end_date'] != null) {
+    end_date = DateFormat('yyyy-MM-dd HH:mm')
+        .format(DateTime.parse(detailClass?['end_date']).toLocal());
+  }
+
+  final params = {
+    'class_schedule_id': detailClass?['id'],
+    'user_type': 1,
+    'payment_id': selectedPayment?.name,
+    'service_id': thisService?.type ?? 2,
+    'product_fee': product_fee,
+    'service_fee': selectedPayment?.fee ?? 0,
+    'app_fee': app_fee,
+    'discount_fee': selectedVoucher?['value'] ?? 0,
+    'voucher_id': selectedVoucher?['id'],
+    'total_fee': (product_fee + (selectedPayment?.fee ?? 0) + app_fee) -
+        (selectedVoucher?['value'] ?? 0),
+    'start_date': start_date,
+    'end_date': end_date,
+    'status': 1,
+  };
+
+  try {
+    final api = await API().post('transaction/class', data: params);
+    if (api.data?['status'] == 'success') {
+      Future.delayed(Duration(milliseconds: 200), () {
+        final redirectParams = {
+          'id': api.data?['data']?['id'].toString() ?? '',
           'status': 'unpaid',
           'provider': (selectedPayment?.name).toString(),
           'origin': 'confirm',
