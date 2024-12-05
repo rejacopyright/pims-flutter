@@ -209,9 +209,10 @@ class OrderDetailPage extends StatelessWidget {
                                 start_date: start_date,
                                 start_time: start_time,
                                 end_time: end_time,
+                                fee: data?['total_fee'] ?? 0,
                               )
                             : [2, 3].contains(data?['service_id'])
-                                ? ClassItem()
+                                ? ClassItem(data: data)
                                 : SizedBox.shrink(),
                       ),
                     ),

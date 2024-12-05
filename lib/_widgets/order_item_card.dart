@@ -3,7 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:pims/_config/dio.dart';
+import 'package:pims/_config/services.dart';
 import 'package:pims/_widgets/button.dart';
+import 'package:pims/_widgets/helper.dart';
 
 class OrderItem extends StatelessWidget {
   const OrderItem({super.key, this.params, this.data});
@@ -44,11 +47,14 @@ class OrderItem extends StatelessWidget {
             'id': data?['id'] ?? '',
             'provider': data?['payment_id'] ?? '',
           },
-          child: VisitItem(
-            start_date: start_date,
-            start_time: start_time,
-            end_time: end_time,
-          ),
+          child: data?['service_id'] == 1
+              ? VisitItem(
+                  start_date: start_date,
+                  start_time: start_time,
+                  end_time: end_time,
+                  fee: data?['total_fee'] ?? 0,
+                )
+              : ClassItem(data: data),
         ),
       ),
     );
@@ -56,11 +62,38 @@ class OrderItem extends StatelessWidget {
 }
 
 class ClassItem extends StatelessWidget {
-  const ClassItem({super.key});
+  const ClassItem({super.key, this.data});
+  final dynamic data;
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final classType = classesList
+        .firstWhere((item) => item.type == (data?['service_id'] ?? 2));
+    String? image, trainerImage;
+    final gallery = data?['class_schedule']?['class']?['class_gallery'];
+    final trainer = data?['class_schedule']?['trainer'];
+    if (gallery != null && gallery?.length > 0) {
+      image = '$SERVER_URL/static/images/class/${gallery?[0]?['filename']}';
+    }
+    if (trainer?['avatar'] != null) {
+      trainerImage = '$SERVER_URL/static/images/user/${trainer?['avatar']}';
+    }
+
+    final programName = data?['class_schedule']?['class']?['name'] ?? '-';
+    final trainerName = trainer?['full_name'] ?? trainer?['username'] ?? '-';
+    final fee = data?['total_fee'] ?? 0;
+
+    String start_date = '???', start_time = '???', end_time = '???';
+    if (data?['start_date'] != null) {
+      start_date = DateFormat('EEEE, dd MMMM yyyy')
+          .format(DateTime.parse(data?['start_date']).toLocal());
+      start_time = DateFormat('HH:mm')
+          .format(DateTime.parse(data?['start_date']).toLocal());
+      end_time = DateFormat('HH:mm')
+          .format(DateTime.parse(data?['end_date']).toLocal());
+    }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -72,10 +105,11 @@ class ClassItem extends StatelessWidget {
           ),
           width: 75,
           height: 75,
-          child: Image.asset(
-            'assets/images/sample/taichi.jpg',
+          child: Image(
+            image: image != null
+                ? NetworkImage(image)
+                : AssetImage('assets/images/no-image.png'),
             fit: BoxFit.cover,
-            opacity: AlwaysStoppedAnimation(1),
           ),
         ),
         Expanded(
@@ -99,7 +133,7 @@ class ClassItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Text(
-                    'Gym Visit',
+                    'Kelas ${classType.label}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: primaryColor,
@@ -109,7 +143,7 @@ class ClassItem extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(bottom: 5),
                   child: Text(
-                    'Progressive Overload Strength & Conditioning by Reja Jamil',
+                    programName,
                     maxLines: 2,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -130,14 +164,15 @@ class ClassItem extends StatelessWidget {
                         ),
                         width: 20,
                         height: 20,
-                        child: Image.asset(
-                          'assets/avatar/4.png',
+                        child: Ink.image(
+                          image: trainerImage != null
+                              ? NetworkImage(trainerImage)
+                              : AssetImage('assets/avatar/user.png'),
                           fit: BoxFit.cover,
-                          opacity: AlwaysStoppedAnimation(1),
                         ),
                       ),
                       Text(
-                        'Reja Jamil',
+                        trainerName,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: TextStyle(
@@ -160,7 +195,7 @@ class ClassItem extends StatelessWidget {
                         color: primaryColor,
                       ),
                       Text(
-                        'Senin, 18 Mei 1992',
+                        start_date,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -181,7 +216,7 @@ class ClassItem extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
-                        '06:00 - 7:30',
+                        '$start_time - $end_time',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color(0xff777777),
@@ -192,7 +227,7 @@ class ClassItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Rp. 50.000',
+                  'Rp. ${currency.format(fee)}',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: TextStyle(
@@ -215,10 +250,12 @@ class VisitItem extends StatelessWidget {
     this.start_date = '???',
     this.start_time = '???',
     this.end_time = '???',
+    this.fee = 0,
   });
   final String start_date;
   final String start_time;
   final String end_time;
+  final int fee;
 
   @override
   Widget build(BuildContext context) {
@@ -296,6 +333,16 @@ class VisitItem extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Rp. ${currency.format(fee)}',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
               ],
             ),
