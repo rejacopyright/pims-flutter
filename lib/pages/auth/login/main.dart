@@ -31,7 +31,7 @@ class LoginController extends GetxController {
     } catch (e) {
       dynamic err = e;
       // dynamic error = err?.response?.data['message'];
-      dynamic error = err?.response?.data['message'];
+      dynamic error = err?.response?.data?['message'];
       errorMessage.value = error;
     } finally {
       signinBtnIsLoading.value = false;

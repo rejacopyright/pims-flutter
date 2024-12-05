@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:synchronized/synchronized.dart';
 
-String host = 'http://192.168.2.101:4000';
+String SERVER_URL = 'https://api.pimsclub.id';
 
 class TokenRefreshInterceptor extends QueuedInterceptor {
   final Dio dio;
@@ -35,7 +35,7 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
         await _lock.synchronized(() async {
           final dioRefresh = Dio(
             BaseOptions(
-              baseUrl: '$host/api/v1/',
+              baseUrl: '$SERVER_URL/api/v1/',
               headers: {
                 HttpHeaders.authorizationHeader:
                     'Bearer ${refresh_token.toString()}'
@@ -74,7 +74,7 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
 class API {
   final dio = Dio(
     BaseOptions(
-      baseUrl: '$host/api/v1/',
+      baseUrl: '$SERVER_URL/api/v1/',
       // contentType: Headers.formUrlEncodedContentType,
       // headers: {'Access-Control-Allow-Origin': '*', 'Accept': '*'}
       // headers: {HttpHeaders.authorizationHeader: 'Bearer abc'},

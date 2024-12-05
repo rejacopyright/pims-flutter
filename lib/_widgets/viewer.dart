@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ImageViewer extends StatelessWidget {
-  ImageViewer({super.key, required this.image});
+  ImageViewer({super.key, this.type = 'asset', required this.image});
   final String image;
+  final String type;
   final imageController = TransformationController();
 
   @override
@@ -41,8 +42,9 @@ class ImageViewer extends StatelessWidget {
                     ..scale(2.0);
                 }
               },
-              child: Image.asset(
-                image,
+              child: Ink.image(
+                image:
+                    type == 'asset' ? AssetImage(image) : NetworkImage(image),
                 fit: BoxFit.contain,
               ),
             ),

@@ -8,15 +8,19 @@ class ProgramBookingState {
   String? category;
   String? image;
   int? price;
-  String? userImage;
-  String userName;
+  String? time;
+  int? gender;
+  String? trainerImage;
+  String trainerName;
   ProgramBookingState({
     required this.title,
     this.category,
     this.image,
     this.price,
-    this.userImage,
-    required this.userName,
+    this.time,
+    this.gender,
+    this.trainerImage,
+    required this.trainerName,
   });
 }
 
@@ -37,6 +41,10 @@ class ProgramBookingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late Color primaryColor = Theme.of(context).primaryColor;
+
+    final genders = {1: 'male', 2: 'female', 3: 'gender'};
+    final gender = genders[item.gender];
+
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(7.5),
@@ -59,9 +67,9 @@ class ProgramBookingCard extends StatelessWidget {
                       // height: (MediaQuery.of(context).size.width / crossAxisCount) - 40,
                       height: 135,
                       child: Ink.image(
-                        image: AssetImage(
-                          item.image ?? 'assets/images/no-image.png',
-                        ),
+                        image: item.image != null
+                            ? NetworkImage(item.image as String)
+                            : AssetImage('assets/images/no-image.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -135,7 +143,7 @@ class ProgramBookingCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -153,16 +161,16 @@ class ProgramBookingCard extends StatelessWidget {
                         ),
                         width: 17.5,
                         height: 17.5,
-                        child: Image.asset(
-                          item.userImage ?? 'assets/avatar/user.png',
+                        child: Ink.image(
+                          image: item.trainerImage != null
+                              ? NetworkImage(item.trainerImage as String)
+                              : AssetImage('assets/avatar/user.png'),
                           fit: BoxFit.cover,
-                          opacity: AlwaysStoppedAnimation(
-                              item.userImage != null ? 1 : 0.25),
                         ),
                       ),
                       Expanded(
                         child: Text(
-                          item.userName,
+                          item.trainerName,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
@@ -201,7 +209,7 @@ class ProgramBookingCard extends StatelessWidget {
                           color: primaryColor,
                         ),
                         Text(
-                          '06:00 - 7:30',
+                          item.time ?? '',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
@@ -263,7 +271,7 @@ class ProgramBookingCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(3.5),
                                 ),
                                 child: Image.asset(
-                                  'assets/icons/gender.png',
+                                  'assets/icons/$gender.png',
                                   height: 15,
                                   fit: BoxFit.contain,
                                 ),

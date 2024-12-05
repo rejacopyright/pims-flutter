@@ -1,28 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:pims/_config/dio.dart';
+import 'package:pims/_config/services.dart';
+import 'package:pims/_config/storage.dart';
 import 'package:pims/_router/main.dart';
 import 'package:pims/_widgets/program_booking_card.dart';
+import 'package:pims/pages/classes/main.dart';
+
+fetchClass(String classType, String date) async {
+// final queryParameters = {'page': 1, 'limit': 2};
+  try {
+    final api = await API()
+        .get('/class/open/$classType', queryParameters: {'date': date});
+    final result = List.generate(api.data?['data']?.length ?? 0, (i) {
+      return api.data?['data']?[i];
+    });
+    await storage.write('dataClass', result);
+    return result;
+  } catch (e) {
+    return [];
+  }
+}
 
 class SelectClassController extends GetxController {
   RxBool pageIsReady = false.obs;
+  RxList dataClass = [].obs;
 
   @override
   void onInit() {
-    // TODO: implement onInit
+    Future.delayed(Duration(milliseconds: 100), () async {
+      pageIsReady.value = true;
+      final classType = Get.rootDelegate.parameters['type'];
+      final thisClass =
+          classesList.firstWhereOrNull((item) => item.name == classType);
+      final classController = Get.put(ClassAppController());
+      final date =
+          DateFormat('yyyy-MM-dd').format(classController.selectedDate.value);
+      try {
+        final res = await fetchClass(thisClass!.name, date);
+        dataClass.value = res;
+      } catch (e) {
+        //
+      }
+    });
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    pageIsReady.value = true;
-    super.onReady();
   }
 
   @override
   void refresh() {
     pageIsReady.value = false;
     Future.delayed(Duration(milliseconds: 100), () {
-      onReady();
+      onInit();
     });
     super.refresh();
   }
@@ -37,59 +66,11 @@ class SelectClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final classController = Get.put(SelectClassController());
-    List<ProgramBookingState> programData = [
-      ProgramBookingState(
-        title: 'Progressive Overload Strength & Conditioning by Reja Jamil',
-        category: 'Fungsional',
-        image: 'assets/images/sample/jujutsu.jpg',
-        price: 100000,
-        userImage: 'assets/avatar/1.png',
-        userName: 'Reja Jamil',
-      ),
-      ProgramBookingState(
-        title: 'Tai Chi',
-        category: 'Studio',
-        image: 'assets/images/sample/taichi.jpg',
-        price: 150000,
-        userImage: 'assets/avatar/2.png',
-        userName: 'Reja Jamil',
-      ),
-      ProgramBookingState(
-        title: 'Karate',
-        category: 'Fungsional',
-        image: 'assets/images/sample/karate.jpg',
-        price: 100000,
-        userImage: 'assets/avatar/3.png',
-        userName: 'Reja Jamil',
-      ),
-      ProgramBookingState(
-        title: 'Muay Thai',
-        category: 'Studio',
-        image: 'assets/images/sample/muaythai.jpg',
-        price: 25000,
-        userImage: 'assets/avatar/4.png',
-        userName: 'Reja Jamil',
-      ),
-      ProgramBookingState(
-        title: 'Kung Fu',
-        category: 'Fungsional',
-        image: 'assets/images/sample/kungfu.jpg',
-        price: 35000,
-        userImage: 'assets/avatar/5.png',
-        userName: 'Reja Jamil',
-      ),
-      ProgramBookingState(
-        title: 'Taekwondo',
-        category: 'Studio',
-        image: 'assets/images/sample/taekwondo.jpg',
-        price: 3000000,
-        userImage: 'assets/avatar/6.png',
-        userName: 'Reja Jamil',
-      ),
-    ];
 
     return Obx(() {
       final pageIsReady = classController.pageIsReady.value;
+      final dataClass = classController.dataClass;
+      final classType = params?['type'] == 'studio' ? 'Studio' : 'Fungsional';
       return GridView.count(
         clipBehavior: Clip.antiAlias,
         childAspectRatio: pageIsReady ? 0.65 : 1,
@@ -103,11 +84,41 @@ class SelectClass extends StatelessWidget {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         children: pageIsReady
-            ? programData.map((item) {
+            ? dataClass.map((item) {
+                String? image, trainerImage;
+                final gallery = item?['class']?['class_gallery'];
+                if (gallery != null && gallery?.length > 0) {
+                  image =
+                      '$SERVER_URL/static/images/class/${gallery?[0]?['filename']}';
+                }
+                if (item?['trainer']?['avatar'] != null) {
+                  trainerImage =
+                      '$SERVER_URL/static/images/user/${item?['trainer']?['avatar']}';
+                }
+                final startDate = item?['start_date'] != null
+                    ? DateFormat('HH:mm')
+                        .format(DateTime.parse(item?['start_date']).toLocal())
+                    : '';
+                final endDate = item?['end_date'] != null
+                    ? DateFormat('HH:mm')
+                        .format(DateTime.parse(item?['end_date']).toLocal())
+                    : '';
+                final classTime = '$startDate - $endDate';
+                final gender = item?['class']?['gender'] ?? 3;
                 return ProgramBookingCard(
                   to: '$homeRoute/services/class/detail',
-                  params: params,
-                  item: item,
+                  params: {...(params ?? {}), 'id': item?['id']},
+                  item: ProgramBookingState(
+                    title: item?['class']?['name'] ?? '',
+                    category: classType,
+                    image: image,
+                    price: item?['fee'] ?? 0,
+                    time: classTime,
+                    gender: gender,
+                    trainerImage: trainerImage,
+                    trainerName: item?['trainer']?['full_name'] ??
+                        item?['trainer']?['username'],
+                  ),
                   crossAxisCount: crossAxisCount,
                 );
               }).toList()

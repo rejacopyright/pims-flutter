@@ -1,14 +1,52 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/_config/services.dart';
-import 'package:pims/pages/classes/detail/main.dart';
 
-class ClassDetailDescriptionController extends ClassDetailController {}
+class ClassDetailDescriptionController extends GetxController {
+  RxBool pageIsReady = true.obs;
+
+  @override
+  void onInit() {
+    Future.delayed(Duration(milliseconds: 100), () async {
+      pageIsReady.value = true;
+    });
+    super.onInit();
+  }
+
+  @override
+  void refresh() {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 200), () {
+      onInit();
+    });
+    super.refresh();
+  }
+}
 
 class ClassDetailDescription extends StatelessWidget {
-  ClassDetailDescription({super.key, this.thisClass});
+  ClassDetailDescription({
+    super.key,
+    this.thisClass,
+    this.start_date = '',
+    this.start_time = '',
+    this.end_time = '',
+    this.trainer,
+    this.gender = 3,
+    this.title = '-',
+    this.description = '-',
+  });
   final ClassItem? thisClass;
+  final String? start_date;
+  final String? start_time;
+  final String? end_time;
+  final dynamic trainer;
+  final int gender;
+  final String title;
+  final String description;
 
   final store = Get.put(ClassDetailDescriptionController());
 
@@ -16,6 +54,10 @@ class ClassDetailDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final fullWidth = MediaQuery.of(context).size.width;
+    final replacedImageFromDescription = description.replaceAllMapped(
+      RegExp(r'(<img[^>]+)(height=)', caseSensitive: false),
+      (match) => '${match.group(1)}_${match.group(1)}',
+    );
     return Obx(() {
       final pageIsReady = store.pageIsReady.value;
       if (pageIsReady) {
@@ -43,7 +85,7 @@ class ClassDetailDescription extends StatelessWidget {
                         color: primaryColor,
                       ),
                       Text(
-                        'Senin, 18 Mei 1992',
+                        start_date ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -58,7 +100,7 @@ class ClassDetailDescription extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
-                        '06:00 - 7:30',
+                        '$start_time - $end_time',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -79,10 +121,11 @@ class ClassDetailDescription extends StatelessWidget {
                     ),
                     width: 50,
                     height: 50,
-                    child: Image.asset(
-                      'assets/avatar/5.png',
+                    child: Ink.image(
+                      image: trainer?['avatar'] != null
+                          ? NetworkImage(trainer['avatar'] as String)
+                          : AssetImage('assets/avatar/user.png'),
                       fit: BoxFit.cover,
-                      opacity: AlwaysStoppedAnimation(1),
                     ),
                   ),
                   Expanded(
@@ -90,7 +133,7 @@ class ClassDetailDescription extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Reja Jamil',
+                          trainer?['full_name'] ?? trainer?['username'] ?? '',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
@@ -99,7 +142,7 @@ class ClassDetailDescription extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Instruktur balap renang',
+                          '${trainer?['username'] ?? ''} | ${trainer?['email'] ?? ''}',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
@@ -115,7 +158,8 @@ class ClassDetailDescription extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(top: 10, bottom: 10),
-              child: ClassDesciptionBadges(thisClass: thisClass),
+              child:
+                  ClassDesciptionBadges(thisClass: thisClass, gender: gender),
             ),
             Container(
               margin: EdgeInsets.only(top: 15, bottom: 15),
@@ -125,7 +169,7 @@ class ClassDetailDescription extends StatelessWidget {
               //   borderRadius: BorderRadius.circular(5),
               // ),
               child: Text(
-                'Progressive Overload Strength & Conditioning (Not Air Conditioner) by Reja Jamil',
+                title,
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -133,14 +177,7 @@ class ClassDetailDescription extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
-              'Karate adalah seni bela diri yang berasal dari Jepang. Seni bela diri ini sedikit dipengaruhi oleh seni bela diri Cina, Kempo. Karate dibawa masuk ke Jepang lewat Okinawa dan mulai berkembang di Ryukyu Islands. Seni bela diri ini pertama kali disebut Tote yang berarti seperti Tinju China. Ketika karate masuk ke Jepang, nasionalisme Jepang pada saat itu sedang tinggi-tingginya, sehingga Sensei Gichin Funakoshi mengubah kanji Okinawa (Tote: Tinju China) dalam kanji Jepang menjadi karate (tangan kosong) agar lebih mudah diterima oleh masyarakat Jepang. Karate terdiri dari atas dua kanji. Yang pertama adalah Kara dan berarti kosong. Dan yang kedua, te, berarti tangan. Yang dua kanji bersama artinya tangan kosong',
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                height: 2,
-                fontSize: 15,
-              ),
-            ),
+            HtmlWidget(replacedImageFromDescription),
           ],
         );
       }
@@ -185,13 +222,19 @@ class ClassDesciptionBadges extends StatelessWidget {
   const ClassDesciptionBadges({
     super.key,
     required this.thisClass,
+    this.gender = 3,
   });
 
   final ClassItem? thisClass;
+  final int gender;
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final gendersIcon = {1: 'male', 2: 'female', 3: 'gender'};
+    final gendersLabel = {1: 'Pria', 2: 'Wanita', 3: 'Campuran'};
+    final genderIcon = gendersIcon[gender];
+    final genderLabel = gendersLabel[gender];
     return Wrap(
       spacing: 10,
       children: [
@@ -231,12 +274,12 @@ class ClassDesciptionBadges extends StatelessWidget {
             spacing: 5,
             children: [
               Image.asset(
-                'assets/icons/gender.png',
+                'assets/icons/$genderIcon.png',
                 height: 18,
                 fit: BoxFit.contain,
               ),
               Text(
-                'Campuran',
+                genderLabel ?? 'Campuran',
                 style: TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.bold,

@@ -1,11 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pims/pages/classes/detail/main.dart';
+import 'package:pims/_widgets/helper.dart';
 
-class ClassDetailPriceController extends ClassDetailController {}
+class ClassDetailPriceController extends GetxController {
+  RxBool pageIsReady = true.obs;
+
+  @override
+  void onInit() {
+    Future.delayed(Duration(milliseconds: 100), () async {
+      pageIsReady.value = true;
+    });
+    super.onInit();
+  }
+
+  @override
+  void refresh() {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 200), () {
+      onInit();
+    });
+    super.refresh();
+  }
+}
 
 class ClassDetailPrice extends StatelessWidget {
-  ClassDetailPrice({super.key});
+  ClassDetailPrice({super.key, this.fee = 0});
+  final int fee;
 
   final store = Get.put(ClassDetailPriceController());
 
@@ -37,43 +57,43 @@ class ClassDetailPrice extends StatelessWidget {
                   spacing: 10,
                   children: [
                     Text(
-                      'Rp. 25.000',
+                      'Rp. ${currency.format(fee)}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryColor,
                         fontSize: 20,
                       ),
                     ),
-                    Text(
-                      'Rp. 30.000',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.black.withOpacity(0.25),
-                        fontStyle: FontStyle.italic,
-                        decoration: TextDecoration.lineThrough,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(
-                        left: 5,
-                        right: 5,
-                        top: 1.5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text(
-                        '17%',
-                        softWrap: false,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
+                    // Text(
+                    //   'Rp. 30.000',
+                    //   style: TextStyle(
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 12,
+                    //     color: Colors.black.withOpacity(0.25),
+                    //     fontStyle: FontStyle.italic,
+                    //     decoration: TextDecoration.lineThrough,
+                    //   ),
+                    // ),
+                    // Container(
+                    //   padding: EdgeInsets.only(
+                    //     left: 5,
+                    //     right: 5,
+                    //     top: 1.5,
+                    //   ),
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.red.withOpacity(0.1),
+                    //     borderRadius: BorderRadius.circular(5),
+                    //   ),
+                    //   child: Text(
+                    //     '17%',
+                    //     softWrap: false,
+                    //     style: TextStyle(
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: 12,
+                    //       color: Colors.red,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 Text(
