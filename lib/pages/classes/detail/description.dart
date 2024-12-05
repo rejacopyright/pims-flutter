@@ -31,6 +31,7 @@ class ClassDetailDescription extends StatelessWidget {
   ClassDetailDescription({
     super.key,
     this.thisClass,
+    required this.dataIsReady,
     this.start_date = '',
     this.start_time = '',
     this.end_time = '',
@@ -40,6 +41,7 @@ class ClassDetailDescription extends StatelessWidget {
     this.description = '-',
   });
   final ClassItem? thisClass;
+  final bool dataIsReady;
   final String? start_date;
   final String? start_time;
   final String? end_time;
@@ -60,7 +62,7 @@ class ClassDetailDescription extends StatelessWidget {
     );
     return Obx(() {
       final pageIsReady = store.pageIsReady.value;
-      if (pageIsReady) {
+      if (pageIsReady && dataIsReady) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

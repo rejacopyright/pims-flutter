@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:synchronized/synchronized.dart';
 
-String SERVER_URL = 'https://api.pimsclub.id';
+String SERVER_URL = 'http://127.0.0.1:4000';
 
 class TokenRefreshInterceptor extends QueuedInterceptor {
   final Dio dio;

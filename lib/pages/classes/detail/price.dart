@@ -24,8 +24,9 @@ class ClassDetailPriceController extends GetxController {
 }
 
 class ClassDetailPrice extends StatelessWidget {
-  ClassDetailPrice({super.key, this.fee = 0});
+  ClassDetailPrice({super.key, this.fee = 0, required this.dataIsReady});
   final int fee;
+  final bool dataIsReady;
 
   final store = Get.put(ClassDetailPriceController());
 
@@ -33,7 +34,7 @@ class ClassDetailPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       final pageIsReady = store.pageIsReady.value;
-      if (pageIsReady) {
+      if (pageIsReady && dataIsReady) {
         return Material(
           color: Colors.white,
           clipBehavior: Clip.antiAlias,

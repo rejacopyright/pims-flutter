@@ -31,6 +31,7 @@ fetchDetailClass(String? id) async {
 
 class ClassDetailController extends GetxController {
   RxBool pageIsReady = false.obs;
+  RxBool dataIsReady = false.obs;
   final detailClass = Rxn<Map<String, dynamic>>(null);
 
   @override
@@ -38,8 +39,12 @@ class ClassDetailController extends GetxController {
     pageIsReady.value = true;
     Future.delayed(Duration(milliseconds: 300), () async {
       final id = Get.rootDelegate.parameters['id'];
-      final res = await fetchDetailClass(id);
-      detailClass.value = res;
+      try {
+        final res = await fetchDetailClass(id);
+        detailClass.value = res;
+      } finally {
+        dataIsReady.value = true;
+      }
     });
     super.onInit();
   }
@@ -92,6 +97,7 @@ class ClassDetailPage extends StatelessWidget {
                   return Obx(() {
                     final detail = thisController.detailClass.value;
                     final gallery = detail?['class']?['class_gallery'];
+                    final dataIsReady = thisController.dataIsReady.value;
                     dynamic images;
                     if (gallery != null && gallery?.length > 0) {
                       images = gallery;
@@ -110,10 +116,14 @@ class ClassDetailPage extends StatelessWidget {
                     final gender = detail?['class']?['gender'] ?? 3;
                     return Column(
                       children: [
-                        ClassDetailImageSlider(images: images),
+                        ClassDetailImageSlider(
+                            images: images, dataIsReady: dataIsReady),
                         Container(
                           margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-                          child: ClassDetailPrice(fee: detail?['fee'] ?? 0),
+                          child: ClassDetailPrice(
+                            fee: detail?['fee'] ?? 0,
+                            dataIsReady: dataIsReady,
+                          ),
                         ),
                         Container(
                           alignment: Alignment.topLeft,
@@ -131,6 +141,7 @@ class ClassDetailPage extends StatelessWidget {
                             title: detail?['class']?['name'] ?? '-',
                             description:
                                 detail?['class']?['description'] ?? '-',
+                            dataIsReady: dataIsReady,
                           ),
                         ),
                       ],

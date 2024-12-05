@@ -30,8 +30,9 @@ class ClassDetailImageSliderController extends GetxController {
 final CarouselSliderController _controller = CarouselSliderController();
 
 class ClassDetailImageSlider extends StatelessWidget {
-  ClassDetailImageSlider({super.key, this.images});
+  ClassDetailImageSlider({super.key, this.images, required this.dataIsReady});
   final dynamic images;
+  final bool dataIsReady;
 
   final store = Get.put(ClassDetailImageSliderController());
 
@@ -45,7 +46,7 @@ class ClassDetailImageSlider extends StatelessWidget {
     }
     return Obx(() {
       final pageIsReady = store.pageIsReady.value;
-      if (pageIsReady) {
+      if (pageIsReady && dataIsReady) {
         if (thisImages != null) {
           return Column(
             children: [
