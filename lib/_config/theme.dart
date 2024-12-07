@@ -5,8 +5,8 @@ ThemeData themeConfig() {
   late Color primaryColor = Colors.green; // 4CAF50
   return ThemeData(
     scaffoldBackgroundColor: Colors.white,
-    fontFamily: GoogleFonts.catamaran()
-        .fontFamily, // comfortaa, outfit, poiretOne, catamaran, josefinSans, dosis, poppins
+    fontFamily: GoogleFonts.questrial()
+        .fontFamily, // questrial, comfortaa, outfit, poiretOne, catamaran, josefinSans, dosis, poppins
     useMaterial3: true,
     primaryColor: primaryColor,
     colorScheme: ColorScheme.fromSeed(

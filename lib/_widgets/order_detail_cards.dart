@@ -38,7 +38,7 @@ class OrderDetailPaymentBank extends StatelessWidget {
       return Column(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 25),
+            margin: EdgeInsets.only(top: 25, bottom: 15),
             alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
@@ -116,6 +116,147 @@ class OrderDetailPaymentBank extends StatelessWidget {
                       ),
                       Text(
                         isCopied ? 'Tersalin' : 'Salin',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: isCopied ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    });
+  }
+}
+
+class OrderDetailMandiriBank extends StatelessWidget {
+  const OrderDetailMandiriBank({
+    super.key,
+    required this.biller_code,
+    required this.bill_key,
+  });
+  final String biller_code;
+  final String bill_key;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = Get.put(OrderDetailCardController());
+    final paymentController = Get.put(PaymentController());
+    final primaryColor = Theme.of(context).primaryColor;
+    return Obx(() {
+      final paymentData = paymentController.paymentData.value;
+      final payment =
+          paymentData?.firstWhereOrNull((item) => item.name == 'mandiri');
+      final isPayment = payment != null;
+      final isCopied = state.isCopied.value;
+      return Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 25, bottom: 10),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            height: isPayment ? 35 : 75,
+            child: Image.asset(
+              payment?.icon ?? 'assets/icons/no-image.png',
+              fit: BoxFit.contain,
+              opacity: AlwaysStoppedAnimation(1),
+            ),
+          ),
+          Container(
+            margin: EdgeInsetsDirectional.only(top: 10),
+            alignment: Alignment.center,
+            child: Text(
+              'Biller Code :',
+              style: TextStyle(fontSize: 14),
+            ),
+          ),
+          Container(
+            margin: EdgeInsetsDirectional.only(top: 5),
+            alignment: Alignment.center,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                biller_code,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsetsDirectional.only(top: 10),
+            alignment: Alignment.center,
+            child: Text(
+              'Bill Key :',
+              style: TextStyle(fontSize: 14),
+            ),
+          ),
+          Container(
+            margin: EdgeInsetsDirectional.only(top: 5),
+            alignment: Alignment.center,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                bill_key,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(top: 15),
+            child: Material(
+              color: isCopied ? primaryColor : Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(7.5),
+                side: const BorderSide(
+                  color: Color(0xffdddddd),
+                  width: 1,
+                ),
+              ),
+              // elevation: 1,
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                splashFactory: InkSplash.splashFactory,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  await state.setCopied(true);
+                  await Clipboard.setData(
+                    ClipboardData(text: bill_key),
+                  );
+                  Future.delayed(Duration(milliseconds: 1500), () {
+                    state.setCopied(false);
+                  });
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    bottom: 10,
+                    left: 15,
+                    right: 25,
+                  ),
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 10,
+                    children: [
+                      Icon(
+                        Iconsax.copy5,
+                        size: 18,
+                        color: isCopied ? Colors.white : Colors.black,
+                      ),
+                      Text(
+                        isCopied ? 'Tersalin' : 'Salin Biller Key',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

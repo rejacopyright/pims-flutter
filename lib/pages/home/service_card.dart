@@ -46,7 +46,8 @@ class ServiceCard extends StatelessWidget {
             child: Text(
               label,
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 13, height: 1),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
