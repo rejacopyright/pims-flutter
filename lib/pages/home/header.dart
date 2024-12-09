@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pims/_config/dio.dart';
+import 'package:pims/_controller/user_controller.dart';
 import 'package:pims/_router/main.dart';
 import 'package:pims/_widgets/helper.dart';
 
@@ -82,6 +84,7 @@ class HomeHeaderContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final state = Get.put(HomeHeaderController());
+    final userController = Get.put(UserController());
     final box = GetStorage();
     final user = box.read('user');
     var name = user['username'];
@@ -95,6 +98,7 @@ class HomeHeaderContent extends StatelessWidget {
     name = name.toString().toTitleCase();
     return Obx(() {
       final pageIsReady = state.pageIsReady.value;
+      final avatar = userController.avatar.value;
       return Container(
         // width: double.infinity,
         margin: EdgeInsets.only(bottom: 5, left: 15, right: 15),
@@ -129,8 +133,11 @@ class HomeHeaderContent extends StatelessWidget {
                               ),
                               width: 35,
                               height: 35,
-                              child: Image.asset(
-                                'assets/avatar/3.png',
+                              child: Image(
+                                image: avatar != null
+                                    ? NetworkImage(
+                                        '$SERVER_URL/static/images/user/$avatar')
+                                    : AssetImage('assets/avatar/5.png'),
                                 fit: BoxFit.cover,
                               ),
                             ),

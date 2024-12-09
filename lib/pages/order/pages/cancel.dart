@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_config/dio.dart';
 import 'package:pims/_config/storage.dart';
+import 'package:pims/_widgets/nodata.dart';
 import 'package:pims/_widgets/order_item_card.dart';
 
 fetchOrderCancel() async {
@@ -68,13 +69,16 @@ class CancelOrderPage extends StatelessWidget {
         onRefresh: () async {
           store.refresh();
         },
-        child: ListView.builder(
-          padding: EdgeInsets.only(top: 15, bottom: 150, left: 15, right: 15),
-          itemCount: data.length,
-          itemBuilder: (ctx, index) => isReady
-              ? OrderItem(params: {'status': 'cancel'}, data: data[index])
-              : OrderItemLoader(),
-        ),
+        child: data.isEmpty
+            ? NoData(text: 'Tidak ada transaksi')
+            : ListView.builder(
+                padding:
+                    EdgeInsets.only(top: 15, bottom: 150, left: 15, right: 15),
+                itemCount: data.length,
+                itemBuilder: (ctx, index) => isReady
+                    ? OrderItem(params: {'status': 'cancel'}, data: data[index])
+                    : OrderItemLoader(),
+              ),
       );
     });
   }
