@@ -10,6 +10,8 @@ class ProgramBookingState {
   int? price;
   String? time;
   int? gender;
+  int quota;
+  int booked;
   String? trainerImage;
   String trainerName;
   ProgramBookingState({
@@ -20,6 +22,8 @@ class ProgramBookingState {
     this.time,
     this.gender,
     this.trainerImage,
+    this.quota = 0,
+    this.booked = 0,
     required this.trainerName,
   });
 }
@@ -118,11 +122,13 @@ class ProgramBookingCard extends StatelessWidget {
                           bottom: 0,
                         ),
                         decoration: BoxDecoration(
-                          color: primaryColor,
+                          color: item.booked >= item.quota
+                              ? Colors.red
+                              : primaryColor,
                           borderRadius: BorderRadius.circular(3.5),
                         ),
                         child: Text(
-                          '2/10',
+                          '${item.booked}/${item.quota}',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(

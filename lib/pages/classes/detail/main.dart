@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pims/_config/dio.dart';
 import 'package:pims/_config/services.dart';
@@ -69,56 +70,71 @@ class ClassDetailPage extends StatelessWidget {
     final classType = Get.rootDelegate.parameters['type'];
     final thisClass =
         classesList.firstWhereOrNull((item) => item.name == classType);
-    return Scaffold(
-      bottomNavigationBar: SafeArea(child: ClassBottomNav()),
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return [ClassDetailAppBar()];
-        },
-        body: RefreshIndicator(
-          color: Theme.of(context).primaryColor,
-          displacement: 30,
-          onRefresh: () async {
-            imageController.refresh();
-            priceController.refresh();
-            descriptionController.refresh();
+    final box = GetStorage();
+    final user = box.read('user');
+    return Obx(() {
+      final detail = thisController.detailClass.value;
+      final gallery = detail?['class']?['class_gallery'];
+      final dataIsReady = thisController.dataIsReady.value;
+      dynamic images;
+      if (gallery != null && gallery?.length > 0) {
+        images = gallery;
+      }
+      String? start_date, start_time, end_time;
+      int? duration;
+      if (detail?['start_date'] != null) {
+        start_date = DateFormat('EEEE, dd MMMM yyyy')
+            .format(DateTime.parse(detail?['start_date']).toLocal());
+        start_time = DateFormat('HH:mm')
+            .format(DateTime.parse(detail?['start_date']).toLocal());
+      }
+      if (detail?['end_date'] != null) {
+        end_time = DateFormat('HH:mm')
+            .format(DateTime.parse(detail?['end_date']).toLocal());
+      }
+      if (detail?['start_date'] != null && detail?['end_date'] != null) {
+        duration = DateTime.parse(detail?['end_date'])
+            .difference(DateTime.parse(detail?['start_date']))
+            .inMinutes;
+      }
+      final gender = detail?['class']?['gender'] ?? 3;
+      final int quota = detail?['quota'] ?? 0;
+      final int booked = detail?['transaction']?.length ?? 0;
+      final isFull = booked >= quota;
+      List userTrxIds = detail != null &&
+              detail['transaction'] != null &&
+              detail['transaction']?.length > 0
+          ? detail['transaction']?.map((item) => item?['user']?['id']).toList()
+          : [];
+      final isBookedByMe = userTrxIds.contains(user?['id']);
+      return Scaffold(
+        bottomNavigationBar: SafeArea(
+            child: isFull
+                ? ClassBottomNavFullQuota()
+                : isBookedByMe
+                    ? ClassBottomNavIsBookedByMe()
+                    : ClassBottomNav()),
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [ClassDetailAppBar()];
           },
-          child: CustomScrollView(
-            controller: classDetailScrollController,
-            physics: AlwaysScrollableScrollPhysics(),
-            scrollBehavior: MaterialScrollBehavior().copyWith(
-              overscroll: false,
-            ),
-            slivers: [
-              SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  return Obx(() {
-                    final detail = thisController.detailClass.value;
-                    final gallery = detail?['class']?['class_gallery'];
-                    final dataIsReady = thisController.dataIsReady.value;
-                    dynamic images;
-                    if (gallery != null && gallery?.length > 0) {
-                      images = gallery;
-                    }
-                    String? start_date, start_time, end_time;
-                    int? duration;
-                    if (detail?['start_date'] != null) {
-                      start_date = DateFormat('EEEE, dd MMMM yyyy').format(
-                          DateTime.parse(detail?['start_date']).toLocal());
-                      start_time = DateFormat('HH:mm').format(
-                          DateTime.parse(detail?['start_date']).toLocal());
-                    }
-                    if (detail?['end_date'] != null) {
-                      end_time = DateFormat('HH:mm').format(
-                          DateTime.parse(detail?['end_date']).toLocal());
-                    }
-                    if (detail?['start_date'] != null &&
-                        detail?['end_date'] != null) {
-                      duration = DateTime.parse(detail?['end_date'])
-                          .difference(DateTime.parse(detail?['start_date']))
-                          .inMinutes;
-                    }
-                    final gender = detail?['class']?['gender'] ?? 3;
+          body: RefreshIndicator(
+            color: Theme.of(context).primaryColor,
+            displacement: 30,
+            onRefresh: () async {
+              imageController.refresh();
+              priceController.refresh();
+              descriptionController.refresh();
+            },
+            child: CustomScrollView(
+              controller: classDetailScrollController,
+              physics: AlwaysScrollableScrollPhysics(),
+              scrollBehavior: MaterialScrollBehavior().copyWith(
+                overscroll: false,
+              ),
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
                     return Column(
                       children: [
                         ClassDetailImageSlider(
@@ -152,36 +168,36 @@ class ClassDetailPage extends StatelessWidget {
                         ),
                       ],
                     );
-                  });
-                }, childCount: 1),
-              ),
-              // SliverAppBar(
-              //   backgroundColor: Colors.white,
-              //   shadowColor: Colors.black.withOpacity(0.25),
-              //   elevation: 1,
-              //   pinned: true,
-              //   automaticallyImplyLeading: false,
-              //   surfaceTintColor: Colors.transparent,
-              //   centerTitle: false,
-              //   toolbarHeight: 35,
-              //   flexibleSpace: FlexibleSpaceBar(
-              //     titlePadding: EdgeInsets.zero,
-              //     centerTitle: false,
-              //     title: ProductDetailTabs(
-              //       key: productDetailTabKey,
-              //     ),
-              //   ),
-              // ),
-              // SliverList.builder(
-              //   itemBuilder: (context, index) {
-              //     return Text('Tab Content');
-              //   },
-              //   itemCount: 1,
-              // ),
-            ],
+                  }, childCount: 1),
+                ),
+                // SliverAppBar(
+                //   backgroundColor: Colors.white,
+                //   shadowColor: Colors.black.withOpacity(0.25),
+                //   elevation: 1,
+                //   pinned: true,
+                //   automaticallyImplyLeading: false,
+                //   surfaceTintColor: Colors.transparent,
+                //   centerTitle: false,
+                //   toolbarHeight: 35,
+                //   flexibleSpace: FlexibleSpaceBar(
+                //     titlePadding: EdgeInsets.zero,
+                //     centerTitle: false,
+                //     title: ProductDetailTabs(
+                //       key: productDetailTabKey,
+                //     ),
+                //   ),
+                // ),
+                // SliverList.builder(
+                //   itemBuilder: (context, index) {
+                //     return Text('Tab Content');
+                //   },
+                //   itemCount: 1,
+                // ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

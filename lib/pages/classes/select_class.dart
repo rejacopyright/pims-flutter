@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pims/_config/dio.dart';
@@ -122,6 +119,8 @@ class SelectClass extends StatelessWidget {
                         trainerImage: trainerImage,
                         trainerName: item?['trainer']?['full_name'] ??
                             item?['trainer']?['username'],
+                        quota: item?['quota'] ?? 0,
+                        booked: item?['transaction']?.length ?? 0,
                       ),
                       crossAxisCount: crossAxisCount,
                     );
