@@ -26,6 +26,17 @@ class OrderDetailPageController extends GetxController {
     });
     super.onInit();
   }
+
+  @override
+  void onClose() {
+    final lastHistory =
+        Get.rootDelegate.history[Get.rootDelegate.history.length - 1];
+    final currentPageName = lastHistory.currentPage?.name;
+    if (currentPageName == '/order/detail') {
+      Get.rootDelegate.popRoute();
+    }
+    super.onClose();
+  }
 }
 
 class OrderDetailPage extends StatelessWidget {
