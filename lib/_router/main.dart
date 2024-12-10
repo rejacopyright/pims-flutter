@@ -17,6 +17,7 @@ import 'package:pims/pages/order/detail/main.dart';
 import 'package:pims/pages/order/main.dart';
 import 'package:pims/pages/product/detail/main.dart';
 import 'package:pims/pages/product/main.dart';
+import 'package:pims/pages/profile/edit/main.dart';
 import 'package:pims/pages/profile/main.dart';
 import 'package:pims/pages/visit/main.dart';
 
@@ -182,12 +183,18 @@ List<Route> menusNav = [
         ),
       ]),
   Route(
-    name: '/profile',
-    page: Scoper(child: ProfilePage()),
-    label: 'Akun',
-    icon: Iconsax.profile_circle,
-    activeIcon: Iconsax.profile_tick5,
-  ),
+      name: '/profile',
+      page: Scoper(child: ProfilePage()),
+      label: 'Akun',
+      icon: Iconsax.profile_circle,
+      activeIcon: Iconsax.profile_tick5,
+      children: [
+        GetPage(
+          name: '/edit',
+          page: () => ProfileEditPage(),
+          participatesInRootNavigator: true,
+        ),
+      ]),
 ];
 
 List<String> pageHasNav = [

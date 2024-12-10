@@ -205,7 +205,10 @@ class ProfileAppBar extends StatelessWidget {
                                       SizedBox(
                                         height: 35,
                                         child: TextButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Get.rootDelegate
+                                                .toNamed('/profile/edit');
+                                          },
                                           style: TextButton.styleFrom(
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
@@ -312,8 +315,8 @@ class TakePictureWidget extends StatelessWidget {
             'data:image/${ext == 'png' ? 'png' : 'jpeg'};base64,';
         final base64Data = base64Encode(imageByte);
         final base64Str = '$base64prefix$base64Data';
-        final api = await API()
-            .post('users/update/avatar', data: {'avatar': base64Str});
+        final api =
+            await API().post('update/avatar', data: {'avatar': base64Str});
         if (api.data?['status'] == 'success') {
           final box = GetStorage();
           final profileStore = Get.put(UserController());
