@@ -1,4 +1,4 @@
-package com.example.pims
+package id.pimsclub.pims
 
 import io.flutter.embedding.android.FlutterActivity
 

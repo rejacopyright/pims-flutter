@@ -8,7 +8,7 @@
 PRODUCT_NAME = pims
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.pims
+PRODUCT_BUNDLE_IDENTIFIER = id.pimsclub.pims
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2024 com.example. All rights reserved.
