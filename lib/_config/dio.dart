@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:synchronized/synchronized.dart';
 
-String SERVER_URL = 'http://127.0.0.1:4000';
+String SERVER_URL = 'https://tidy-safe-lemur.ngrok-free.app';
 
 class TokenRefreshInterceptor extends QueuedInterceptor {
   final Dio dio;

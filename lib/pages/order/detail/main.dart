@@ -28,7 +28,7 @@ class OrderDetailPageController extends GetxController {
   }
 
   @override
-  void onClose() {
+  void onClose() async {
     final lastHistory =
         Get.rootDelegate.history[Get.rootDelegate.history.length - 1];
     final currentPageName = lastHistory.currentPage?.name;

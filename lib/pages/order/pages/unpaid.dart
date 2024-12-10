@@ -22,6 +22,8 @@ class UnpaidOrderController extends GetxController {
   RxBool isReady = false.obs;
   RxList order_unpaid = [].obs;
 
+  setOrderUnpaid(e) => order_unpaid.value = e;
+
   @override
   void onInit() {
     Future.delayed(Duration(milliseconds: 100), () async {
@@ -69,20 +71,21 @@ class UnpaidOrderPage extends StatelessWidget {
         onRefresh: () async {
           store.refresh();
         },
-        child: data.isEmpty
-            ? NoData(text: 'Tidak ada transaksi')
-            : ListView.builder(
-                padding:
-                    EdgeInsets.only(top: 15, bottom: 150, left: 15, right: 15),
-                shrinkWrap: true,
-                itemCount: data.length,
-                itemBuilder: (ctx, index) {
-                  return isReady
-                      ? OrderItem(
-                          params: {'status': 'unpaid'}, data: data[index])
-                      : OrderItemLoader();
-                },
-              ),
+        // NoData(text: 'Tidak ada transaksi'),
+        child: ListView.builder(
+          padding: EdgeInsets.only(top: 15, bottom: 150, left: 15, right: 15),
+          shrinkWrap: true,
+          itemCount: data.isEmpty ? 1 : data.length,
+          itemBuilder: (ctx, index) {
+            return isReady
+                ? data.isEmpty
+                    ? SizedBox(
+                        height: Get.height / 1.5,
+                        child: NoData(text: 'Tidak ada transaksi'))
+                    : OrderItem(params: {'status': 'unpaid'}, data: data[index])
+                : OrderItemLoader();
+          },
+        ),
       );
     });
   }

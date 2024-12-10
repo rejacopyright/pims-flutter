@@ -69,16 +69,17 @@ class ActiveOrderPage extends StatelessWidget {
         onRefresh: () async {
           store.refresh();
         },
-        child: data.isEmpty
-            ? NoData(text: 'Tidak ada transaksi')
-            : ListView.builder(
-                padding:
-                    EdgeInsets.only(top: 15, bottom: 150, left: 15, right: 15),
-                itemCount: data.length,
-                itemBuilder: (ctx, index) => isReady
-                    ? OrderItem(params: {'status': 'active'}, data: data[index])
-                    : OrderItemLoader(),
-              ),
+        child: ListView.builder(
+          padding: EdgeInsets.only(top: 15, bottom: 150, left: 15, right: 15),
+          itemCount: data.length,
+          itemBuilder: (ctx, index) => isReady
+              ? data.isEmpty
+                  ? SizedBox(
+                      height: Get.height / 1.5,
+                      child: NoData(text: 'Tidak ada transaksi'))
+                  : OrderItem(params: {'status': 'active'}, data: data[index])
+              : OrderItemLoader(),
+        ),
       );
     });
   }

@@ -4,7 +4,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pims/_config/dio.dart';
 
 class ProfileEditController extends GetxController {
   RxString email = ''.obs;
