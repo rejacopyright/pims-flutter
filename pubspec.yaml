@@ -13,7 +13,7 @@ dependencies:
  google_fonts: ^6.2.1
  carousel_slider: ^5.0.0
  smooth_page_indicator: ^1.2.0+3
- intl: ^0.20.1
+ intl: any
  flutter_rating_bar: ^4.0.1
  flutter_svg: ^2.0.11
  coupon_uikit: ^0.2.1
@@ -25,6 +25,8 @@ dependencies:
  qr_flutter: ^4.1.0
  flutter_widget_from_html: ^0.15.3
  image_picker: ^1.1.2
+ flutter_localizations:
+  sdk: flutter
 dev_dependencies:
  flutter_test:
   sdk: flutter
