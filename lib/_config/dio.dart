@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:synchronized/synchronized.dart';
 
-String SERVER_URL = 'https://tidy-safe-lemur.ngrok-free.app';
+String SERVER_URL = 'http://127.0.0.1:4000';
 
 class TokenRefreshInterceptor extends QueuedInterceptor {
   final Dio dio;
@@ -55,6 +55,7 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
           final api = await dioRefresh.post('auth/token/refresh');
           await box.write('token', api.data['token']);
           await box.write('refresh_token', api.data['refresh_token']);
+          await box.write('user', api.data['user']);
 
           // Retry the original request with the new token
           err.requestOptions.headers['Authorization'] =
