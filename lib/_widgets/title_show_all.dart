@@ -23,40 +23,41 @@ class TitleShowAll extends StatelessWidget {
       padding: EdgeInsets.only(left: 15, right: 10),
       margin: margin ?? EdgeInsets.symmetric(vertical: 10),
       child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title ?? 'Title',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title ?? 'Title',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
             ),
-            InkWell(
-              onTap: () {},
-              borderRadius: BorderRadius.circular(5),
-              child: Container(
-                padding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 5),
-                // margin: EdgeInsets.only(top: 3),
-                child: Wrap(
-                  spacing: 2,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      showMore ?? 'Selengkapnya',
-                      style: TextStyle(
-                        color: primary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
+          ),
+          InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(5),
+            child: Container(
+              padding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 5),
+              // margin: EdgeInsets.only(top: 3),
+              child: Wrap(
+                spacing: 2,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(
+                    showMore ?? 'Selengkapnya',
+                    style: TextStyle(
+                      color: primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
                     ),
-                    Icon(Iconsax.arrow_right_3, size: 12, color: primary),
-                  ],
-                ),
+                  ),
+                  Icon(Iconsax.arrow_right_3, size: 12, color: primary),
+                ],
               ),
             ),
-          ]),
+          ),
+        ],
+      ),
     );
   }
 }

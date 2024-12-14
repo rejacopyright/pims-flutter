@@ -47,11 +47,12 @@ class BannerPromo extends StatelessWidget {
       'assets/images/home-banner-1.jpg',
     ];
     final store = Get.put(BannerPromoController());
+    double bannerHeight = 150;
     return Obx(() {
       final currentPage = store.currentPage.value;
       final pageIsReady = store.pageIsReady.value;
       return SizedBox(
-        height: 125,
+        height: bannerHeight,
         child: pageIsReady
             ? Stack(
                 children: [
@@ -60,7 +61,7 @@ class BannerPromo extends StatelessWidget {
                     options: CarouselOptions(
                       autoPlay: true,
                       autoPlayInterval: Duration(seconds: 7),
-                      height: 125.0,
+                      height: bannerHeight,
                       viewportFraction: 0.95,
                       enlargeCenterPage: true,
                       enlargeFactor: 0.5,
