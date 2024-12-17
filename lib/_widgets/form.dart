@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class SearchField extends StatelessWidget {
-  const SearchField({super.key});
+  const SearchField({super.key, this.onChange});
+  final ValueChanged<dynamic>? onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +12,12 @@ class SearchField extends StatelessWidget {
       child: TextField(
         maxLines: 1,
         style: TextStyle(fontSize: 14),
+        onTapOutside: (e) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        onChanged: (val) {
+          onChange!(val);
+        },
         decoration: InputDecoration(
           filled: true,
           fillColor: Color(0xffeeeeee).withOpacity(0.9),

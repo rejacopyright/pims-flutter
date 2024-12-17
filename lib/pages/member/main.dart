@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/_router/main.dart';
-import 'package:pims/_widgets/title_show_all.dart';
 
 import 'appbar.dart';
-import 'more_member.dart';
 
 class MemberController extends GetxController {
   RxBool pageIsReady = false.obs;
