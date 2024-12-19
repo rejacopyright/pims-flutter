@@ -20,6 +20,12 @@ extension TitleCase on String {
   }
 }
 
+extension ToFixed on double {
+  double toFixed(n) {
+    return double.parse(toStringAsFixed(n));
+  }
+}
+
 extension Uint8ListExtensions on Uint8List {
   bool startsWith(List<int> pattern) {
     if (pattern.length > length) return false;

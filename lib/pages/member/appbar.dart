@@ -1,25 +1,38 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:pims/_router/main.dart';
 import 'package:pims/_widgets/button.dart';
+import 'package:pims/_widgets/helper.dart';
 
 class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MemberAppBar({super.key});
+  const MemberAppBar({super.key, this.me});
+  final Map<String, dynamic>? me;
 
   @override
   Size get preferredSize => Size.fromHeight(120);
 
   @override
   Widget build(BuildContext context) {
-    double expandedHeight = 200;
-    double toolbarHeight = 80;
+    final membership = me?['membership'];
+    final member = me?['member'];
+    bool isMember = false;
+    if (membership?['end_date'] != null) {
+      final end_date = DateTime.parse(membership['end_date']).toLocal();
+      final now = DateTime.now();
+      isMember = now.isBefore(end_date);
+    }
+    double toolbarHeight = 70;
+    double expandedHeight = isMember ? 200 : toolbarHeight;
     return SliverLayoutBuilder(builder: (context, sliverConstraints) {
       final bool isCollapsed =
           sliverConstraints.scrollOffset + toolbarHeight > expandedHeight;
       final statusBarColor = isCollapsed ? Colors.white : Colors.transparent;
-      final textColor = isCollapsed ? Colors.black : Colors.white;
+      final textColor = isCollapsed && isMember ? Colors.black : Colors.white;
       return SliverAppBar(
         backgroundColor: statusBarColor,
         shadowColor: Colors.black.withOpacity(0.25),
@@ -40,12 +53,14 @@ class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
             clipBehavior: Clip.none,
             children: [
               HeaderBackgroundMember(),
-              Positioned(
-                top: 20,
-                left: 0,
-                right: 0,
-                child: MemberCard(),
-              ),
+              isMember
+                  ? Positioned(
+                      top: 20,
+                      left: 0,
+                      right: 0,
+                      child: MemberCard(me: me),
+                    )
+                  : SizedBox.shrink(),
             ],
           ),
           title: Container(
@@ -75,10 +90,15 @@ class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     width: 50,
                     height: 50,
-                    child: Image.asset(
-                      'assets/avatar/3.png',
-                      fit: BoxFit.cover,
-                    ),
+                    child: me?['avatar_link'] != null
+                        ? Image.network(
+                            me?['avatar_link'],
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/avatar/user.png',
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   Wrap(
                     direction: Axis.vertical,
@@ -86,7 +106,7 @@ class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
                     runAlignment: WrapAlignment.center,
                     children: [
                       Text(
-                        'Reja Jamil',
+                        me?['full_name'] ?? '',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: textColor,
@@ -94,7 +114,9 @@ class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                       ),
                       Text(
-                        isCollapsed ? 'Paket Gold 3 Bulan' : '085766666393',
+                        isCollapsed && isMember
+                            ? (member?['name'] ?? '')
+                            : me?['phone'] ?? '',
                         style: TextStyle(
                           // fontWeight: FontWeight.bold,
                           color: textColor,
@@ -110,13 +132,13 @@ class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
                       onPressed: () => Get.rootDelegate.offNamed(homeRoute),
                       icon: Icon(
                         Iconsax.home5,
-                        color: isCollapsed ? Colors.black : Colors.white,
+                        color: textColor,
                         size: 18,
                       ),
                       label: Text(
                         'Home',
                         style: TextStyle(
-                          color: isCollapsed ? Colors.black : Colors.white,
+                          color: textColor,
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -137,11 +159,29 @@ class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class MemberCard extends StatelessWidget {
-  const MemberCard({super.key});
+  const MemberCard({super.key, this.me});
+  final Map<String, dynamic>? me;
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final member = me?['member'];
+    final membership = me?['membership'];
+
+    DateTime end_at;
+    String end_date = '???';
+    int day_left = 0;
+    int duration = membership?['duration'] ?? 0;
+    if (membership != null && membership['end_date'] != null) {
+      end_at = DateTime.parse(membership['end_date']).toLocal();
+      // end_date = DateFormat('EEEE, d MMMM yyyy').format(end_at);
+      end_date = DateFormat('d MMMM yyyy').format(end_at);
+      day_left = end_at.difference(DateTime.now()).inDays;
+    }
+
+    final daysPercentage =
+        ((100 - ((100 / duration) * day_left)) / 100).toFixed(2);
+
     return Container(
       // width: Get.width / 2,
       height: 150,
@@ -202,18 +242,32 @@ class MemberCard extends StatelessWidget {
                       padding: EdgeInsets.all(3.5),
                       margin: EdgeInsets.only(right: 10),
                       decoration: BoxDecoration(
-                        color: Colors.amberAccent.shade100,
+                        color: member?['badge'] != null
+                            ? Colors.white.withOpacity(0.5)
+                            : Colors.amberAccent.shade100,
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: Icon(
-                        Iconsax.crown5,
-                        size: 35,
-                        color: Colors.orange.shade900,
-                      ),
+                      child: member?['badge'] != null
+                          ? Image(
+                              width: 40,
+                              image: NetworkImage(member?['badge']),
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Iconsax.crown5,
+                                  size: 35,
+                                  color: Colors.orange.shade900,
+                                );
+                              },
+                            )
+                          : Icon(
+                              Iconsax.crown5,
+                              size: 35,
+                              color: Colors.orange.shade900,
+                            ),
                     ),
                     Expanded(
                       child: Text(
-                        'Paket Gold 3 Bulan',
+                        member?['name'] ?? '???',
                         maxLines: 2,
                         softWrap: true,
                         style: TextStyle(
@@ -229,7 +283,7 @@ class MemberCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     LinearProgressIndicator(
-                      value: 0.3,
+                      value: daysPercentage,
                       backgroundColor: Colors.white.withOpacity(0.5),
                       valueColor:
                           AlwaysStoppedAnimation(primaryColor.withGreen(165)),
@@ -242,14 +296,14 @@ class MemberCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '18 Mei 1992',
+                            end_date,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                           ),
                           Text(
-                            'Sisa 30 hari',
+                            'Sisa $day_left hari',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.yellowAccent,

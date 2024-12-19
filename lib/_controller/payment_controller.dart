@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:pims/_config/dio.dart';
 import 'package:pims/_config/services.dart';
 import 'package:pims/_controller/config_controller.dart';
+import 'package:pims/_router/main.dart';
 import 'package:pims/pages/classes/detail/main.dart';
+import 'package:pims/pages/member/explore/detail/main.dart';
 import 'package:pims/pages/visit/main.dart';
 
 class PaymentData {
@@ -183,6 +185,39 @@ class PaymentController extends GetxController {
       //
     }
     super.onInit();
+  }
+}
+
+Future memberTransaction() async {
+  final paymentController = Get.put(PaymentController());
+  final detailMemberController = Get.put(MemberExploreDetailController());
+  final selectedPayment = paymentController.selectedPayment.value;
+  final detailMember = detailMemberController.detailPackage.value;
+
+  final params = {
+    'member_id': detailMember?['id'],
+    'payment_id': selectedPayment?.name,
+    'total_fee': detailMember?['fee'],
+    'duration': detailMember?['duration'],
+  };
+
+  try {
+    final api = await API().post('transaction/member', data: params);
+    if (api.data?['status'] == 'success') {
+      Future.delayed(Duration(milliseconds: 200), () {
+        final redirectParams = {
+          'id': api.data?['data']?['id'].toString() ?? '',
+          // 'status': 'unpaid',
+          'origin': 'confirm',
+        };
+        Get.rootDelegate.toNamed(
+          '$homeRoute/member/detail',
+          parameters: redirectParams,
+        );
+      });
+    }
+  } catch (e) {
+    //
   }
 }
 

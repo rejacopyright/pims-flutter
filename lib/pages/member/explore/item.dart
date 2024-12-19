@@ -145,11 +145,19 @@ class MemberExploreItem extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 10),
                   child: Wrap(
                     spacing: 5,
-                    crossAxisAlignment: WrapCrossAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.end,
                     children: [
                       Text('Masa Berlaku :'),
                       Text(
-                        '$durationInMonths bulan',
+                        (durationInMonths ?? 0).toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          height: 1.2,
+                        ),
+                      ),
+                      Text(
+                        'bulan',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/_config/dio.dart';
 import 'package:pims/_controller/user_controller.dart';
@@ -85,18 +84,12 @@ class HomeHeaderContent extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     final state = Get.put(HomeHeaderController());
     final userController = Get.put(UserController());
-    final box = GetStorage();
-    final user = box.read('user');
-    var name = user['username'];
-    if (user['first_name'] != null && user['last_name'] != null) {
-      name = '${user['first_name']} ${user['last_name']}';
-    } else if (user['first_name'] != null) {
-      name = user['first_name'];
-    } else if (user['last_name'] != null) {
-      name = user['last_name'];
-    }
-    name = name.toString().toTitleCase();
+    userController.onInit();
     return Obx(() {
+      final user = userController.user.value;
+      final member = user?['member'];
+      var name = user?['full_name'];
+      name = name.toString().toTitleCase();
       final pageIsReady = state.pageIsReady.value;
       final avatar = userController.avatar.value;
       return Container(
@@ -188,7 +181,7 @@ class HomeHeaderContent extends StatelessWidget {
                                             ),
                                             Text(
                                               currency.format(int.parse(
-                                                  (user['wallet'] ?? 0)
+                                                  (user?['wallet'] ?? 0)
                                                       .toString())),
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -218,28 +211,53 @@ class HomeHeaderContent extends StatelessWidget {
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Color(0xfff0f0f0),
+                                  color: member?['id'] != null
+                                      ? primaryColor.withOpacity(0.2)
+                                      : Color(0xfff0f0f0),
                                   borderRadius: BorderRadius.circular(7.5),
                                 ),
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 3.5,
-                                  horizontal: 6,
-                                ),
+                                padding: member?['id'] != null
+                                    ? EdgeInsets.symmetric(
+                                        vertical: 5,
+                                        horizontal: 10,
+                                      )
+                                    : EdgeInsets.symmetric(
+                                        vertical: 3.5,
+                                        horizontal: 6,
+                                      ),
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: Row(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(3.5),
+                                      padding: EdgeInsets.all(
+                                        member?['id'] != null ? 1 : 3.5,
+                                      ),
                                       margin: EdgeInsets.only(right: 5),
                                       decoration: BoxDecoration(
-                                        color: Colors.amber,
+                                        color: member?['badge'] != null
+                                            ? Colors.white.withOpacity(0.5)
+                                            : Colors.amber,
                                         borderRadius: BorderRadius.circular(50),
                                       ),
-                                      child: Icon(
-                                        Iconsax.crown5,
-                                        size: 18,
-                                      ),
+                                      child: member?['badge'] != null
+                                          ? Image(
+                                              width: 25,
+                                              image: NetworkImage(
+                                                  member?['badge']),
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                return Icon(
+                                                  Iconsax.crown5,
+                                                  size: 18,
+                                                  color: Colors.orange.shade900,
+                                                );
+                                              },
+                                            )
+                                          : Icon(
+                                              Iconsax.crown5,
+                                              size: 18,
+                                            ),
                                     ),
                                     Column(
                                       mainAxisSize: MainAxisSize.min,
@@ -249,17 +267,22 @@ class HomeHeaderContent extends StatelessWidget {
                                         Text(
                                           'Membership',
                                           style: TextStyle(
-                                            // fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Miliki Sekarang',
-                                          style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 12,
+                                            fontSize:
+                                                member?['id'] != null ? 14 : 12,
+                                            color: member?['id'] != null
+                                                ? primaryColor.withGreen(150)
+                                                : Colors.black,
                                           ),
                                         ),
+                                        member?['id'] != null
+                                            ? SizedBox.shrink()
+                                            : Text(
+                                                'Miliki Sekarang',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
                                       ],
                                     ),
                                   ],

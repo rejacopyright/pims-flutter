@@ -47,14 +47,14 @@ class OrderDetailPage extends StatelessWidget {
     final state = Get.put(OrderDetailPageController());
     state.onInit();
     final primaryColor = Theme.of(context).primaryColor;
-    final params = Get.rootDelegate.parameters;
-    final status = params['status'];
+    // final params = Get.rootDelegate.parameters;
+    // final status = params['status'];
 
     // VERIFY
-    final isUnpaid = status != null && status == 'unpaid';
-    final isActive = status != null && status == 'active';
-    final isDone = status != null && status == 'done';
-    final isCancel = status != null && status == 'cancel';
+    // final isUnpaid = status != null && status == 'unpaid';
+    // final isActive = status != null && status == 'active';
+    // final isDone = status != null && status == 'done';
+    // final isCancel = status != null && status == 'cancel';
     return Scaffold(
       appBar: OrderDetailAppBar(),
       body: RefreshIndicator(
@@ -65,6 +65,13 @@ class OrderDetailPage extends StatelessWidget {
         },
         child: Obx(() {
           final data = state.data.value;
+          // VERIFY
+          final status = data?['status'];
+          final isUnpaid = status == 1;
+          final isActive = status == 2;
+          final isDone = status == 3;
+          final isCancel = status == 4;
+
           final provider = data?['payment_id'] ?? '';
 
           DateTime expired_at;
