@@ -70,26 +70,35 @@ class QRButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
     return SizedBox(
       width: 65,
       height: 65,
       child: FittedBox(
         child: FloatingActionButton(
           elevation: 1.5,
-          shape: CircleBorder(),
+          shape: CircleBorder(
+            side: BorderSide(color: primaryColor.withOpacity(0.75)),
+          ),
           backgroundColor: Colors.white,
           onPressed: () {
             Future.delayed(Duration(milliseconds: 200), () {
-              // Get.back();
+              Get.rootDelegate.toNamed(
+                '/order',
+                parameters: {'order_tab': 'active'},
+              );
             });
           },
-          child: SvgPicture.asset(
-            'assets/icons/qr.svg',
-            width: 40,
-            height: 40,
-            colorFilter: ColorFilter.mode(
-              Theme.of(context).primaryColor.withOpacity(1),
-              BlendMode.srcIn,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: SvgPicture.asset(
+              'assets/icons/cart.svg',
+              width: 40,
+              height: 40,
+              colorFilter: ColorFilter.mode(
+                primaryColor,
+                BlendMode.srcIn,
+              ),
             ),
           ),
         ),

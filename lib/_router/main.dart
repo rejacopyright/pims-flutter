@@ -134,16 +134,20 @@ List<Route> menusNav = [
           GetPage(name: '/payment', page: () => ClassPaymentConfirmation()),
         ]),
       ]),
-      GetPage(name: '/member', page: () => MemberPage(), children: [
-        GetPage(name: '/detail', page: () => MemberDetailPage()),
-        GetPage(
-          name: '/explore',
-          page: () => MemberExplorePage(),
-          children: [
-            GetPage(name: '/detail', page: () => MemberExploreDetailPage()),
-          ],
-        ),
-      ]),
+      GetPage(
+        name: '/member',
+        page: () => MemberPage(),
+        children: [
+          GetPage(name: '/detail', page: () => MemberDetailPage()),
+          GetPage(
+            name: '/explore',
+            page: () => MemberExplorePage(),
+            children: [
+              GetPage(name: '/detail', page: () => MemberExploreDetailPage()),
+            ],
+          ),
+        ],
+      ),
     ],
   ),
   Route(
@@ -167,34 +171,34 @@ List<Route> menusNav = [
     page: Scoper(child: ProductApp()),
   ),
   Route(
-      name: '/order',
-      page: Scoper(child: OrderPage()),
-      label: 'Pesanan',
-      icon: Iconsax.shopping_cart,
-      activeIcon: Iconsax.shopping_cart5,
-      middlewares: [
-        AuthMiddleware()
-      ],
-      children: [
-        GetPage(
-          name: '/detail',
-          page: () => OrderDetailPage(),
-          participatesInRootNavigator: true,
-        ),
-      ]),
+    name: '/order',
+    page: Scoper(child: OrderPage()),
+    label: 'Pesanan',
+    icon: Iconsax.shopping_cart,
+    activeIcon: Iconsax.shopping_cart5,
+    middlewares: [AuthMiddleware()],
+    children: [
+      GetPage(
+        name: '/detail',
+        page: () => OrderDetailPage(),
+        participatesInRootNavigator: true,
+      ),
+    ],
+  ),
   Route(
-      name: '/profile',
-      page: Scoper(child: ProfilePage()),
-      label: 'Akun',
-      icon: Iconsax.profile_circle,
-      activeIcon: Iconsax.profile_tick5,
-      children: [
-        GetPage(
-          name: '/edit',
-          page: () => ProfileEditPage(),
-          participatesInRootNavigator: true,
-        ),
-      ]),
+    name: '/profile',
+    page: Scoper(child: ProfilePage()),
+    label: 'Akun',
+    icon: Iconsax.profile_circle,
+    activeIcon: Iconsax.profile_tick5,
+    children: [
+      GetPage(
+        name: '/edit',
+        page: () => ProfileEditPage(),
+        participatesInRootNavigator: true,
+      ),
+    ],
+  ),
 ];
 
 List<String> pageHasNav = [

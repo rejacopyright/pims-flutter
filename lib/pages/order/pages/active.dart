@@ -71,7 +71,7 @@ class ActiveOrderPage extends StatelessWidget {
         },
         child: ListView.builder(
           padding: EdgeInsets.only(top: 15, bottom: 150, left: 15, right: 15),
-          itemCount: data.length,
+          itemCount: data.isEmpty ? 1 : data.length,
           itemBuilder: (ctx, index) => isReady
               ? data.isEmpty
                   ? SizedBox(
