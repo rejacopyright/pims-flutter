@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pims/_config/dio.dart';
+import 'package:pims/_router/main.dart';
 import 'package:pims/_widgets/member_detail_cards.dart';
 import 'package:pims/_widgets/order_detail_cards.dart';
 
@@ -58,6 +59,7 @@ class MemberDetailPage extends StatelessWidget {
         displacement: 30,
         color: primaryColor,
         onRefresh: () async {
+          memberController.onInit();
           state.refresh();
         },
         child: Obx(() {
@@ -144,6 +146,7 @@ class MemberDetailPage extends StatelessWidget {
                       child:
                           isActive ? MemberDetailRefund() : SizedBox.shrink(),
                     ),
+                    isUnpaid ? CancelOrder() : SizedBox.shrink(),
                     Padding(padding: EdgeInsets.only(bottom: 50))
                   ],
                 ),
@@ -153,5 +156,72 @@ class MemberDetailPage extends StatelessWidget {
         }),
       ),
     );
+  }
+}
+
+class CancelOrderController extends GetxController {
+  RxBool btnIsLoading = false.obs;
+  setLoadingBtn(e) => btnIsLoading.value = e;
+}
+
+class CancelOrder extends StatelessWidget {
+  const CancelOrder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final state = Get.put(CancelOrderController());
+    return Obx(() {
+      final btnIsLoading = state.btnIsLoading.value;
+      return Container(
+        padding: EdgeInsets.only(top: 15),
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: !btnIsLoading
+              ? () async {
+                  final id = Get.rootDelegate.parameters['id'];
+                  if (id != null) {
+                    try {
+                      state.setLoadingBtn(true);
+                      final api =
+                          await API().delete('member/transaction/$id/delete');
+                      if (api.data?['status'] == 'success') {
+                        final memberController = Get.put(MemberController());
+                        memberController.onInit();
+                        state.setLoadingBtn(false);
+                        Future.delayed(Duration(milliseconds: 300), () {
+                          Get.rootDelegate.toNamed('$homeRoute/member');
+                        });
+                      }
+                    } catch (err) {
+                      //
+                    } finally {
+                      state.setLoadingBtn(false);
+                    }
+                  }
+                }
+              : null,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xfff5f5f5),
+            foregroundColor: Colors.black,
+            elevation: 0,
+            overlayColor: Colors.black.withOpacity(0.25),
+            padding: EdgeInsets.symmetric(vertical: 15),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(width: 0.5, color: Color(0xffaaaaaa)),
+            ),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            shadowColor: Colors.black.withOpacity(0.5),
+          ),
+          child: Text(
+            btnIsLoading ? 'Waiting...' : 'Batalkan',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    });
   }
 }

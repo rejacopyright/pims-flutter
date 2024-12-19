@@ -100,32 +100,37 @@ class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
                             fit: BoxFit.cover,
                           ),
                   ),
-                  Wrap(
-                    direction: Axis.vertical,
-                    alignment: WrapAlignment.center,
-                    runAlignment: WrapAlignment.center,
-                    children: [
-                      Text(
-                        me?['full_name'] ?? '',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: textColor,
-                          fontSize: 12,
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // direction: Axis.vertical,
+                      // alignment: WrapAlignment.center,
+                      // runAlignment: WrapAlignment.center,
+                      children: [
+                        Text(
+                          me?['full_name'] ?? '',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: textColor,
+                            fontSize: 12,
+                          ),
                         ),
-                      ),
-                      Text(
-                        isCollapsed && isMember
-                            ? (member?['name'] ?? '')
-                            : me?['phone'] ?? '',
-                        style: TextStyle(
-                          // fontWeight: FontWeight.bold,
-                          color: textColor,
-                          fontSize: 14,
+                        Text(
+                          isCollapsed && isMember
+                              ? (member?['name'] ?? '')
+                              : me?['phone'] ?? '',
+                          maxLines: 2,
+                          style: TextStyle(
+                            // fontWeight: FontWeight.bold,
+                            color: textColor,
+                            fontSize: 14,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(right: 15),
                     child: ElevatedButton.icon(

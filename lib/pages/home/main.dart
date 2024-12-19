@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_controller/user_controller.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/navbar.dart';
 import 'package:pims/pages/home/banner_promo.dart';
@@ -86,6 +87,8 @@ class Homepage extends StatelessWidget {
           color: Theme.of(context).primaryColor,
           displacement: 30,
           onRefresh: () async {
+            final userController = Get.put(UserController());
+            userController.onInit();
             homeHeaderController.refresh();
             bannerController.refresh();
             serviceController.refresh();

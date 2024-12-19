@@ -6,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:pims/_config/dio.dart';
 import 'package:pims/_router/main.dart';
+import 'package:pims/_widgets/helper.dart';
 import 'package:pims/_widgets/member_explore_detail_cards.dart';
 import 'package:pims/pages/member/explore/item.dart';
 
@@ -26,8 +27,8 @@ class MemberController extends GetxController {
 
   @override
   void onInit() {
-    pageIsReady.value = false;
     Future.delayed(Duration(milliseconds: 200), () async {
+      pageIsReady.value = false;
       try {
         me.value = await fetchMe();
       } finally {
@@ -64,6 +65,7 @@ class MemberPage extends StatelessWidget {
         final pageIsReady = state.pageIsReady.value;
         final me = state.me.value;
         final membership = me?['membership'];
+        List pending_membership = me?['pending_membership'] ?? [];
         bool isUnpaidMember = membership?['status'] == 1;
         bool isMember = false;
         if (membership?['end_date'] != null) {
@@ -110,6 +112,11 @@ class MemberPage extends StatelessWidget {
                     slivers: [
                       MemberAppBar(me: me),
                       SliverPadding(padding: EdgeInsets.only(top: 20)),
+                      pending_membership.isNotEmpty
+                          ? SliverMemberPending(
+                              pending_membership: pending_membership,
+                            )
+                          : SliverPadding(padding: EdgeInsets.zero),
                       isMember
                           ? SliverMember(me: me)
                           : SliverToBoxAdapter(
@@ -376,6 +383,44 @@ class SliverMember extends StatelessWidget {
   }
 }
 
+class SliverMemberPending extends StatelessWidget {
+  const SliverMemberPending({super.key, this.pending_membership});
+  final List? pending_membership;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverList.builder(
+      itemBuilder: (context, index) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 10,
+            ),
+            child: Text(
+              'Pending',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.orange,
+              ),
+            ),
+          ),
+          ...(pending_membership ?? []).map((item) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              margin: EdgeInsets.only(bottom: 10),
+              child: PendingItem(item: item),
+            );
+          }),
+        ],
+      ),
+      itemCount: 1,
+    );
+  }
+}
+
 class FeatureItem extends StatelessWidget {
   const FeatureItem({
     super.key,
@@ -461,6 +506,99 @@ class FeatureItem extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class PendingItem extends StatelessWidget {
+  const PendingItem({super.key, this.item});
+  final Map<String, dynamic>? item;
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+    final member = item?['member'];
+    String purchase_expired = '???', purchase_expired_time = '???';
+    if (item?['purchase_expired'] != null) {
+      purchase_expired = DateFormat('EEEE, dd MMMM yyyy')
+          .format(DateTime.parse(item?['purchase_expired']).toLocal());
+      purchase_expired_time = DateFormat('HH:mm')
+          .format(DateTime.parse(item?['purchase_expired']).toLocal());
+    }
+    return TextButton(
+      onPressed: () {
+        Get.rootDelegate.toNamed(
+          '$homeRoute/member/detail',
+          parameters: {'id': item?['id']},
+        );
+      },
+      style: TextButton.styleFrom(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 2,
+        overlayColor: Colors.black.withOpacity(0.25),
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(width: 0.5, color: Color(0xffdddddd)),
+        ),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        shadowColor: Colors.black.withOpacity(0.5),
+      ),
+      child: Container(
+        padding: EdgeInsets.all(15),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 40,
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: primaryColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Image.asset('assets/icons/calendar-tick.png'),
+            ),
+            SizedBox(width: 10),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          member?['name'] ?? '',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                        Text(
+                          purchase_expired,
+                          style: TextStyle(color: Color(0xff777777)),
+                        ),
+                        Text(
+                          'Pukul: $purchase_expired_time WIB',
+                          style: TextStyle(color: Color(0xff777777)),
+                        ),
+                        Text(
+                          'Rp. ${currency.format(item?['fee'] ?? 0)}',
+                          style: TextStyle(
+                            color: primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

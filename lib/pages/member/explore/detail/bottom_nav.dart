@@ -1,11 +1,32 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pims/_config/dio.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/helper.dart';
 
 import 'main.dart';
 import 'payment.dart';
+
+class BottomSheet {
+  static void showPayment(context) {
+    // Size size = MediaQuery.of(context).size;
+    showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
+      constraints: BoxConstraints(
+        minHeight: 100,
+        maxHeight: Get.height * 0.9,
+      ),
+      context: context,
+      builder: (context) {
+        return MemberExploreDetailPaymentCard();
+      },
+    );
+  }
+}
 
 class MemberExploreDetailBottomNavController extends GetxController {
   RxBool tncIsChecked = false.obs;
@@ -116,19 +137,37 @@ class MemberExploreDetailBottomNav extends StatelessWidget {
                   child: ElevatedButton(
                     clipBehavior: Clip.antiAlias,
                     onPressed: tncIsChecked
-                        ? () {
-                            showModalBottomSheet(
-                              useSafeArea: true,
-                              isScrollControlled: true,
-                              constraints: BoxConstraints(
-                                minHeight: 100,
-                                maxHeight: Get.height * 0.9,
-                              ),
-                              context: context,
-                              builder: (context) {
-                                return MemberExploreDetailPaymentCard();
-                              },
-                            );
+                        ? () async {
+                            final api = await API().get('me');
+                            final me = api.data;
+                            final membership = me?['membership'];
+                            bool isActiveMember = false;
+                            if (membership?['end_date'] != null) {
+                              final end_date =
+                                  DateTime.parse(membership['end_date'])
+                                      .toLocal();
+                              isActiveMember = end_date.isAfter(DateTime.now());
+                            }
+                            if (context.mounted) {
+                              if (isActiveMember) {
+                                showDialog(
+                                  context: context,
+                                  useSafeArea: true,
+                                  barrierDismissible: true,
+                                  builder: (context) {
+                                    return Center(
+                                      child: ConfirmReplaceMember(
+                                        onSubmit: () {
+                                          BottomSheet.showPayment(context);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                BottomSheet.showPayment(context);
+                              }
+                            }
                           }
                         : null,
                     style: ElevatedButton.styleFrom(
@@ -160,5 +199,104 @@ class MemberExploreDetailBottomNav extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class ConfirmReplaceMember extends StatelessWidget {
+  const ConfirmReplaceMember({super.key, this.onSubmit});
+  final Function()? onSubmit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Get.width - 120,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 25),
+            child: Icon(
+              Iconsax.info_circle5,
+              color: Colors.orange,
+              size: 35,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            margin: EdgeInsets.only(top: 10, bottom: 20),
+            child: Text(
+              'Saat ini anda memiliki member yang aktif. Jika anda melakukan pembelian member baru, maka member yang sedang aktif akan terganti',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          Container(
+            // padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: Color(0xffdddddd))),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Get.rootDelegate.popRoute(),
+                    style: TextButton.styleFrom(
+                      elevation: 0,
+                      overlayColor: Colors.black.withOpacity(0.25),
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      shape: RoundedRectangleBorder(),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Text(
+                      'Tutup',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                  child: VerticalDivider(
+                    width: 1,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Color(0xffdddddd),
+                  ),
+                ),
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
+                      onSubmit!();
+                    },
+                    style: TextButton.styleFrom(
+                      elevation: 0,
+                      overlayColor: Colors.black.withOpacity(0.25),
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      shape: RoundedRectangleBorder(),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Text(
+                      'Lanjutkan',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
