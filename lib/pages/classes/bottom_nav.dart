@@ -7,7 +7,7 @@ import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/helper.dart';
 import 'package:pims/_widgets/payment/payment_card.dart';
 import 'package:pims/_widgets/payment/price_section.dart';
-import 'package:pims/_widgets/payment/voucher_section.dart';
+// import 'package:pims/_widgets/payment/voucher_section.dart';
 
 class ClassBottomNav extends StatelessWidget {
   ClassBottomNav({super.key});
@@ -34,7 +34,10 @@ class ClassBottomNav extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Column(
-            children: [VoucherSection(), PriceSection()],
+            children: [
+              // VoucherSection(),
+              PriceSection(),
+            ],
           ),
           Row(
             children: [

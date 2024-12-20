@@ -16,7 +16,7 @@ class ConfigController extends GetxController {
       final memberAPI = await API().get('order/check/member/visit');
       final membership = memberAPI.data;
       final visit_api_fee = membership?['visit'] != null
-          ? (membership?['fee'] ?? 0)
+          ? (membership?['visit']?['fee'] ?? 0)
           : api.data?['visit_fee'];
 
       isMember.value = membership?['isMember'];

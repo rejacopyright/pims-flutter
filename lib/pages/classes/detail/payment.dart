@@ -136,7 +136,10 @@ class ClassFinalPrice extends StatelessWidget {
     final classDetailController = Get.put(ClassDetailController());
     return Obx(() {
       final detailClass = classDetailController.detailClass.value;
-      final product_fee = detailClass?['fee'] ?? 0;
+      final isMember = detailClass?['isMember'];
+      final member_class = detailClass?['member_class'];
+      final product_fee =
+          isMember ? (member_class?['fee'] ?? 0) : (detailClass?['fee'] ?? 0);
       final selectedVoucher = paymentController.selectedVoucher.value;
       final selectedPayment = paymentController.selectedPayment.value;
       final voucherIsSelected = selectedVoucher != null;
@@ -145,7 +148,7 @@ class ClassFinalPrice extends StatelessWidget {
       final paymentDetail = paymentData
           ?.firstWhereOrNull((item) => item.name == selectedPayment?.name);
       final discount = voucherIsSelected ? selectedVoucher['value'] : 0;
-      final fee = paymentIsSelected && paymentDetail!.fee != null
+      final fee = paymentIsSelected && paymentDetail!.fee != null && !isMember
           ? paymentDetail.fee
           : 0;
       return Column(

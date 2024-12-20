@@ -122,6 +122,7 @@ class ClassDetailPage extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             displacement: 30,
             onRefresh: () async {
+              thisController.onInit();
               imageController.refresh();
               priceController.refresh();
               descriptionController.refresh();

@@ -230,12 +230,14 @@ Future visitTransaction() async {
   final selectedVoucher = paymentController.selectedVoucher.value;
   final selectedPayment = paymentController.selectedPayment.value;
   final visit_fee = configController.visit_fee.value;
-  final app_fee = configController.app_fee.value;
+  final app_fee = isMember ? 0 : configController.app_fee.value;
   final visitTime = visitController.selectedTime.value;
   final visitTimeInterval = configController.visit_time_interval.value;
   final end_date = visitTime?.add(Duration(minutes: visitTimeInterval));
-  final total_fee = (visit_fee + (selectedPayment?.fee ?? 0) + app_fee) -
-      (selectedVoucher?['value'] ?? 0);
+
+  final service_fee = isMember ? 0 : (selectedPayment?.fee ?? 0);
+  final total_fee =
+      (visit_fee + service_fee + app_fee) - (selectedVoucher?['value'] ?? 0);
 
   bool memberBypass = isMember && total_fee == 0;
 
@@ -244,7 +246,7 @@ Future visitTransaction() async {
     'payment_id': selectedPayment?.name,
     'service_id': 1,
     'product_fee': visit_fee,
-    'service_fee': selectedPayment?.fee ?? 0,
+    'service_fee': service_fee,
     'app_fee': app_fee,
     'discount_fee': selectedVoucher?['value'] ?? 0,
     'voucher_id': selectedVoucher?['id'],
@@ -277,14 +279,20 @@ Future classTransaction() async {
   final classDetailController = Get.put(ClassDetailController());
   final paymentController = Get.put(PaymentController());
   final configController = Get.put(ConfigController());
+
+  final detailClass = classDetailController.detailClass.value;
+
+  final isMember = configController.isMember.value;
+  final member_class = detailClass?['member_class'];
+
   final selectedVoucher = paymentController.selectedVoucher.value;
   final selectedPayment = paymentController.selectedPayment.value;
-  final app_fee = configController.app_fee.value;
+  final app_fee = isMember ? 0 : configController.app_fee.value;
   final thisService = classesList.firstWhereOrNull(
       (item) => item.name == Get.rootDelegate.parameters['type']);
 
-  final detailClass = classDetailController.detailClass.value;
-  final product_fee = detailClass?['fee'] ?? 0;
+  final product_fee =
+      isMember ? (member_class?['fee'] ?? 0) : (detailClass?['fee'] ?? 0);
   String? start_date, end_date;
   if (detailClass?['start_date'] != null) {
     start_date = DateFormat('yyyy-MM-dd HH:mm')
@@ -295,21 +303,26 @@ Future classTransaction() async {
         .format(DateTime.parse(detailClass?['end_date']).toLocal());
   }
 
+  final service_fee = isMember ? 0 : (selectedPayment?.fee ?? 0);
+  final total_fee =
+      (product_fee + service_fee + app_fee) - (selectedVoucher?['value'] ?? 0);
+
+  bool memberBypass = isMember && total_fee == 0;
+
   final params = {
     'class_schedule_id': detailClass?['id'],
-    'user_type': 1,
+    'user_type': isMember ? 2 : 1,
     'payment_id': selectedPayment?.name,
     'service_id': thisService?.type ?? 2,
     'product_fee': product_fee,
-    'service_fee': selectedPayment?.fee ?? 0,
+    'service_fee': service_fee,
     'app_fee': app_fee,
     'discount_fee': selectedVoucher?['value'] ?? 0,
     'voucher_id': selectedVoucher?['id'],
-    'total_fee': (product_fee + (selectedPayment?.fee ?? 0) + app_fee) -
-        (selectedVoucher?['value'] ?? 0),
+    'total_fee': total_fee,
     'start_date': start_date,
     'end_date': end_date,
-    'status': 1,
+    'status': memberBypass ? 2 : 1,
   };
 
   try {
@@ -318,7 +331,7 @@ Future classTransaction() async {
       Future.delayed(Duration(milliseconds: 200), () {
         final redirectParams = {
           'id': api.data?['data']?['id'].toString() ?? '',
-          'status': 'unpaid',
+          'status': memberBypass ? 'active' : 'unpaid',
           'provider': (selectedPayment?.name).toString(),
           'origin': 'confirm',
         };
