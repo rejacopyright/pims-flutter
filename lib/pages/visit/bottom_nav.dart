@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -8,12 +10,31 @@ import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/helper.dart';
 import 'package:pims/_widgets/payment/payment_card.dart';
 import 'package:pims/_widgets/payment/price_section.dart';
-import 'package:pims/_widgets/payment/voucher_section.dart';
 import 'package:pims/pages/visit/main.dart';
+
+class BottomSheet {
+  static void showPayment(context) {
+    // Size size = MediaQuery.of(context).size;
+    showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
+      constraints: BoxConstraints(
+        minHeight: 100,
+        maxHeight: Get.height * 0.9,
+      ),
+      context: context,
+      builder: (context) {
+        return BookingVisitPaymentCard();
+      },
+    );
+  }
+}
 
 class VisitBottomNavController extends GetxController {
   RxBool submitButtonIsLoading = false.obs;
+  RxBool submitMemberButtonIsLoading = false.obs;
   setSubmitButtonIsLoading(e) => submitButtonIsLoading.value = e;
+  setSubmitMemberButtonIsLoading(e) => submitMemberButtonIsLoading.value = e;
 }
 
 class VisitBottomNav extends StatelessWidget {
@@ -25,6 +46,8 @@ class VisitBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final visitController = Get.put(VisitAppController());
+    final configController = Get.put(ConfigController());
+    final state = Get.put(VisitBottomNavController());
     return Container(
       width: Get.width,
       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -42,13 +65,17 @@ class VisitBottomNav extends StatelessWidget {
         () {
           final selectedTime = visitController.selectedTime.value;
           final timeIsSelected = selectedTime != null;
+          final isMember = configController.isMember.value;
+          final visit_fee = configController.visit_fee.value;
+          final submitMemberButtonIsLoading =
+              state.submitMemberButtonIsLoading.value;
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Column(
                 children: timeIsSelected
                     ? [
-                        VoucherSection(),
+                        // VoucherSection(),
                         TimeSection(
                           primaryColor: primaryColor,
                           selectedTime: selectedTime,
@@ -102,27 +129,47 @@ class VisitBottomNav extends StatelessWidget {
                       child: InkWell(
                         splashFactory: InkSplash.splashFactory,
                         highlightColor: Colors.transparent,
-                        onTap: () {
-                          if (timeIsSelected) {
-                            showModalBottomSheet(
-                              useSafeArea: true,
-                              isScrollControlled: true,
-                              constraints: BoxConstraints(
-                                minHeight: 100,
-                                maxHeight: Get.height * 0.9,
-                              ),
-                              context: context,
-                              builder: (context) {
-                                return BookingVisitPaymentCard();
+                        onTap: isMember && visit_fee == 0
+                            ? () {
+                                showDialog(
+                                  context: context,
+                                  useSafeArea: true,
+                                  barrierDismissible: true,
+                                  builder: (context) {
+                                    return Center(
+                                      child: ConfirmBooking(
+                                        submitIsLoading:
+                                            submitMemberButtonIsLoading,
+                                        onSubmit: () async {
+                                          if (!submitMemberButtonIsLoading) {
+                                            state
+                                                .setSubmitMemberButtonIsLoading(
+                                                    true);
+                                            await visitTransaction();
+                                            state
+                                                .setSubmitMemberButtonIsLoading(
+                                                    false);
+                                          }
+                                        },
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
+                            : () {
+                                if (timeIsSelected) {
+                                  BottomSheet.showPayment(context);
+                                }
                               },
-                            );
-                          }
-                        },
                         child: Container(
                           alignment: Alignment.center,
                           height: 50,
                           child: Text(
-                            timeIsSelected ? 'Bayar' : 'Booking',
+                            timeIsSelected
+                                ? (isMember && visit_fee == 0
+                                    ? 'Booking'
+                                    : 'Bayar')
+                                : 'Booking',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -138,6 +185,108 @@ class VisitBottomNav extends StatelessWidget {
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class ConfirmBooking extends StatelessWidget {
+  const ConfirmBooking(
+      {super.key, this.submitIsLoading = false, this.onSubmit});
+  final bool submitIsLoading;
+  final Function()? onSubmit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Get.width - 120,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 25),
+            child: Icon(
+              Iconsax.tick_circle,
+              color: Theme.of(context).primaryColor,
+              size: 35,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            margin: EdgeInsets.only(top: 10, bottom: 20),
+            child: Text(
+              'Klik tombol booking untuk melanjutkan',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          Container(
+            // padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: Color(0xffdddddd))),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Get.rootDelegate.popRoute(),
+                    style: TextButton.styleFrom(
+                      elevation: 0,
+                      overlayColor: Colors.black.withOpacity(0.25),
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      shape: RoundedRectangleBorder(),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Text(
+                      'Tutup',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                  child: VerticalDivider(
+                    width: 1,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Color(0xffdddddd),
+                  ),
+                ),
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
+                      onSubmit!();
+                    },
+                    style: TextButton.styleFrom(
+                      elevation: 0,
+                      overlayColor: Colors.black.withOpacity(0.25),
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      shape: RoundedRectangleBorder(),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Text(
+                      submitIsLoading ? 'Waiting...' : 'Booking',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color:
+                            submitIsLoading ? Color(0xffaaaaaa) : Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

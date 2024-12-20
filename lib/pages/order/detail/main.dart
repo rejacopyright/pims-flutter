@@ -255,7 +255,7 @@ class OrderDetailPage extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: isActive && cancelable
+                      child: isActive && cancelable && data?['id'] == 'xxx'
                           ? OrderDetailRefund(
                               cancelable: cancelable,
                               cancelable_date: cancelable_date,

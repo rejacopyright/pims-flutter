@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_controller/config_controller.dart';
 import 'package:pims/pages/visit/bottom_nav.dart';
 import 'package:pims/pages/visit/header.dart';
 import 'package:pims/pages/visit/select_times.dart';
@@ -16,16 +17,19 @@ class VisitAppController extends GetxController {
   void setSelectedTime(e) => selectedTime.value = e;
 
   @override
-  void onReady() {
-    pageIsReady.value = true;
-    super.onReady();
+  void onInit() async {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 200), () {
+      pageIsReady.value = true;
+    });
+    super.onInit();
   }
 
   @override
   void refresh() {
     pageIsReady.value = false;
     Future.delayed(Duration(milliseconds: 100), () {
-      onReady();
+      onInit();
     });
     super.refresh();
   }
@@ -39,6 +43,7 @@ class VisitPage extends StatelessWidget {
     final visitController = Get.put(VisitAppController());
     // final selectDaysController = Get.put(SelectDaysController());
     final selectTimesController = Get.put(SelectTimesController());
+    final configController = Get.put(ConfigController());
     return Scaffold(
       // appBar: VisitAppBar(),
       bottomNavigationBar: SafeArea(child: VisitBottomNav()),
@@ -61,6 +66,7 @@ class VisitPage extends StatelessWidget {
               color: Theme.of(context).primaryColor,
               displacement: 10,
               onRefresh: () async {
+                configController.onInit();
                 visitController.refresh();
                 selectTimesController.refresh();
                 // selectDaysController.refresh();

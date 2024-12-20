@@ -334,16 +334,18 @@ class VisitItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
-                Text(
-                  'Rp. ${currency.format(fee)}',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
+                SizedBox(height: fee > 0 ? 10 : 0),
+                fee > 0
+                    ? Text(
+                        'Rp. ${currency.format(fee)}',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
           ),

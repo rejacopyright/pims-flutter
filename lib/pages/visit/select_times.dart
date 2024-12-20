@@ -24,6 +24,7 @@ class SelectTimesController extends GetxController {
   @override
   void onInit() {
     Future.delayed(Duration(milliseconds: 200), () async {
+      pageIsReady.value = false;
       try {
         final visitController = Get.put(VisitAppController());
         final selectedDate =
@@ -43,14 +44,10 @@ class SelectTimesController extends GetxController {
         super.onInit();
       } catch (e) {
         //
+      } finally {
+        pageIsReady.value = true;
       }
     });
-  }
-
-  @override
-  void onReady() {
-    pageIsReady.value = true;
-    super.onReady();
   }
 
   @override
@@ -58,7 +55,6 @@ class SelectTimesController extends GetxController {
     pageIsReady.value = false;
     Future.delayed(Duration(milliseconds: 100), () {
       onInit();
-      onReady();
     });
     super.refresh();
   }

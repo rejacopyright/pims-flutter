@@ -225,6 +225,8 @@ Future visitTransaction() async {
   final paymentController = Get.put(PaymentController());
   final visitController = Get.put(VisitAppController());
   final configController = Get.put(ConfigController());
+  final isMember = configController.isMember.value;
+
   final selectedVoucher = paymentController.selectedVoucher.value;
   final selectedPayment = paymentController.selectedPayment.value;
   final visit_fee = configController.visit_fee.value;
@@ -232,9 +234,13 @@ Future visitTransaction() async {
   final visitTime = visitController.selectedTime.value;
   final visitTimeInterval = configController.visit_time_interval.value;
   final end_date = visitTime?.add(Duration(minutes: visitTimeInterval));
+  final total_fee = (visit_fee + (selectedPayment?.fee ?? 0) + app_fee) -
+      (selectedVoucher?['value'] ?? 0);
+
+  bool memberBypass = isMember && total_fee == 0;
 
   final params = {
-    'user_type': 1,
+    'user_type': isMember ? 2 : 1,
     'payment_id': selectedPayment?.name,
     'service_id': 1,
     'product_fee': visit_fee,
@@ -242,11 +248,10 @@ Future visitTransaction() async {
     'app_fee': app_fee,
     'discount_fee': selectedVoucher?['value'] ?? 0,
     'voucher_id': selectedVoucher?['id'],
-    'total_fee': (visit_fee + (selectedPayment?.fee ?? 0) + app_fee) -
-        (selectedVoucher?['value'] ?? 0),
+    'total_fee': total_fee,
     'start_date': visitTime?.toString(),
     'end_date': end_date?.toString(),
-    'status': 1,
+    'status': memberBypass ? 2 : 1,
   };
 
   // inspect(visitTime?.toUtc().toString());
@@ -256,7 +261,7 @@ Future visitTransaction() async {
       Future.delayed(Duration(milliseconds: 200), () {
         final redirectParams = {
           'id': api.data?['data']?['id'].toString() ?? '',
-          'status': 'unpaid',
+          'status': memberBypass ? 'active' : 'unpaid',
           'provider': (selectedPayment?.name).toString(),
           'origin': 'confirm',
         };
