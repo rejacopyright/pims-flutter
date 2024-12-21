@@ -89,6 +89,7 @@ class HomeHeaderContent extends StatelessWidget {
       final user = userController.user.value;
       final member = user?['member'];
       var name = user?['full_name'];
+      var username = user?['username'];
       name = name.toString().toTitleCase();
       final pageIsReady = state.pageIsReady.value;
       final avatar = userController.avatar.value;
@@ -120,7 +121,11 @@ class HomeHeaderContent extends StatelessWidget {
                           children: [
                             Container(
                               clipBehavior: Clip.antiAlias,
-                              margin: EdgeInsets.symmetric(horizontal: 7.5),
+                              margin: EdgeInsets.only(
+                                left: 7.5,
+                                right: 7.5,
+                                bottom: 2.5,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                               ),
@@ -130,7 +135,7 @@ class HomeHeaderContent extends StatelessWidget {
                                 image: avatar != null
                                     ? NetworkImage(
                                         '$SERVER_URL/static/images/user/$avatar')
-                                    : AssetImage('assets/avatar/5.png'),
+                                    : AssetImage('assets/avatar/user.png'),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -139,60 +144,67 @@ class HomeHeaderContent extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 2.5),
-                                    child: Text(
-                                      name,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
+                                  Text(
+                                    name,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      height: 1.2,
                                     ),
                                   ),
-                                  Wrap(
-                                    crossAxisAlignment:
-                                        WrapCrossAlignment.center,
-                                    spacing: 2.5,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(2.5),
-                                        margin: EdgeInsets.only(right: 5),
-                                        decoration: BoxDecoration(
-                                          color: primaryColor.withOpacity(0.15),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: Icon(
-                                          Iconsax.empty_wallet5,
-                                          size: 16,
-                                          color: primaryColor,
-                                        ),
-                                      ),
-                                      FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Wrap(
-                                          children: [
-                                            Text(
-                                              'Rp. ',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            Text(
-                                              currency.format(int.parse(
-                                                  (user?['wallet'] ?? 0)
-                                                      .toString())),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                                  Text(
+                                    username,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      color: Color(0xff777777),
+                                      height: 1,
+                                    ),
                                   ),
+                                  // Wrap(
+                                  //   crossAxisAlignment:
+                                  //       WrapCrossAlignment.center,
+                                  //   spacing: 2.5,
+                                  //   children: [
+                                  //     Container(
+                                  //       padding: EdgeInsets.all(2.5),
+                                  //       margin: EdgeInsets.only(right: 5),
+                                  //       decoration: BoxDecoration(
+                                  //         color: primaryColor.withOpacity(0.15),
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(5),
+                                  //       ),
+                                  //       child: Icon(
+                                  //         Iconsax.empty_wallet5,
+                                  //         size: 16,
+                                  //         color: primaryColor,
+                                  //       ),
+                                  //     ),
+                                  //     FittedBox(
+                                  //       fit: BoxFit.scaleDown,
+                                  //       child: Wrap(
+                                  //         children: [
+                                  //           Text(
+                                  //             'Rp. ',
+                                  //             style: TextStyle(
+                                  //               fontWeight: FontWeight.bold,
+                                  //               fontSize: 12,
+                                  //             ),
+                                  //           ),
+                                  //           Text(
+                                  //             currency.format(int.parse(
+                                  //                 (user?['wallet'] ?? 0)
+                                  //                     .toString())),
+                                  //             style: TextStyle(
+                                  //               fontWeight: FontWeight.bold,
+                                  //               fontSize: 18,
+                                  //             ),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                             ),

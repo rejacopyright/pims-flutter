@@ -205,7 +205,7 @@ class ClassItem extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 15),
+                  padding: EdgeInsets.only(bottom: fee > 0 ? 15 : 0),
                   child: Wrap(
                     spacing: 5,
                     crossAxisAlignment: WrapCrossAlignment.center,
@@ -226,15 +226,17 @@ class ClassItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text(
-                  'Rp. ${currency.format(fee)}',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
+                fee > 0
+                    ? Text(
+                        'Rp. ${currency.format(fee)}',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
           ),

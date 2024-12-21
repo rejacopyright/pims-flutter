@@ -20,7 +20,9 @@ class BookingClassPaymentCard extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     final paymentController = Get.put(PaymentController());
     final state = Get.put(BookingClassPaymentController());
+    final classDetailController = Get.put(ClassDetailController());
     return Obx(() {
+      final detailClass = classDetailController.detailClass.value;
       final selectedPayment = paymentController.selectedPayment.value;
       final paymentIsSelected = selectedPayment != null;
       final submitButtonIsLoading = state.submitButtonIsLoading.value;
@@ -77,38 +79,36 @@ class BookingClassPaymentCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       ClassFinalPrice(),
-                      Material(
-                        borderRadius: BorderRadius.circular(5),
-                        clipBehavior: Clip.antiAlias,
-                        color: primaryColor
-                            .withOpacity(paymentIsSelected ? 1 : 0.5),
-                        child: InkWell(
-                          // to: '/order/detail',
-                          // params: {
-                          //   'status': 'unpaid',
-                          //   'provider': (selectedPayment?.name).toString(),
-                          //   'origin': 'confirm',
-                          // },
-                          onTap: () async {
-                            if (!submitButtonIsLoading && paymentIsSelected) {
-                              state.setSubmitButtonIsLoading(true);
-                              await classTransaction();
-                              state.setSubmitButtonIsLoading(false);
-                            }
-                          },
-                          child: Container(
-                            height: 50,
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
-                            child: Text(
-                              'Booking',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      ElevatedButton(
+                        onPressed: !submitButtonIsLoading && paymentIsSelected
+                            ? () async {
+                                state.setSubmitButtonIsLoading(true);
+                                await classTransaction(detailClass);
+                                state.setSubmitButtonIsLoading(false);
+                              }
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: primaryColor,
+                          disabledBackgroundColor:
+                              primaryColor.withOpacity(0.25),
+                          foregroundColor: Colors.white,
+                          shadowColor: Colors.transparent,
+                          minimumSize: Size(double.infinity, 48),
+                          shape: StadiumBorder(),
+                        ),
+                        child: Container(
+                          height: 50,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10,
+                          ),
+                          child: Text(
+                            submitButtonIsLoading ? 'Waiting...' : 'Booking',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),

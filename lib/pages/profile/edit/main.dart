@@ -336,7 +336,10 @@ class ProfileEditPage extends StatelessWidget {
                                 ? Container(
                                     width: double.infinity,
                                     alignment: Alignment.center,
-                                    margin: EdgeInsets.only(top: 15),
+                                    margin: EdgeInsets.only(
+                                      top: 15,
+                                      bottom: 25,
+                                    ),
                                     padding: EdgeInsets.symmetric(vertical: 15),
                                     decoration: BoxDecoration(
                                       color: Colors.red.withOpacity(0.025),

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/_controller/payment_controller.dart';
 import 'package:pims/_widgets/helper.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class MemberDetailPrice extends StatelessWidget {
   const MemberDetailPrice(
@@ -77,7 +78,15 @@ class MemberDetailPrice extends StatelessWidget {
 }
 
 class MemberDetailQR extends StatelessWidget {
-  const MemberDetailQR({super.key});
+  const MemberDetailQR({
+    super.key,
+    this.order_no,
+    this.expired_date,
+    this.expired_time,
+  });
+  final String? order_no;
+  final String? expired_date;
+  final String? expired_time;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +100,7 @@ class MemberDetailQR extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'No. Pesanan:',
+                  'ID Member:',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14,
@@ -99,7 +108,7 @@ class MemberDetailQR extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '0-241109-AGWRYDL',
+                  order_no ?? '???',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18,
@@ -112,27 +121,20 @@ class MemberDetailQR extends StatelessWidget {
           ),
           Container(
             clipBehavior: Clip.antiAlias,
-            margin: EdgeInsets.only(left: 10, right: 10),
+            margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
             width: Get.width * 0.75,
             height: Get.width * 0.75,
-            child: Image.asset(
-              'assets/images/sample/qrcode.png',
-              fit: BoxFit.cover,
-              opacity: AlwaysStoppedAnimation(1),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: Text(
-              'US7264HFHFD7746634HDBFH',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+            child: QrImageView(
+              data: 'xxx',
+              version: QrVersions.auto,
+              size: 100,
+              gapless: true,
+              embeddedImage: AssetImage('assets/icons/logo.png'),
+              embeddedImageStyle: QrEmbeddedImageStyle(
+                size: Size(Get.width * 0.2, Get.width * 0.2),
               ),
             ),
           ),
@@ -173,12 +175,25 @@ class MemberDetailQR extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Berakhir pada :',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
+                      Wrap(
+                        spacing: 5,
+                        children: [
+                          Text(
+                            'Berakhir pada :',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Text(
+                            expired_date ?? '',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                            textAlign: TextAlign.end,
+                          ),
+                        ],
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 5)),
                       Wrap(
@@ -186,21 +201,12 @@ class MemberDetailQR extends StatelessWidget {
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Text(
-                            'Pukul:',
+                            'Pukul :',
                             style: TextStyle(fontSize: 14),
                             textAlign: TextAlign.end,
                           ),
                           Text(
-                            '15:00',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.red,
-                            ),
-                            textAlign: TextAlign.end,
-                          ),
-                          Text(
-                            '(18 Mei, 1992)',
+                            '(${expired_time ?? ''})',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,

@@ -6,7 +6,6 @@ import 'package:pims/_config/dio.dart';
 import 'package:pims/_config/services.dart';
 import 'package:pims/_controller/config_controller.dart';
 import 'package:pims/_router/main.dart';
-import 'package:pims/pages/classes/detail/main.dart';
 import 'package:pims/pages/member/explore/detail/main.dart';
 import 'package:pims/pages/visit/main.dart';
 
@@ -225,6 +224,7 @@ Future visitTransaction() async {
   final paymentController = Get.put(PaymentController());
   final visitController = Get.put(VisitAppController());
   final configController = Get.put(ConfigController());
+  configController.onInit();
   final isMember = configController.isMember.value;
 
   final selectedVoucher = paymentController.selectedVoucher.value;
@@ -256,11 +256,14 @@ Future visitTransaction() async {
     'status': memberBypass ? 2 : 1,
   };
 
-  // inspect(visitTime?.toUtc().toString());
+  // await Future.delayed(Duration(seconds: 1));
+
+  // visitTime?.toUtc().toString()
+  // if (false) {
   try {
     final api = await API().post('transaction/visit', data: params);
     if (api.data?['status'] == 'success') {
-      Future.delayed(Duration(milliseconds: 200), () {
+      await Future.delayed(Duration(milliseconds: 200), () {
         final redirectParams = {
           'id': api.data?['data']?['id'].toString() ?? '',
           'status': memberBypass ? 'active' : 'unpaid',
@@ -273,14 +276,13 @@ Future visitTransaction() async {
   } catch (e) {
     //
   }
+  // }
 }
 
-Future classTransaction() async {
-  final classDetailController = Get.put(ClassDetailController());
+Future classTransaction(dynamic detailClass) async {
   final paymentController = Get.put(PaymentController());
   final configController = Get.put(ConfigController());
-
-  final detailClass = classDetailController.detailClass.value;
+  configController.onInit();
 
   final isMember = configController.isMember.value;
   final member_class = detailClass?['member_class'];
@@ -325,10 +327,13 @@ Future classTransaction() async {
     'status': memberBypass ? 2 : 1,
   };
 
+  // await Future.delayed(Duration(seconds: 1));
+
+  // if (false) {
   try {
     final api = await API().post('transaction/class', data: params);
     if (api.data?['status'] == 'success') {
-      Future.delayed(Duration(milliseconds: 200), () {
+      await Future.delayed(Duration(milliseconds: 200), () {
         final redirectParams = {
           'id': api.data?['data']?['id'].toString() ?? '',
           'status': memberBypass ? 'active' : 'unpaid',
@@ -341,4 +346,5 @@ Future classTransaction() async {
   } catch (e) {
     //
   }
+  // }
 }

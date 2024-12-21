@@ -126,7 +126,14 @@ class MemberDetailPage extends StatelessWidget {
                     ),
                     Column(
                       children: isActive
-                          ? [MemberDetailQR(), MemberDetailQuota()]
+                          ? [
+                              MemberDetailQR(
+                                order_no: data?['order_no'],
+                                expired_date: expired_date,
+                                expired_time: expired_time,
+                              ),
+                              // MemberDetailQuota(),
+                            ]
                           : [SizedBox.shrink()],
                     ),
                     Column(
@@ -142,10 +149,10 @@ class MemberDetailPage extends StatelessWidget {
                           isCancel ? MemberDetailCancel() : SizedBox.shrink(),
                     ),
                     MemberExploreItem(detail: data?['member']),
-                    Container(
-                      child:
-                          isActive ? MemberDetailRefund() : SizedBox.shrink(),
-                    ),
+                    // Container(
+                    //   child:
+                    //       isActive ? MemberDetailRefund() : SizedBox.shrink(),
+                    // ),
                     isUnpaid ? CancelOrder() : SizedBox.shrink(),
                     Padding(padding: EdgeInsets.only(bottom: 50))
                   ],

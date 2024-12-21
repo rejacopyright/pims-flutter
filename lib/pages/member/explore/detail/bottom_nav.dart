@@ -149,7 +149,19 @@ class MemberExploreDetailBottomNav extends StatelessWidget {
                               isActiveMember = end_date.isAfter(DateTime.now());
                             }
                             if (context.mounted) {
-                              if (isActiveMember) {
+                              if ([me?['nik'], me?['nik_file']]
+                                  .contains(null)) {
+                                showDialog(
+                                  context: context,
+                                  useSafeArea: true,
+                                  barrierDismissible: true,
+                                  builder: (context) {
+                                    return Center(
+                                      child: ModalRequiredNIK(),
+                                    );
+                                  },
+                                );
+                              } else if (isActiveMember) {
                                 showDialog(
                                   context: context,
                                   useSafeArea: true,
@@ -199,6 +211,75 @@ class MemberExploreDetailBottomNav extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class ModalRequiredNIK extends StatelessWidget {
+  const ModalRequiredNIK({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Get.width - 120,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 25),
+            child: Icon(
+              Iconsax.info_circle5,
+              color: Colors.orange,
+              size: 35,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            margin: EdgeInsets.only(top: 10, bottom: 20),
+            child: Text(
+              'Untuk membeli member, kamu wajib mengisi NIK dan Upload KTP',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          Container(
+            // padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: Color(0xffdddddd))),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
+                      Get.rootDelegate.toNamed('/profile/edit');
+                    },
+                    style: TextButton.styleFrom(
+                      elevation: 0,
+                      overlayColor: Colors.black.withOpacity(0.25),
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      shape: RoundedRectangleBorder(),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Text(
+                      'Lengkapi Persyaratan',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
 

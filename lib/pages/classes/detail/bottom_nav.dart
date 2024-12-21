@@ -134,7 +134,7 @@ class ClassBottomNav extends StatelessWidget {
                                         if (!submitMemberButtonIsLoading) {
                                           state.setSubmitMemberButtonIsLoading(
                                               true);
-                                          await classTransaction();
+                                          await classTransaction(detailClass);
                                           state.setSubmitMemberButtonIsLoading(
                                               false);
                                         }

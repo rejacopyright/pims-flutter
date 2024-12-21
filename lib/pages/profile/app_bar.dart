@@ -107,7 +107,7 @@ class ProfileAppBar extends StatelessWidget {
                                   child: Image(
                                     image: avatar != null
                                         ? NetworkImage(avatar)
-                                        : AssetImage('assets/avatar/5.png'),
+                                        : AssetImage('assets/avatar/user.png'),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

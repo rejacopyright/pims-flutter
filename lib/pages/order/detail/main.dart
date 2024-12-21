@@ -7,6 +7,7 @@ import 'package:pims/_config/dio.dart';
 import 'package:pims/_widgets/order_detail_cards.dart';
 import 'package:pims/_widgets/order_item_card.dart';
 import 'package:pims/pages/order/detail/appbar.dart';
+import 'package:pims/pages/order/pages/unpaid.dart';
 
 class OrderDetailPageController extends GetxController {
   final data = Rxn<Map<String, dynamic>>();
@@ -45,6 +46,7 @@ class OrderDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = Get.put(OrderDetailPageController());
+    final upaidController = Get.put(UnpaidOrderController());
     state.onInit();
     final primaryColor = Theme.of(context).primaryColor;
     // final params = Get.rootDelegate.parameters;
@@ -61,6 +63,10 @@ class OrderDetailPage extends StatelessWidget {
         displacement: 30,
         color: primaryColor,
         onRefresh: () async {
+          final params = Get.rootDelegate.parameters;
+          if (params['status'] == 'unpaid') {
+            upaidController.onInit();
+          }
           state.onInit();
         },
         child: Obx(() {

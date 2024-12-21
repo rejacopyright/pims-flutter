@@ -357,34 +357,36 @@ class BookingVisitPaymentCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       VisitFinalPrice(),
-                      Material(
-                        borderRadius: BorderRadius.circular(5),
-                        clipBehavior: Clip.antiAlias,
-                        color: primaryColor.withOpacity(
-                            !submitButtonIsLoading && paymentIsSelected
-                                ? 1
-                                : 0.5),
-                        child: InkWell(
-                          onTap: () async {
-                            if (!submitButtonIsLoading && paymentIsSelected) {
-                              state.setSubmitButtonIsLoading(true);
-                              await visitTransaction();
-                              state.setSubmitButtonIsLoading(false);
-                            }
-                          },
-                          child: Container(
-                            height: 50,
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
-                            child: Text(
-                              'Booking',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      ElevatedButton(
+                        onPressed: !submitButtonIsLoading && paymentIsSelected
+                            ? () async {
+                                state.setSubmitButtonIsLoading(true);
+                                await visitTransaction();
+                                state.setSubmitButtonIsLoading(false);
+                              }
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: primaryColor,
+                          disabledBackgroundColor:
+                              primaryColor.withOpacity(0.25),
+                          foregroundColor: Colors.white,
+                          shadowColor: Colors.transparent,
+                          minimumSize: Size(double.infinity, 48),
+                          shape: StadiumBorder(),
+                        ),
+                        child: Container(
+                          height: 50,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10,
+                          ),
+                          child: Text(
+                            submitButtonIsLoading ? 'Waiting...' : 'Booking',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
