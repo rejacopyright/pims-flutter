@@ -968,6 +968,7 @@ class CancelFormWidget extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
                     Get.rootDelegate.popRoute();

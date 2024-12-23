@@ -55,7 +55,7 @@ class MemberExploreDetailFeatures extends StatelessWidget {
                               width: 1, color: Color(0xffe5e5e5)),
                           defaultColumnWidth: FlexColumnWidth(),
                           columnWidths: {
-                            0: IntrinsicColumnWidth(),
+                            // 0: IntrinsicColumnWidth(),
                           },
                           defaultVerticalAlignment:
                               TableCellVerticalAlignment.middle,
@@ -101,19 +101,20 @@ class MemberExploreDetailFeatures extends StatelessWidget {
                                       vertical: 10,
                                       horizontal: 15,
                                     ),
-                                    child: Wrap(
-                                      direction: Axis.vertical,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           item?['title'] ?? '',
-                                          softWrap: false,
+                                          softWrap: true,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
                                           item?['value'] ?? '',
-                                          softWrap: false,
+                                          softWrap: true,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,

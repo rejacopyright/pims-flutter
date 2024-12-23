@@ -122,16 +122,20 @@ class OrderDetailPage extends StatelessWidget {
           }
 
           bool cancelable = false;
+          bool bypassMember =
+              data?['user_type'] == 2 && data?['total_fee'] == 0;
           String cancelable_date = '???', cancelable_time = '???';
-          if (data?['cancelable_until'] != null) {
-            cancelable_date = DateFormat('EEEE, dd MMMM yyyy')
-                .format(DateTime.parse(data?['cancelable_until']).toLocal());
-            cancelable_time = DateFormat('HH:mm')
-                .format(DateTime.parse(data?['cancelable_until']).toLocal());
-
-            cancelable = DateTime.parse(data?['cancelable_until'])
+          // if (data?['cancelable_until'] != null) {
+          if (bypassMember) {
+            final cancelable_date_format = DateTime.parse(data?['start_date'])
                 .toLocal()
-                .isAfter(DateTime.now());
+                .subtract(Duration(hours: 36));
+            cancelable_date =
+                DateFormat('EEEE, dd MMMM yyyy').format(cancelable_date_format);
+            cancelable_time =
+                DateFormat('HH:mm').format(cancelable_date_format);
+
+            cancelable = cancelable_date_format.isAfter(DateTime.now());
           }
 
           String cancel_date = '???',
@@ -261,7 +265,7 @@ class OrderDetailPage extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: isActive && cancelable && data?['id'] == 'xxx'
+                      child: isActive && cancelable
                           ? OrderDetailRefund(
                               cancelable: cancelable,
                               cancelable_date: cancelable_date,

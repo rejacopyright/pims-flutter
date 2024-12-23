@@ -98,9 +98,8 @@ class MemberExploreItem extends StatelessWidget {
                       EdgeInsets.only(bottom: mapFeatures.isNotEmpty ? 10 : 5),
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return Wrap(
-                      spacing: 5,
-                      crossAxisAlignment: WrapCrossAlignment.center,
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           clipBehavior: Clip.none,
@@ -123,20 +122,28 @@ class MemberExploreItem extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Text(
-                          mapFeatures[index]['value'],
-                          style: TextStyle(
-                            color: Color(0xffaaaaaa),
-                            fontWeight: FontWeight.bold,
+                        SizedBox(width: 5),
+                        Expanded(
+                          child: Wrap(
+                            spacing: 5,
+                            children: [
+                              Text(
+                                mapFeatures[index]['value'],
+                                style: TextStyle(
+                                  color: Color(0xffaaaaaa),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                mapFeatures[index]['title'],
+                                style: TextStyle(
+                                  color: Color(0xffaaaaaa),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                        Text(
-                          mapFeatures[index]['title'],
-                          style: TextStyle(
-                            color: Color(0xffaaaaaa),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
                       ],
                     );
                   },
