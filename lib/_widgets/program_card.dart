@@ -1,4 +1,7 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/helper.dart';
 
@@ -23,11 +26,11 @@ class ProgramCard extends StatelessWidget {
   const ProgramCard({
     super.key,
     required this.crossAxisCount,
-    required this.item,
+    this.item,
   });
 
   final int crossAxisCount;
-  final ProgramState item;
+  final Map<String, dynamic>? item;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +43,7 @@ class ProgramCard extends StatelessWidget {
       elevation: 3.5,
       child: LinkWell(
         to: '/product/detail',
+        params: {'product_id': item?['id'] ?? ''},
         child: Stack(
           children: [
             Column(
@@ -52,9 +56,13 @@ class ProgramCard extends StatelessWidget {
                       // height: (MediaQuery.of(context).size.width / crossAxisCount) - 40,
                       height: 135,
                       child: Ink.image(
-                        image: AssetImage(
-                          item.image ?? 'assets/images/no-image.png',
-                        ),
+                        image: item?['image'] != null
+                            ? NetworkImage(
+                                item?['image'],
+                              )
+                            : AssetImage(
+                                'assets/images/no-image.png',
+                              ),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -88,7 +96,7 @@ class ProgramCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(3.5),
                         ),
                         child: Text(
-                          item.category ?? 'Lainnya',
+                          item?['service_name'] ?? 'Lainnya',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
@@ -104,7 +112,7 @@ class ProgramCard extends StatelessWidget {
                   padding:
                       EdgeInsets.only(left: 10, right: 5, top: 10, bottom: 5),
                   child: Text(
-                    item.title,
+                    item?['name'] ?? '???',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: TextStyle(
@@ -113,43 +121,44 @@ class ProgramCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.only(left: 10, right: 5),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        clipBehavior: Clip.antiAlias,
-                        margin: EdgeInsets.only(right: 7),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
+                item?['trainer'] != null
+                    ? Container(
+                        padding: EdgeInsets.only(left: 10, right: 5),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              clipBehavior: Clip.antiAlias,
+                              margin: EdgeInsets.only(right: 7, bottom: 2),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              width: 17.5,
+                              height: 17.5,
+                              child: Icon(
+                                Iconsax.user,
+                                size: 12,
+                                color: primary,
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                item?['trainer']?['full_name'] ?? '',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        width: 17.5,
-                        height: 17.5,
-                        child: Image.asset(
-                          item.userImage ?? 'assets/avatar/user.png',
-                          fit: BoxFit.cover,
-                          opacity: AlwaysStoppedAnimation(
-                              item.userImage != null ? 1 : 0.25),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          item.userName,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
-            item.price != null
+            item?['default_fee'] != null
                 ? Positioned(
                     left: 0,
                     right: 0,
@@ -158,56 +167,55 @@ class ProgramCard extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.only(left: 10, right: 10, top: 5),
                       child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Rp. ',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                    ),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Rp. ',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
                                   ),
-                                  item.price != null
-                                      ? Text(
-                                          currency.format(item.price),
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                          ),
-                                        )
-                                      : SizedBox.shrink(),
-                                ],
-                              ),
+                                ),
+                                Text(
+                                  currency.format(item?['default_fee']),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Container(
-                              constraints: BoxConstraints(
-                                maxWidth: (MediaQuery.of(context).size.width /
-                                        crossAxisCount) -
-                                    50,
-                              ),
-                              padding: EdgeInsets.only(
-                                left: 7.5,
-                                right: 7.5,
-                                top: 1.5,
-                                bottom: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                color: primary.withOpacity(0.05),
-                                borderRadius: BorderRadius.circular(3.5),
-                              ),
-                              child: Image.asset(
-                                'assets/icons/gender.png',
-                                height: 17.5,
-                                fit: BoxFit.contain,
-                              ),
+                          ),
+                          Container(
+                            constraints: BoxConstraints(
+                              maxWidth: (MediaQuery.of(context).size.width /
+                                      crossAxisCount) -
+                                  50,
                             ),
-                          ]),
+                            padding: EdgeInsets.only(
+                              left: 7.5,
+                              right: 7.5,
+                              top: 1.5,
+                              bottom: 5,
+                            ),
+                            decoration: BoxDecoration(
+                              color: primary.withOpacity(0.05),
+                              borderRadius: BorderRadius.circular(3.5),
+                            ),
+                            child: Image.asset(
+                              'assets/icons/${item?['gender'] == 1 ? 'male' : item?['gender'] == 1 ? 'female' : 'gender'}.png',
+                              height: 17.5,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 : SizedBox.shrink(),

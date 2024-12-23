@@ -7,11 +7,11 @@ import 'package:intl/intl.dart';
 import 'package:pims/_config/dio.dart';
 import 'package:pims/_config/services.dart';
 import 'package:pims/_config/storage.dart';
-import 'package:pims/pages/classes/detail/appbar.dart';
-import 'package:pims/pages/classes/detail/bottom_nav.dart';
-import 'package:pims/pages/classes/detail/description.dart';
-import 'package:pims/pages/classes/detail/image_slider.dart';
-import 'package:pims/pages/classes/detail/price.dart';
+import './appbar.dart';
+import './bottom_nav.dart';
+import './description.dart';
+import './image_slider.dart';
+import './price.dart';
 
 ScrollController classDetailScrollController = ScrollController();
 GlobalKey classDetailTabKey = GlobalKey();
@@ -67,13 +67,12 @@ class ClassDetailPage extends StatelessWidget {
     final priceController = Get.put(ClassDetailPriceController());
     final descriptionController = Get.put(ClassDetailDescriptionController());
     final thisController = Get.put(ClassDetailController());
-    final classType = Get.rootDelegate.parameters['type'];
-    final thisClass =
-        classesList.firstWhereOrNull((item) => item.name == classType);
     final box = GetStorage();
     final user = box.read('user');
     return Obx(() {
       final detail = thisController.detailClass.value;
+      final thisClass = classesList.firstWhereOrNull(
+          (item) => item.type == (detail?['service__id'] ?? 2));
       final gallery = detail?['class']?['class_gallery'];
       final dataIsReady = thisController.dataIsReady.value;
       dynamic images;
@@ -107,6 +106,7 @@ class ClassDetailPage extends StatelessWidget {
           ? detail['transaction']?.map((item) => item?['user']?['id']).toList()
           : [];
       final isBookedByMe = userTrxIds.contains(user?['id']);
+      List transaction = detail?['transaction'] ?? [];
       return Scaffold(
         bottomNavigationBar: SafeArea(
             child: isFull
@@ -165,6 +165,8 @@ class ClassDetailPage extends StatelessWidget {
                             description:
                                 detail?['class']?['description'] ?? '-',
                             dataIsReady: dataIsReady,
+                            transaction: transaction,
+                            quota: quota,
                           ),
                         ),
                       ],

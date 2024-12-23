@@ -88,8 +88,8 @@ class HomeHeaderContent extends StatelessWidget {
     return Obx(() {
       final user = userController.user.value;
       final member = user?['member'];
-      var name = user?['full_name'];
-      var username = user?['username'];
+      var name = user?['full_name'] ?? '???';
+      var username = user?['username'] ?? '???';
       name = name.toString().toTitleCase();
       final pageIsReady = state.pageIsReady.value;
       final avatar = userController.avatar.value;

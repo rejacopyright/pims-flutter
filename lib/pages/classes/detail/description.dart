@@ -39,6 +39,8 @@ class ClassDetailDescription extends StatelessWidget {
     this.gender = 3,
     this.title = '-',
     this.description = '-',
+    this.transaction = const [],
+    this.quota = 0,
   });
   final ClassItem? thisClass;
   final bool dataIsReady;
@@ -49,6 +51,8 @@ class ClassDetailDescription extends StatelessWidget {
   final int gender;
   final String title;
   final String description;
+  final List transaction;
+  final int quota;
 
   final store = Get.put(ClassDetailDescriptionController());
 
@@ -160,8 +164,12 @@ class ClassDetailDescription extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(top: 10, bottom: 10),
-              child:
-                  ClassDesciptionBadges(thisClass: thisClass, gender: gender),
+              child: ClassDesciptionBadges(
+                thisClass: thisClass,
+                gender: gender,
+                transaction: transaction,
+                quota: quota,
+              ),
             ),
             Container(
               margin: EdgeInsets.only(top: 15, bottom: 15),
@@ -225,10 +233,14 @@ class ClassDesciptionBadges extends StatelessWidget {
     super.key,
     required this.thisClass,
     this.gender = 3,
+    this.transaction = const [],
+    this.quota = 0,
   });
 
   final ClassItem? thisClass;
   final int gender;
+  final List transaction;
+  final int quota;
 
   @override
   Widget build(BuildContext context) {
@@ -291,27 +303,141 @@ class ClassDesciptionBadges extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 7.5,
-            vertical: 5,
-          ),
-          // margin: EdgeInsets.only(top: 15, bottom: 20),
-          decoration: BoxDecoration(
-            color: primaryColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(width: 1, color: primaryColor),
-          ),
-          child: Text(
-            '2/10',
-            style: TextStyle(
-              color: primaryColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
+        InkWell(
+          onTap: transaction.isNotEmpty
+              ? () {
+                  Modal.showListParticipant(context, transaction);
+                }
+              : null,
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 7.5,
+              vertical: 5,
+            ),
+            // margin: EdgeInsets.only(top: 15, bottom: 20),
+            decoration: BoxDecoration(
+              color: primaryColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(width: 1, color: primaryColor),
+            ),
+            child: Text(
+              '${transaction.length}/$quota',
+              style: TextStyle(
+                color: primaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class Modal {
+  static void showListParticipant(context, List participant) {
+    // Size size = MediaQuery.of(context).size;
+    showModalBottomSheet(
+      useSafeArea: true,
+      // isScrollControlled: true,
+      constraints: BoxConstraints(
+        minHeight: 300,
+        maxHeight: Get.height * 0.9,
+      ),
+      context: context,
+      builder: (context) {
+        return Material(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            children: [
+              Container(
+                width: Get.width,
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: Container(
+                  height: 7.5,
+                  width: 75,
+                  margin: EdgeInsets.only(top: 20, bottom: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 10,
+                  ),
+                  child: ListView(
+                    physics: ClampingScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    shrinkWrap: true,
+                    children: [
+                      ...participant,
+                    ].map((item) {
+                      final thisUser = item?['user'];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 7.5),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              clipBehavior: Clip.antiAlias,
+                              margin: EdgeInsets.only(right: 7.5, bottom: 7.5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              width: 50,
+                              height: 50,
+                              child: Ink.image(
+                                image: thisUser?['avatar_link'] != null
+                                    ? NetworkImage(thisUser['avatar_link'])
+                                    : AssetImage('assets/avatar/user.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    thisUser?['full_name'] ?? '',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${thisUser?['username'] ?? ''}',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff777777),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+              SafeArea(child: SizedBox.shrink()),
+            ],
+          ),
+        );
+      },
     );
   }
 }

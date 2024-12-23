@@ -108,7 +108,7 @@ class SelectClass extends StatelessWidget {
                     final gender = item?['class']?['gender'] ?? 3;
                     return ProgramBookingCard(
                       to: '$homeRoute/services/class/detail',
-                      params: {...(params ?? {}), 'id': item?['id']},
+                      params: {'id': item?['id']},
                       item: ProgramBookingState(
                         title: item?['class']?['name'] ?? '',
                         category: classType,
