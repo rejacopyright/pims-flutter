@@ -252,6 +252,13 @@ class LoginPage extends StatelessWidget {
                               style: TextStyle(color: Color(0xff777777)),
                             ),
                           ),
+                          Text(
+                            'v1.0.5',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11,
+                            ),
+                          ),
                         ],
                       ),
                     ),

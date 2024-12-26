@@ -3,10 +3,12 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:synchronized/synchronized.dart';
 
-String SERVER_URL = 'http://127.0.0.1:4000';
+String SERVER_URL =
+    kReleaseMode ? 'https://api.pimsclub.id' : 'http://127.0.0.1:4000';
 
 class TokenRefreshInterceptor extends QueuedInterceptor {
   final Dio dio;

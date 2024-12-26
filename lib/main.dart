@@ -40,7 +40,7 @@ class MyApp extends State<AppState> {
       }
     });
     return GetMaterialApp(
-      title: 'Flutter Demos',
+      title: 'PIMS CLUB',
       localizationsDelegates: [
         // AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
