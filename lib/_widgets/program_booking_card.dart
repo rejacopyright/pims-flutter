@@ -167,7 +167,7 @@ class ProgramBookingCard extends StatelessWidget {
                         ),
                         width: 17.5,
                         height: 17.5,
-                        child: Ink.image(
+                        child: Image(
                           image: item.trainerImage != null
                               ? NetworkImage(item.trainerImage as String)
                               : AssetImage('assets/avatar/user.png'),

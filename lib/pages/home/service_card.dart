@@ -28,7 +28,7 @@ class ServiceCard extends StatelessWidget {
         // Get.rootDelegate.toNamed('$homeRoute${name ?? '/'}');
       },
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
@@ -85,13 +85,15 @@ class ServiceSectionController extends GetxController {
 }
 
 class ServiceSection extends StatelessWidget {
-  const ServiceSection({super.key});
+  const ServiceSection({super.key, this.user});
+  final Map<String, dynamic>? user;
 
   @override
   Widget build(BuildContext context) {
     final store = Get.put(ServiceSectionController());
     final Color primary = Theme.of(context).primaryColor;
     return Obx(() {
+      final isTrainer = user?['role_id'] == 3;
       final pageIsReady = store.pageIsReady.value;
       final gridCount = 4;
       final gridSize = (MediaQuery.of(context).size.width / gridCount) - 30;
@@ -110,17 +112,25 @@ class ServiceSection extends StatelessWidget {
             scrollDirection: Axis.vertical,
             crossAxisSpacing: 15,
             mainAxisSpacing: 15,
-            children: servicesList
-                .where((item) => item.home == true)
-                .map(
-                  (e) => ServiceCard(
-                    label: e.label,
-                    icon: e.icon,
-                    name: e.name,
-                    type: e.type,
+            children: [
+              ...servicesList.where((item) => item.home == true).map(
+                    (e) => ServiceCard(
+                      label: e.label,
+                      icon: e.icon,
+                      name: e.name,
+                      type: e.type,
+                    ),
                   ),
-                )
-                .toList(),
+              ...(isTrainer
+                  ? [
+                      ServiceCard(
+                        label: 'Jadwal Saya',
+                        icon: 'assets/icons/calendar-tick.png',
+                        name: '/trainer',
+                      )
+                    ]
+                  : [SizedBox.shrink()]),
+            ],
           ),
         );
       }

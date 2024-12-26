@@ -118,7 +118,8 @@ class SelectClass extends StatelessWidget {
                         gender: gender,
                         trainerImage: trainerImage,
                         trainerName: item?['trainer']?['full_name'] ??
-                            item?['trainer']?['username'],
+                            item?['trainer']?['username'] ??
+                            '???',
                         quota: item?['quota'] ?? 0,
                         booked: item?['transaction']?.length ?? 0,
                       ),

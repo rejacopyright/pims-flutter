@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pims/_config/dio.dart';
 import 'package:pims/_config/services.dart';
-import 'package:pims/_controller/config_controller.dart';
 import 'package:pims/_router/main.dart';
 import 'package:pims/pages/member/explore/detail/main.dart';
 import 'package:pims/pages/visit/main.dart';
@@ -223,16 +222,21 @@ Future memberTransaction() async {
 Future visitTransaction() async {
   final paymentController = Get.put(PaymentController());
   final visitController = Get.put(VisitAppController());
-  final configController = Get.put(ConfigController());
-  configController.onInit();
-  final isMember = configController.isMember.value;
+
+  final config = await API().get('/global/config');
+  final memberAPI = await API().get('order/check/member/visit');
+  final membership = memberAPI.data;
+  final isMember = membership?['isMember'] ?? false;
+
+  final visit_fee = membership?['visit'] != null
+      ? (membership?['visit']?['fee'] ?? 0)
+      : config.data?['visit_fee'];
 
   final selectedVoucher = paymentController.selectedVoucher.value;
   final selectedPayment = paymentController.selectedPayment.value;
-  final visit_fee = configController.visit_fee.value;
-  final app_fee = isMember ? 0 : configController.app_fee.value;
+  final app_fee = isMember ? 0 : (config.data?['app_fee'] ?? 0);
   final visitTime = visitController.selectedTime.value;
-  final visitTimeInterval = configController.visit_time_interval.value;
+  final visitTimeInterval = config.data?['visit_time_interval'] ?? 0;
   final end_date = visitTime?.add(Duration(minutes: visitTimeInterval));
 
   final service_fee = isMember ? 0 : (selectedPayment?.fee ?? 0);
@@ -281,15 +285,16 @@ Future visitTransaction() async {
 
 Future classTransaction(dynamic detailClass) async {
   final paymentController = Get.put(PaymentController());
-  final configController = Get.put(ConfigController());
-  configController.onInit();
+  final config = await API().get('/global/config');
+  final memberAPI = await API().get('order/check/member/visit');
+  final membership = memberAPI.data;
+  final isMember = membership?['isMember'] ?? false;
 
-  final isMember = configController.isMember.value;
   final member_class = detailClass?['member_class'];
 
   final selectedVoucher = paymentController.selectedVoucher.value;
   final selectedPayment = paymentController.selectedPayment.value;
-  final app_fee = isMember ? 0 : configController.app_fee.value;
+  final app_fee = isMember ? 0 : (config.data?['app_fee'] ?? 0);
   final thisService = classesList.firstWhereOrNull(
       (item) => item.name == Get.rootDelegate.parameters['type']);
 

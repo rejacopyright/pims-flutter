@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/_config/dio.dart';
-import 'package:pims/_controller/user_controller.dart';
 import 'package:pims/_router/main.dart';
 import 'package:pims/_widgets/helper.dart';
 
@@ -33,7 +32,9 @@ class HomeHeaderController extends GetxController {
 }
 
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key});
+  const HomeHeader({super.key, this.user, this.avatar});
+  final Map<String, dynamic>? user;
+  final String? avatar;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,7 @@ class HomeHeader extends StatelessWidget {
           expandedTitleScale: 1.1,
           centerTitle: true,
           titlePadding: EdgeInsets.all(0.0),
-          title: HomeHeaderContent(),
+          title: HomeHeaderContent(user: user, avatar: avatar),
           background: HomeHeaderBackground(),
         ),
       );
@@ -77,22 +78,20 @@ class HomeHeader extends StatelessWidget {
 }
 
 class HomeHeaderContent extends StatelessWidget {
-  const HomeHeaderContent({super.key});
+  const HomeHeaderContent({super.key, this.user, this.avatar});
+  final Map<String, dynamic>? user;
+  final String? avatar;
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final state = Get.put(HomeHeaderController());
-    final userController = Get.put(UserController());
-    userController.onInit();
     return Obx(() {
-      final user = userController.user.value;
       final member = user?['member'];
       var name = user?['full_name'] ?? '???';
       var username = user?['username'] ?? '???';
       name = name.toString().toTitleCase();
       final pageIsReady = state.pageIsReady.value;
-      final avatar = userController.avatar.value;
       return Container(
         // width: double.infinity,
         margin: EdgeInsets.only(bottom: 5, left: 15, right: 15),

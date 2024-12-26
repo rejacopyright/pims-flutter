@@ -114,54 +114,58 @@ class ClassDetailDescription extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    clipBehavior: Clip.antiAlias,
-                    margin: EdgeInsets.only(right: 7.5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    width: 50,
-                    height: 50,
-                    child: Ink.image(
-                      image: trainer?['avatar'] != null
-                          ? NetworkImage(trainer['avatar'] as String)
-                          : AssetImage('assets/avatar/user.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            trainer != null
+                ? Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          trainer?['full_name'] ?? trainer?['username'] ?? '',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
+                        Container(
+                          clipBehavior: Clip.antiAlias,
+                          margin: EdgeInsets.only(right: 7.5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          width: 50,
+                          height: 50,
+                          child: Image(
+                            image: trainer?['avatar_link'] != null
+                                ? NetworkImage(trainer['avatar_link'] as String)
+                                : AssetImage('assets/avatar/user.png'),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        Text(
-                          '${trainer?['username'] ?? ''} | ${trainer?['email'] ?? ''}',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                              color: Color(0xff777777)),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                trainer?['full_name'] ??
+                                    trainer?['username'] ??
+                                    '',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                '${trainer?['username'] ?? ''} | ${trainer?['email'] ?? ''}',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                    color: Color(0xff777777)),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ),
+                  )
+                : SizedBox.shrink(),
             Padding(
               padding: EdgeInsets.only(top: 10, bottom: 10),
               child: ClassDesciptionBadges(

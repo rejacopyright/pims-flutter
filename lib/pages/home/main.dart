@@ -48,81 +48,86 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> content = [
-      Container(
-        margin: EdgeInsets.symmetric(vertical: 10.0),
-        child: BannerPromo(),
-      ),
-      // TitleShowAll(title: 'Temukan Tukang'),
-      ServiceSection(),
-      // TitleShowAll(
-      //   title: 'Trainers',
-      //   margin: EdgeInsets.only(top: 5, bottom: 5),
-      // ),
-      // TopUserCard(),
-      // Padding(padding: EdgeInsets.only(bottom: 5)),
-      // TitleShowAll(
-      //   title: 'Programs',
-      //   margin: EdgeInsets.only(top: 10),
-      // ),
-    ];
-
     final homeHeaderController = Get.put(HomeHeaderController());
     final topUserController = Get.put(TopUserCardController());
     final serviceController = Get.put(ServiceSectionController());
     final bannerController = Get.put(BannerPromoController());
     final programController = Get.put(ProgramSectionController());
+    final userController = Get.put(UserController());
+    userController.onInit();
 
     return Scaffold(
       bottomNavigationBar: NavbarWidget(name: '/app'),
       extendBody: true,
       floatingActionButton: QRButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return [HomeHeader()];
-        },
-        body: RefreshIndicator(
-          color: Theme.of(context).primaryColor,
-          displacement: 30,
-          onRefresh: () async {
-            final userController = Get.put(UserController());
-            userController.onInit();
-            homeHeaderController.refresh();
-            bannerController.refresh();
-            serviceController.refresh();
-            topUserController.refresh();
-            programController.refresh();
+      body: Obx(() {
+        final user = userController.user.value;
+        final avatar = userController.avatar.value;
+        return NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [HomeHeader(user: user, avatar: avatar)];
           },
-          child: CustomScrollView(
-            physics: BouncingScrollPhysics(),
-            scrollBehavior: MaterialScrollBehavior().copyWith(
-              overscroll: false,
-            ),
-            slivers: [
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return Column(children: content);
-                  },
-                  childCount: 1,
-                ),
+          body: RefreshIndicator(
+            color: Theme.of(context).primaryColor,
+            displacement: 30,
+            onRefresh: () async {
+              userController.onInit();
+              homeHeaderController.refresh();
+              bannerController.refresh();
+              serviceController.refresh();
+              topUserController.refresh();
+              programController.refresh();
+            },
+            child: CustomScrollView(
+              physics: BouncingScrollPhysics(),
+              scrollBehavior: MaterialScrollBehavior().copyWith(
+                overscroll: false,
               ),
-              // SliverList(
-              //   delegate: SliverChildBuilderDelegate(
-              //     (context, index) => Container(
-              //       margin: EdgeInsets.symmetric(vertical: 10),
-              //       child: ProgramSection(),
-              //     ),
-              //     childCount: 1,
-              //   ),
-              // ),
-              SliverPadding(padding: EdgeInsets.only(bottom: 100))
-            ],
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 10.0),
+                            child: BannerPromo(),
+                          ),
+                          // TitleShowAll(title: 'Temukan Tukang'),
+                          ServiceSection(user: user),
+                          // TitleShowAll(
+                          //   title: 'Trainers',
+                          //   margin: EdgeInsets.only(top: 5, bottom: 5),
+                          // ),
+                          // TopUserCard(),
+                          // Padding(padding: EdgeInsets.only(bottom: 5)),
+                          // TitleShowAll(
+                          //   title: 'Programs',
+                          //   margin: EdgeInsets.only(top: 10),
+                          // ),
+                        ],
+                      );
+                    },
+                    childCount: 1,
+                  ),
+                ),
+                // SliverList(
+                //   delegate: SliverChildBuilderDelegate(
+                //     (context, index) => Container(
+                //       margin: EdgeInsets.symmetric(vertical: 10),
+                //       child: ProgramSection(),
+                //     ),
+                //     childCount: 1,
+                //   ),
+                // ),
+                SliverPadding(padding: EdgeInsets.only(bottom: 100))
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

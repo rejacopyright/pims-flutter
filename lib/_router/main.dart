@@ -19,6 +19,7 @@ import 'package:pims/pages/product/detail/main.dart';
 import 'package:pims/pages/product/main.dart';
 import 'package:pims/pages/profile/edit/main.dart';
 import 'package:pims/pages/profile/main.dart';
+import 'package:pims/pages/trainer/main.dart';
 import 'package:pims/pages/visit/main.dart';
 
 // class PageMiddelware extends GetMiddleware {
@@ -147,6 +148,10 @@ List<Route> menusNav = [
             ],
           ),
         ],
+      ),
+      GetPage(
+        name: '/trainer',
+        page: () => TrainerPage(),
       ),
     ],
   ),

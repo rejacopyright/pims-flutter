@@ -114,7 +114,9 @@ class ProductDetailPage extends StatelessWidget {
                           images: images,
                           dataIsReady: dataIsReady,
                         ),
-                        TrainerCard(trainer: trainer),
+                        trainer != null
+                            ? TrainerCard(trainer: trainer)
+                            : SizedBox.shrink(),
                         Container(
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.symmetric(
@@ -148,47 +150,50 @@ class ProductDetailPage extends StatelessWidget {
                     );
                   }, childCount: 1),
                 ),
-                SliverPadding(
-                  padding: const EdgeInsets.only(top: 20),
-                  sliver: SliverAppBar(
-                    pinned: true,
-                    backgroundColor: Color(0xfffafafa),
-                    surfaceTintColor: Colors.white,
-                    toolbarHeight: 0,
-                    shadowColor: Colors.black.withOpacity(0.25),
-                    elevation: 2,
-                    automaticallyImplyLeading: false,
-                    centerTitle: false,
-                    titleSpacing: 15,
-                    flexibleSpace: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Wrap(
-                            spacing: 10,
+                open_class.isNotEmpty
+                    ? SliverPadding(
+                        padding: const EdgeInsets.only(top: 20),
+                        sliver: SliverAppBar(
+                          pinned: true,
+                          backgroundColor: Color(0xfffafafa),
+                          surfaceTintColor: Colors.white,
+                          toolbarHeight: 0,
+                          shadowColor: Colors.black.withOpacity(0.25),
+                          elevation: 2,
+                          automaticallyImplyLeading: false,
+                          centerTitle: false,
+                          titleSpacing: 15,
+                          flexibleSpace: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Iconsax.calendar5,
-                                size: 20,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              Text(
-                                'Jadwal Kelas',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Theme.of(context).primaryColor,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Wrap(
+                                  spacing: 10,
+                                  children: [
+                                    Icon(
+                                      Iconsax.calendar5,
+                                      size: 20,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                    Text(
+                                      'Jadwal Kelas',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
+                      )
+                    : SliverPadding(padding: EdgeInsets.zero),
                 SliverList.list(
                   children: [AvailableOpenClass(open_class: open_class)],
                 ),
