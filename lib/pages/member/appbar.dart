@@ -90,15 +90,14 @@ class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     width: 50,
                     height: 50,
-                    child: me?['avatar_link'] != null
-                        ? Image.network(
-                            me?['avatar_link'],
-                            fit: BoxFit.cover,
-                          )
-                        : Image.asset(
-                            'assets/avatar/user.png',
-                            fit: BoxFit.cover,
-                          ),
+                    child: Image(
+                      image: me?['avatar_link'] != null
+                          ? NetworkImage(
+                              me?['avatar_link'],
+                            )
+                          : AssetImage('assets/avatar/user.png'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   Expanded(
                     child: Column(
