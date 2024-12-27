@@ -20,6 +20,7 @@ import 'package:pims/pages/product/main.dart';
 import 'package:pims/pages/profile/edit/main.dart';
 import 'package:pims/pages/profile/main.dart';
 import 'package:pims/pages/trainer/main.dart';
+import 'package:pims/pages/viewTrainer/main.dart';
 import 'package:pims/pages/visit/main.dart';
 
 // class PageMiddelware extends GetMiddleware {
@@ -176,16 +177,16 @@ List<Route> menusNav = [
     page: Scoper(child: ProductApp()),
   ),
   Route(
-    name: '/order',
-    page: Scoper(child: OrderPage()),
-    label: 'Pesanan',
-    icon: Iconsax.shopping_cart,
-    activeIcon: Iconsax.shopping_cart5,
+    name: '/view/trainer',
+    page: Scoper(child: ViewTrainerApp()),
+    label: 'Trainer',
+    icon: Iconsax.profile_2user,
+    activeIcon: Iconsax.profile_2user5,
     middlewares: [AuthMiddleware()],
     children: [
       GetPage(
         name: '/detail',
-        page: () => OrderDetailPage(),
+        page: () => Placeholder(),
         participatesInRootNavigator: true,
       ),
     ],
@@ -222,16 +223,17 @@ List<GetPage> publicRoutes() {
       page: () => Scoper(child: LoginPage()),
     ),
     GetPage(
-        name: '/register',
-        preventDuplicates: true,
-        participatesInRootNavigator: true,
-        page: () => Scoper(child: RegisterPage()),
-        children: [
-          GetPage(
-            name: '/confirm',
-            page: () => Scoper(child: RegisterConfirmPage()),
-          ),
-        ]),
+      name: '/register',
+      preventDuplicates: true,
+      participatesInRootNavigator: true,
+      page: () => Scoper(child: RegisterPage()),
+      children: [
+        GetPage(
+          name: '/confirm',
+          page: () => Scoper(child: RegisterConfirmPage()),
+        ),
+      ],
+    ),
   ];
 }
 
@@ -257,6 +259,18 @@ List<GetPage> routes() {
               middlewares: e.middlewares,
               children: e.children ?? [],
             ),
+          ),
+          GetPage(
+            name: '/order',
+            page: () => Scoper(child: OrderPage()),
+            middlewares: [AuthMiddleware()],
+            children: [
+              GetPage(
+                name: '/detail',
+                page: () => OrderDetailPage(),
+                participatesInRootNavigator: true,
+              ),
+            ],
           ),
         ]),
   ];

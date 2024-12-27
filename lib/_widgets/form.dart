@@ -6,8 +6,14 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pims/_widgets/helper.dart';
 
 class SearchField extends StatefulWidget {
-  const SearchField({super.key, this.value = '', this.onChange});
+  const SearchField({
+    super.key,
+    this.value = '',
+    this.onChange,
+    this.hintText = 'Cari program disini ...',
+  });
   final String value;
+  final String hintText;
   final ValueChanged<dynamic>? onChange;
 
   @override
@@ -49,7 +55,7 @@ class _SearchFieldState extends State<SearchField> {
             borderRadius: BorderRadius.circular(50),
             borderSide: BorderSide.none,
           ),
-          hintText: 'Cari program disini ...',
+          hintText: widget.hintText,
           hintStyle: TextStyle(
             color: Colors.black.withOpacity(0.5),
             fontSize: 16,

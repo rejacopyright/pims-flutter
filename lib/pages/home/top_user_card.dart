@@ -76,7 +76,7 @@ class TopUserCard extends StatelessWidget {
                       // ),
                       child: LinkWell(
                           to: '/services/visit',
-                          child: StackedUserCard(avatar: e)),
+                          child: StackedUserCard(detail: null)),
                     ),
                   ),
                 )

@@ -71,6 +71,10 @@ class QRButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    String path = '/order';
+    final currentPath =
+        Get.rootDelegate.currentConfiguration?.currentPage?.name ?? homeRoute;
+    bool isCurrent = path == currentPath;
     return SizedBox(
       width: 65,
       height: 65,
@@ -80,11 +84,11 @@ class QRButton extends StatelessWidget {
           shape: CircleBorder(
             side: BorderSide(color: primaryColor.withOpacity(0.75)),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: isCurrent ? primaryColor : Colors.white,
           onPressed: () {
             Future.delayed(Duration(milliseconds: 200), () {
               Get.rootDelegate.toNamed(
-                '/order',
+                path,
                 parameters: {'order_tab': 'active'},
               );
             });
@@ -93,10 +97,10 @@ class QRButton extends StatelessWidget {
             padding: const EdgeInsets.only(top: 5),
             child: SvgPicture.asset(
               'assets/icons/cart.svg',
-              width: 40,
-              height: 40,
+              width: 35,
+              height: 35,
               colorFilter: ColorFilter.mode(
-                primaryColor,
+                isCurrent ? Colors.white : primaryColor,
                 BlendMode.srcIn,
               ),
             ),

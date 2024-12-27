@@ -62,7 +62,7 @@ class MoreMember extends StatelessWidget {
                       elevation: 3.5,
                       child: LinkWell(
                         to: '/services/visit',
-                        child: StackedUserCard(avatar: e),
+                        child: StackedUserCard(detail: null),
                       ),
                     ),
                   ),

@@ -253,7 +253,7 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'v1.0.6',
+                            'v1.0.7',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 11,
