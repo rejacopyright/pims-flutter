@@ -172,7 +172,9 @@ class PaymentController extends GetxController {
   void onInit() async {
     try {
       final api = await API().get('/global/payment_method');
-      final result = (api.data as List).map((item) {
+      final result = (api.data as List)
+          .where((item) => !['corporate', 'cod'].contains(item?['name']))
+          .map((item) {
         final thisItem =
             defaultPayments.firstWhereOrNull((x) => x.name == item?['name']);
         item['icon'] = thisItem?.icon ?? '';

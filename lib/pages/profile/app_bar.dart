@@ -31,6 +31,7 @@ class ProfileAppBar extends StatelessWidget {
         titlePadding: EdgeInsets.all(0.0),
         background: Obx(() {
           final userAvatar = thisState.avatar.value;
+          final user = thisState.user.value;
           final avatar = userAvatar != null
               ? '$SERVER_URL/static/images/user/$userAvatar'
               : null;
@@ -116,7 +117,7 @@ class ProfileAppBar extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Reja Jamil',
+                                    user?['full_name'] ?? '???',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -134,7 +135,7 @@ class ProfileAppBar extends StatelessWidget {
                                         color: Colors.white,
                                       ),
                                       Text(
-                                        'reja.copyright@gmail.com',
+                                        user?['email'] ?? '???',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
