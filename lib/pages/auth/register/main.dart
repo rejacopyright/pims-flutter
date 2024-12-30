@@ -180,10 +180,19 @@ class RegisterPage extends StatelessWidget {
                               if (value!.isEmpty) {
                                 return 'Username wajib diisi';
                               }
+                              const pattern = r"""([a-z0-9_])$""";
+                              final regex = RegExp(pattern);
+                              if (!regex.hasMatch(value)) {
+                                return 'Hanya boleh huruf kecil, (_), dan angka';
+                              }
+                              if (value.length < 3) {
+                                return 'minimal 3 karakter';
+                              }
                               return null;
                             },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             onTapOutside: (e) {
-                              _formKey.currentState!.validate();
                               FocusManager.instance.primaryFocus?.unfocus();
                             },
                             onChanged: (val) {
@@ -219,8 +228,9 @@ class RegisterPage extends StatelessWidget {
                               }
                               return null;
                             },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             onTapOutside: (e) {
-                              _formKey.currentState!.validate();
                               FocusManager.instance.primaryFocus?.unfocus();
                             },
                             onChanged: (val) {
@@ -250,8 +260,9 @@ class RegisterPage extends StatelessWidget {
                               }
                               return null;
                             },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             onTapOutside: (e) {
-                              _formKey.currentState!.validate();
                               FocusManager.instance.primaryFocus?.unfocus();
                             },
                             onChanged: (val) {
@@ -289,10 +300,41 @@ class RegisterPage extends StatelessWidget {
                               if (value!.isEmpty) {
                                 return 'Kata Sandi wajib diisi';
                               }
+                              var lowerCaseRegex = RegExp(r"""([a-z])""");
+                              var upperCaseRegex = RegExp(r"""([A-Z])""");
+                              var numberRegex = RegExp(r"""([0-9])""");
+                              var spaceRegex = RegExp(r"""([\s])""");
+                              var specialCharRegex =
+                                  RegExp(r"""([!@#$%^&*()_\-\+=[\]{}?])""");
+                              var nonWordRegex =
+                                  RegExp(r"""([|\\;:/.,'"<>~`])""");
+                              // var nonWordRegex = RegExp(r"""([\W])""");
+                              if (nonWordRegex.hasMatch(value)) {
+                                return 'tidak boleh antara ${nonWordRegex.pattern.replaceAll(RegExp(r"""(\(\[)|(\]\))"""), '')}';
+                              }
+                              if (!lowerCaseRegex.hasMatch(value)) {
+                                return 'minimal 1 huruf kecil';
+                              }
+                              if (!upperCaseRegex.hasMatch(value)) {
+                                return 'minimal 1 huruf besar';
+                              }
+                              if (!numberRegex.hasMatch(value)) {
+                                return 'minimal 1 angka';
+                              }
+                              if (spaceRegex.hasMatch(value)) {
+                                return 'tidak boleh ada spasi';
+                              }
+                              if (!specialCharRegex.hasMatch(value)) {
+                                return 'minimal 1 simbol ${specialCharRegex.pattern.replaceAll(RegExp(r"""(\\)|(\(\[)|(\]\))"""), '')}';
+                              }
+                              if (value.length < 8) {
+                                return 'minimal 8 karakter';
+                              }
                               return null;
                             },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             onTapOutside: (e) {
-                              _formKey.currentState!.validate();
                               FocusManager.instance.primaryFocus?.unfocus();
                             },
                             onChanged: (val) {
@@ -335,8 +377,9 @@ class RegisterPage extends StatelessWidget {
                               }
                               return null;
                             },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             onTapOutside: (e) {
-                              _formKey.currentState!.validate();
                               FocusManager.instance.primaryFocus?.unfocus();
                             },
                             onChanged: (val) {
