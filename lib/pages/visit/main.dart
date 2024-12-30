@@ -45,51 +45,39 @@ class VisitPage extends StatelessWidget {
     final selectTimesController = Get.put(SelectTimesController());
     final configController = Get.put(ConfigController());
     return Scaffold(
-      // appBar: VisitAppBar(),
       bottomNavigationBar: SafeArea(child: VisitBottomNav()),
       body: Obx(
         () {
           final pageIsReady = visitController.pageIsReady.value;
-          return NestedScrollView(
-            // physics: ClampingScrollPhysics(),
-            // scrollBehavior:
-            //     MaterialScrollBehavior().copyWith(overscroll: false),
-            floatHeaderSlivers: true,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return [
-                VisitHeader(pageIsReady: pageIsReady),
-                // DaysWidget(),
-              ];
+          return RefreshIndicator(
+            color: Theme.of(context).primaryColor,
+            displacement: 50,
+            edgeOffset: 290,
+            onRefresh: () async {
+              configController.onInit();
+              visitController.refresh();
+              selectTimesController.refresh();
+              // selectDaysController.refresh();
             },
-            body: RefreshIndicator(
-              color: Theme.of(context).primaryColor,
-              displacement: 10,
-              onRefresh: () async {
-                configController.onInit();
-                visitController.refresh();
-                selectTimesController.refresh();
-                // selectDaysController.refresh();
-              },
-              child: CustomScrollView(
-                physics: NeverScrollableScrollPhysics(),
-                scrollBehavior: MaterialScrollBehavior().copyWith(
-                  overscroll: false,
-                ),
-                slivers: [
-                  SliverPadding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 20,
-                    ),
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        return SelectTimes();
-                      }, childCount: 1),
-                    ),
-                  ),
-                ],
+            child: CustomScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              scrollBehavior: MaterialScrollBehavior().copyWith(
+                overscroll: false,
               ),
+              slivers: [
+                VisitHeader(pageIsReady: pageIsReady),
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 20,
+                  ),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      return SelectTimes();
+                    }, childCount: 1),
+                  ),
+                ),
+              ],
             ),
           );
         },

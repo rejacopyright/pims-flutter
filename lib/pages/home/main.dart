@@ -64,67 +64,63 @@ class Homepage extends StatelessWidget {
       body: Obx(() {
         final user = userController.user.value;
         final avatar = userController.avatar.value;
-        return NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [HomeHeader(user: user, avatar: avatar)];
+        return RefreshIndicator(
+          color: Theme.of(context).primaryColor,
+          displacement: 60,
+          edgeOffset: 190,
+          onRefresh: () async {
+            userController.onInit();
+            homeHeaderController.refresh();
+            bannerController.refresh();
+            serviceController.refresh();
+            topUserController.refresh();
+            programController.refresh();
           },
-          body: RefreshIndicator(
-            color: Theme.of(context).primaryColor,
-            displacement: 30,
-            onRefresh: () async {
-              userController.onInit();
-              homeHeaderController.refresh();
-              bannerController.refresh();
-              serviceController.refresh();
-              topUserController.refresh();
-              programController.refresh();
-            },
-            child: CustomScrollView(
-              physics: BouncingScrollPhysics(),
-              scrollBehavior: MaterialScrollBehavior().copyWith(
-                overscroll: false,
-              ),
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 10.0),
-                            child: BannerPromo(),
-                          ),
-                          // TitleShowAll(title: 'Temukan Tukang'),
-                          ServiceSection(user: user),
-                          // TitleShowAll(
-                          //   title: 'Trainers',
-                          //   margin: EdgeInsets.only(top: 5, bottom: 5),
-                          // ),
-                          // TopUserCard(),
-                          // Padding(padding: EdgeInsets.only(bottom: 5)),
-                          // TitleShowAll(
-                          //   title: 'Programs',
-                          //   margin: EdgeInsets.only(top: 10),
-                          // ),
-                        ],
-                      );
-                    },
-                    childCount: 1,
-                  ),
-                ),
-                // SliverList(
-                //   delegate: SliverChildBuilderDelegate(
-                //     (context, index) => Container(
-                //       margin: EdgeInsets.symmetric(vertical: 10),
-                //       child: ProgramSection(),
-                //     ),
-                //     childCount: 1,
-                //   ),
-                // ),
-                SliverPadding(padding: EdgeInsets.only(bottom: 100))
-              ],
+          child: CustomScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            scrollBehavior: MaterialScrollBehavior().copyWith(
+              overscroll: false,
             ),
+            slivers: [
+              HomeHeader(user: user, avatar: avatar),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          child: BannerPromo(),
+                        ),
+                        // TitleShowAll(title: 'Temukan Tukang'),
+                        ServiceSection(user: user),
+                        // TitleShowAll(
+                        //   title: 'Trainers',
+                        //   margin: EdgeInsets.only(top: 5, bottom: 5),
+                        // ),
+                        // TopUserCard(),
+                        // Padding(padding: EdgeInsets.only(bottom: 5)),
+                        // TitleShowAll(
+                        //   title: 'Programs',
+                        //   margin: EdgeInsets.only(top: 10),
+                        // ),
+                      ],
+                    );
+                  },
+                  childCount: 1,
+                ),
+              ),
+              // SliverList(
+              //   delegate: SliverChildBuilderDelegate(
+              //     (context, index) => Container(
+              //       margin: EdgeInsets.symmetric(vertical: 10),
+              //       child: ProgramSection(),
+              //     ),
+              //     childCount: 1,
+              //   ),
+              // ),
+              SliverPadding(padding: EdgeInsets.only(bottom: 100))
+            ],
           ),
         );
       }),

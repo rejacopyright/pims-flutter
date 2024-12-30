@@ -53,7 +53,7 @@ class HomeHeader extends StatelessWidget {
         pinned: true,
         snap: false,
         floating: false,
-        stretch: true,
+        stretch: false,
         stretchTriggerOffset: 20,
         expandedHeight: expandedHeight,
         collapsedHeight: toolbarHeight,

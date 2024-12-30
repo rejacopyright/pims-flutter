@@ -69,7 +69,11 @@ class SelectClass extends StatelessWidget {
     return Obx(() {
       final pageIsReady = classController.pageIsReady.value;
       final dataClass = classController.dataClass;
-      final int crossAxisCount = dataClass.isEmpty ? 1 : 2;
+      final int crossAxisCount = pageIsReady
+          ? dataClass.isEmpty
+              ? 1
+              : 2
+          : 2;
       final classType = params?['type'] == 'studio' ? 'Studio' : 'Fungsional';
       return GridView.count(
         clipBehavior: Clip.antiAlias,
