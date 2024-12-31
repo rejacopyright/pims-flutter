@@ -70,7 +70,7 @@ class TakeNIKWidget extends StatelessWidget {
                 vertical: 20,
               ),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.15),
+                color: Colors.black.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(25),
               ),
             ),
@@ -89,7 +89,7 @@ class TakeNIKWidget extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       clipBehavior: Clip.antiAlias,
-                      shadowColor: Colors.black.withOpacity(0.75),
+                      shadowColor: Colors.black.withValues(alpha: 0.75),
                       elevation: 1,
                       child: InkWell(
                         onTap: () => uploadImage('camera'),
@@ -118,7 +118,7 @@ class TakeNIKWidget extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       clipBehavior: Clip.antiAlias,
-                      shadowColor: Colors.black.withOpacity(0.75),
+                      shadowColor: Colors.black.withValues(alpha: 0.75),
                       elevation: 1,
                       child: InkWell(
                         onTap: () {

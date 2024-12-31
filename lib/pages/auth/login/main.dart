@@ -4,8 +4,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pims/_config/dio.dart';
 import 'package:pims/_router/main.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class LoginController extends GetxController {
+  final info = Rxn<PackageInfo>();
+
   RxString username = ''.obs;
   RxString password = ''.obs;
   final errorMessage = Rxn<String>();
@@ -37,11 +40,20 @@ class LoginController extends GetxController {
       signinBtnIsLoading.value = false;
     }
   }
+
+  @override
+  void onInit() {
+    WidgetsFlutterBinding.ensureInitialized();
+    Future.delayed(Duration(milliseconds: 100), () async {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      info.value = packageInfo;
+    });
+    super.onInit();
+  }
 }
 
 class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-
   LoginPage({super.key});
   @override
   Widget build(BuildContext context) {
@@ -58,6 +70,7 @@ class LoginPage extends StatelessWidget {
         final errorMessage = state.errorMessage.value;
         final signinBtnIsLoading = state.signinBtnIsLoading.value;
         final showPassword = state.showPassword.value;
+        final info = state.info.value;
         return SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -109,11 +122,11 @@ class LoginPage extends StatelessWidget {
                             margin: EdgeInsets.only(top: 15),
                             padding: EdgeInsets.symmetric(vertical: 15),
                             decoration: BoxDecoration(
-                              color: Colors.red.withOpacity(0.025),
+                              color: Colors.red.withValues(alpha: 0.025),
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
                                 width: 1,
-                                color: Colors.red.withOpacity(0.25),
+                                color: Colors.red.withValues(alpha: 0.25),
                               ),
                             ),
                             child: Text(
@@ -134,7 +147,7 @@ class LoginPage extends StatelessWidget {
                             decoration: InputDecoration(
                               hintText: 'Username / Email',
                               filled: true,
-                              fillColor: primaryColor.withOpacity(0.05),
+                              fillColor: primaryColor.withValues(alpha: 0.05),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 16.0 * 1.5, vertical: 16.0),
                               border: OutlineInputBorder(
@@ -165,7 +178,7 @@ class LoginPage extends StatelessWidget {
                               decoration: InputDecoration(
                                 hintText: 'Password',
                                 filled: true,
-                                fillColor: primaryColor.withOpacity(0.05),
+                                fillColor: primaryColor.withValues(alpha: 0.05),
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 16.0 * 1.5, vertical: 16.0),
                                 border: OutlineInputBorder(
@@ -209,8 +222,8 @@ class LoginPage extends StatelessWidget {
                             },
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
-                              backgroundColor: primaryColor
-                                  .withOpacity(signinBtnIsLoading ? 0.5 : 1),
+                              backgroundColor: primaryColor.withValues(
+                                  alpha: signinBtnIsLoading ? 0.5 : 1),
                               foregroundColor: Colors.white,
                               minimumSize: Size(double.infinity, 48),
                               shape: StadiumBorder(),
@@ -253,7 +266,7 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'v1.0.7',
+                            'v${(info?.version ?? 0).toString()}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 11,

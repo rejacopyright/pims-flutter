@@ -138,11 +138,11 @@ class RegisterPage extends StatelessWidget {
                             margin: EdgeInsets.only(top: 15),
                             padding: EdgeInsets.symmetric(vertical: 15),
                             decoration: BoxDecoration(
-                              color: Colors.red.withOpacity(0.025),
+                              color: Colors.red.withValues(alpha: 0.025),
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
                                 width: 1,
-                                color: Colors.red.withOpacity(0.25),
+                                color: Colors.red.withValues(alpha: 0.25),
                               ),
                             ),
                             child: Text(
@@ -397,8 +397,8 @@ class RegisterPage extends StatelessWidget {
                             },
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
-                              backgroundColor: primaryColor
-                                  .withOpacity(registerBtnIsLoading ? 0.5 : 1),
+                              backgroundColor: primaryColor.withValues(
+                                  alpha: registerBtnIsLoading ? 0.5 : 1),
                               foregroundColor: Colors.white,
                               minimumSize: Size(double.infinity, 48),
                               shape: StadiumBorder(),
@@ -429,7 +429,7 @@ class RegisterPage extends StatelessWidget {
                               backgroundColor: Colors.white,
                               overlayColor: Color(0xffaaaaaa),
                               foregroundColor: Colors.black,
-                              shadowColor: Colors.black.withOpacity(0.25),
+                              shadowColor: Colors.black.withValues(alpha: 0.25),
                               minimumSize: Size(double.infinity, 48),
                               shape: StadiumBorder(
                                 side: BorderSide(

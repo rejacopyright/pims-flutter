@@ -9,7 +9,7 @@ class ClassDetailAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       backgroundColor: Colors.white,
-      shadowColor: Colors.black.withOpacity(0.25),
+      shadowColor: Colors.black.withValues(alpha: 0.25),
       elevation: 1,
       forceElevated: true,
       pinned: true,

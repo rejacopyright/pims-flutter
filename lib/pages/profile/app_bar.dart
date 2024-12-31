@@ -10,11 +10,13 @@ import 'package:pims/_config/dio.dart';
 import 'package:pims/_controller/user_controller.dart';
 
 class ProfileAppBar extends StatelessWidget {
-  final bool pageIsReady;
   const ProfileAppBar({
     super.key,
     required this.pageIsReady,
+    this.order,
   });
+  final bool pageIsReady;
+  final Map<String, dynamic>? order;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +54,9 @@ class ProfileAppBar extends StatelessWidget {
                             'assets/images/path-${index + 1}.svg',
                             width: Get.width + 5,
                             colorFilter: ColorFilter.mode(
-                              Theme.of(context).primaryColor.withOpacity(0.65),
+                              Theme.of(context)
+                                  .primaryColor
+                                  .withValues(alpha: 0.65),
                               BlendMode.srcIn,
                             ),
                           ),
@@ -64,9 +68,9 @@ class ProfileAppBar extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.white.withOpacity(0.1),
-                              Colors.white.withOpacity(0.05),
-                              Colors.white.withOpacity(0),
+                              Colors.white.withValues(alpha: 0.1),
+                              Colors.white.withValues(alpha: 0.05),
+                              Colors.white.withValues(alpha: 0),
                             ],
                           ),
                         ),
@@ -150,10 +154,11 @@ class ProfileAppBar extends StatelessWidget {
                                     children: [
                                       Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                            '3',
+                                            (order?['unpaid_count'] ?? 0)
+                                                .toString(),
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
@@ -161,7 +166,7 @@ class ProfileAppBar extends StatelessWidget {
                                             ),
                                           ),
                                           Text(
-                                            'Member',
+                                            'Belum bayar',
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -179,10 +184,11 @@ class ProfileAppBar extends StatelessWidget {
                                       ),
                                       Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                            '24',
+                                            (order?['active_count'] ?? 0)
+                                                .toString(),
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
@@ -190,7 +196,7 @@ class ProfileAppBar extends StatelessWidget {
                                             ),
                                           ),
                                           Text(
-                                            'Jadwal',
+                                            'Jadwal Aktif',
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -355,7 +361,7 @@ class TakePictureWidget extends StatelessWidget {
                 vertical: 20,
               ),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.15),
+                color: Colors.black.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(25),
               ),
             ),
@@ -374,7 +380,7 @@ class TakePictureWidget extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       clipBehavior: Clip.antiAlias,
-                      shadowColor: Colors.black.withOpacity(0.75),
+                      shadowColor: Colors.black.withValues(alpha: 0.75),
                       elevation: 1,
                       child: InkWell(
                         onTap: () => uploadImage('camera'),
@@ -403,7 +409,7 @@ class TakePictureWidget extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       clipBehavior: Clip.antiAlias,
-                      shadowColor: Colors.black.withOpacity(0.75),
+                      shadowColor: Colors.black.withValues(alpha: 0.75),
                       elevation: 1,
                       child: InkWell(
                         onTap: () {

@@ -342,11 +342,13 @@ class ProfileEditPage extends StatelessWidget {
                                     ),
                                     padding: EdgeInsets.symmetric(vertical: 15),
                                     decoration: BoxDecoration(
-                                      color: Colors.red.withOpacity(0.025),
+                                      color:
+                                          Colors.red.withValues(alpha: 0.025),
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
                                         width: 1,
-                                        color: Colors.red.withOpacity(0.25),
+                                        color:
+                                            Colors.red.withValues(alpha: 0.25),
                                       ),
                                     ),
                                     child: Text(

@@ -38,7 +38,7 @@ class OrderItem extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         clipBehavior: Clip.antiAlias,
-        shadowColor: Colors.black.withOpacity(0.75),
+        shadowColor: Colors.black.withValues(alpha: 0.75),
         elevation: 1,
         child: LinkWell(
           to: '/order/detail',
@@ -129,7 +129,7 @@ class ClassItem extends StatelessWidget {
                   ),
                   margin: EdgeInsets.only(bottom: 5),
                   decoration: BoxDecoration(
-                    color: primaryColor.withOpacity(0.1),
+                    color: primaryColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Text(
@@ -273,11 +273,11 @@ class VisitItem extends StatelessWidget {
             alignment: Alignment.center,
             padding: EdgeInsets.all(0),
             decoration: BoxDecoration(
-              color: primaryColor.withOpacity(0.05),
+              color: primaryColor.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(50),
               border: Border.all(
                 width: 1,
-                color: primaryColor.withOpacity(0.5),
+                color: primaryColor.withValues(alpha: 0.5),
               ),
             ),
             child: Text(

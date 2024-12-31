@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pims/_config/dio.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/navbar.dart';
 import 'package:pims/pages/profile/app_bar.dart';
@@ -8,19 +9,28 @@ import 'package:pims/pages/profile/order_status.dart';
 
 class ProfileController extends GetxController {
   RxBool pageIsReady = false.obs;
+  final order = Rxn<Map<String, dynamic>>(null);
   @override
-  void onReady() {
-    Future.delayed(Duration(milliseconds: 100), () {
-      pageIsReady.value = true;
+  void onInit() {
+    Future.delayed(Duration(milliseconds: 100), () async {
+      pageIsReady.value = false;
+      try {
+        final api = await API().get('/profile');
+        order.value = api.data?['order'];
+      } catch (e) {
+        //
+      } finally {
+        pageIsReady.value = true;
+      }
     });
-    super.onReady();
+    super.onInit();
   }
 
   @override
   void refresh() {
     pageIsReady.value = false;
     Future.delayed(Duration(milliseconds: 500), () {
-      onReady();
+      onInit();
     });
     super.refresh();
   }
@@ -31,12 +41,13 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final store = Get.put(ProfileController());
+    final state = Get.put(ProfileController());
     final profileOrderStatusController =
         Get.put(ProfileOrderStatusController());
     final profileCardsController = Get.put(ProfileCardsController());
     return Obx(() {
-      final pageIsReady = store.pageIsReady.value;
+      final pageIsReady = state.pageIsReady.value;
+      final order = state.order.value;
       return Scaffold(
         bottomNavigationBar: NavbarWidget(name: '/profile'),
         extendBody: true,
@@ -64,7 +75,9 @@ class ProfilePage extends StatelessWidget {
                           decoration: BoxDecoration(
                         color: isOffset
                             ? Colors.white
-                            : Theme.of(context).primaryColor.withOpacity(0.85),
+                            : Theme.of(context)
+                                .primaryColor
+                                .withValues(alpha: 0.85),
                       )),
                     ),
                   );
@@ -76,7 +89,7 @@ class ProfilePage extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             displacement: 30,
             onRefresh: () async {
-              // store.refresh();
+              state.refresh();
               profileOrderStatusController.refresh();
               profileCardsController.refresh();
             },
@@ -86,7 +99,7 @@ class ProfilePage extends StatelessWidget {
                 overscroll: false,
               ),
               slivers: [
-                ProfileAppBar(pageIsReady: pageIsReady),
+                ProfileAppBar(pageIsReady: pageIsReady, order: order),
                 SliverList.builder(
                   itemBuilder: (context, index) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

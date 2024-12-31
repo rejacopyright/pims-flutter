@@ -141,7 +141,7 @@ class SelectClass extends StatelessWidget {
                 4,
                 (index) => Container(
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(7.5),
                   ),
                 ),

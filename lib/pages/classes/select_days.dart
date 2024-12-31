@@ -80,13 +80,13 @@ class SelectDays extends StatelessWidget {
                     child: Material(
                       color: isSelected ? primaryColor : Colors.white,
                       clipBehavior: Clip.antiAlias,
-                      shadowColor: Colors.black.withOpacity(0.25),
+                      shadowColor: Colors.black.withValues(alpha: 0.25),
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                         side: BorderSide(
                           color: isCollapsed
-                              ? Colors.black.withOpacity(0.1)
+                              ? Colors.black.withValues(alpha: 0.1)
                               : Colors.white,
                           width: 0.75,
                         ),
@@ -143,7 +143,7 @@ class SelectDays extends StatelessWidget {
               height: 65,
               margin: EdgeInsets.symmetric(vertical: 30),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(50),
               ),
             ),

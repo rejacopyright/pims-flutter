@@ -250,7 +250,7 @@ class OrderDetailPage extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                         clipBehavior: Clip.antiAlias,
-                        shadowColor: Colors.black.withOpacity(0.75),
+                        shadowColor: Colors.black.withValues(alpha: 0.75),
                         elevation: 1,
                         child: data?['service_id'] == 1
                             ? VisitItem(

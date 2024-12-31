@@ -13,7 +13,7 @@ class ProfileEditAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
-      shadowColor: Colors.black.withOpacity(0.25),
+      shadowColor: Colors.black.withValues(alpha: 0.25),
       elevation: 1,
       // automaticallyImplyLeading: false,
       // leadingWidth: 75,

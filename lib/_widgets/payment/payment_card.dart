@@ -134,7 +134,7 @@ class PaymentItem extends StatelessWidget {
               color: thisPaymentIsChecked ? primaryColor : Color(0xffeaeaea),
             ),
             color: thisPaymentIsChecked
-                ? primaryColor.withOpacity(0.05)
+                ? primaryColor.withValues(alpha: 0.05)
                 : Colors.white,
           ),
           child: Row(

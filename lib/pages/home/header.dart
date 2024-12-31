@@ -48,7 +48,7 @@ class HomeHeader extends StatelessWidget {
           isCollapsed ? Colors.white : Colors.transparent;
       return SliverAppBar(
         backgroundColor: statusBarColor,
-        shadowColor: Colors.black.withOpacity(0.25),
+        shadowColor: Colors.black.withValues(alpha: 0.25),
         elevation: 1,
         pinned: true,
         snap: false,
@@ -110,7 +110,7 @@ class HomeHeaderContent extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       clipBehavior: Clip.antiAlias,
-                      shadowColor: Colors.black.withOpacity(0.75),
+                      shadowColor: Colors.black.withValues(alpha: 0.75),
                       elevation: 1,
                       child: InkWell(
                         splashFactory: InkSplash.splashFactory,
@@ -169,7 +169,7 @@ class HomeHeaderContent extends StatelessWidget {
                                   //       padding: EdgeInsets.all(2.5),
                                   //       margin: EdgeInsets.only(right: 5),
                                   //       decoration: BoxDecoration(
-                                  //         color: primaryColor.withOpacity(0.15),
+                                  //         color: primaryColor.withValues(alpha: 0.15),
                                   //         borderRadius:
                                   //             BorderRadius.circular(5),
                                   //       ),
@@ -223,7 +223,7 @@ class HomeHeaderContent extends StatelessWidget {
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: member?['id'] != null
-                                      ? primaryColor.withOpacity(0.2)
+                                      ? primaryColor.withValues(alpha: 0.2)
                                       : Color(0xfff0f0f0),
                                   borderRadius: BorderRadius.circular(7.5),
                                 ),
@@ -247,7 +247,8 @@ class HomeHeaderContent extends StatelessWidget {
                                       margin: EdgeInsets.only(right: 5),
                                       decoration: BoxDecoration(
                                         color: member?['badge'] != null
-                                            ? Colors.white.withOpacity(0.5)
+                                            ? Colors.white
+                                                .withValues(alpha: 0.5)
                                             : Colors.amber,
                                         borderRadius: BorderRadius.circular(50),
                                       ),
@@ -312,7 +313,7 @@ class HomeHeaderContent extends StatelessWidget {
                     height: 60,
                     margin: EdgeInsets.only(bottom: 5),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.5),
+                      color: Colors.white.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   )
@@ -339,11 +340,11 @@ class HomeHeaderBackground extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                // primaryColor.withOpacity(0),
-                primaryColor.withOpacity(0.5),
-                primaryColor.withOpacity(0.75),
-                primaryColor.withOpacity(0.85),
-                primaryColor.withOpacity(1),
+                // primaryColor.withValues(alpha: 0),
+                primaryColor.withValues(alpha: 0.5),
+                primaryColor.withValues(alpha: 0.75),
+                primaryColor.withValues(alpha: 0.85),
+                primaryColor.withValues(alpha: 1),
               ],
             ),
           ),

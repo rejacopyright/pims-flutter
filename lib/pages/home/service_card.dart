@@ -36,9 +36,9 @@ class ServiceCard extends StatelessWidget {
             padding: EdgeInsets.all(12.5),
             margin: EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
-                color: primary.withOpacity(0.1),
+                color: primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(25),
-                border: Border.all(color: primary.withOpacity(0.175))),
+                border: Border.all(color: primary.withValues(alpha: 0.175))),
             child: Image.asset(icon ?? 'logo.png'),
           ),
           Container(
@@ -99,7 +99,7 @@ class ServiceSection extends StatelessWidget {
       final gridSize = (MediaQuery.of(context).size.width / gridCount) - 30;
       if (pageIsReady) {
         return Container(
-          color: primary.withOpacity(0),
+          color: primary.withValues(alpha: 0),
           child: GridView.count(
             restorationId: 'home_menu',
             crossAxisCount: 3,
@@ -145,7 +145,7 @@ class ServiceSection extends StatelessWidget {
               height: gridSize,
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(15),
               ),
             ),

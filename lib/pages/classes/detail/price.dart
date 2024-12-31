@@ -41,13 +41,13 @@ class ClassDetailPrice extends StatelessWidget {
           color: Colors.white,
           clipBehavior: Clip.antiAlias,
           borderRadius: BorderRadius.circular(10),
-          shadowColor: Colors.black.withOpacity(0.5),
+          shadowColor: Colors.black.withValues(alpha: 0.5),
           elevation: 2,
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: Colors.black.withOpacity(0.25),
+                color: Colors.black.withValues(alpha: 0.25),
                 width: 0.15,
               ),
             ),
@@ -72,7 +72,7 @@ class ClassDetailPrice extends StatelessWidget {
                     //   style: TextStyle(
                     //     fontWeight: FontWeight.bold,
                     //     fontSize: 12,
-                    //     color: Colors.black.withOpacity(0.25),
+                    //     color: Colors.black.withValues(alpha: 0.25),
                     //     fontStyle: FontStyle.italic,
                     //     decoration: TextDecoration.lineThrough,
                     //   ),
@@ -84,7 +84,7 @@ class ClassDetailPrice extends StatelessWidget {
                     //     top: 1.5,
                     //   ),
                     //   decoration: BoxDecoration(
-                    //     color: Colors.red.withOpacity(0.1),
+                    //     color: Colors.red.withValues(alpha: 0.1),
                     //     borderRadius: BorderRadius.circular(5),
                     //   ),
                     //   child: Text(
@@ -114,7 +114,7 @@ class ClassDetailPrice extends StatelessWidget {
       return Container(
         height: 50,
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.05),
+          color: Colors.black.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(7.5),
         ),
       );

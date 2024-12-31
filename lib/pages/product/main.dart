@@ -114,7 +114,7 @@ class ProductApp extends StatelessWidget {
                       stretch: true,
                       stretchTriggerOffset: 100,
                       onStretchTrigger: () async {},
-                      shadowColor: Colors.black.withOpacity(0.25),
+                      shadowColor: Colors.black.withValues(alpha: 0.25),
                       automaticallyImplyLeading: false,
                       surfaceTintColor: Colors.transparent,
                       expandedHeight: expandedHeight,
@@ -188,7 +188,7 @@ class ProductApp extends StatelessWidget {
             Container(
               height: 125,
               margin: EdgeInsets.only(bottom: 20),
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
             ),
             GridView.count(
               clipBehavior: Clip.antiAlias,
@@ -206,7 +206,7 @@ class ProductApp extends StatelessWidget {
                 4,
                 (index) => Container(
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(7.5),
                   ),
                 ),

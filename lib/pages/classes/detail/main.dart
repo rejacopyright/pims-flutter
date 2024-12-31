@@ -175,7 +175,7 @@ class ClassDetailPage extends StatelessWidget {
                 ),
                 // SliverAppBar(
                 //   backgroundColor: Colors.white,
-                //   shadowColor: Colors.black.withOpacity(0.25),
+                //   shadowColor: Colors.black.withValues(alpha: 0.25),
                 //   elevation: 1,
                 //   pinned: true,
                 //   automaticallyImplyLeading: false,

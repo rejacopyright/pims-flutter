@@ -34,7 +34,7 @@ class MemberExploreItem extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         clipBehavior: Clip.antiAlias,
-        shadowColor: Colors.black.withOpacity(0.75),
+        shadowColor: Colors.black.withValues(alpha: 0.75),
         elevation: 1,
         child: LinkWell(
           to: '$homeRoute/member/explore/detail',
@@ -55,7 +55,7 @@ class MemberExploreItem extends StatelessWidget {
                         //     EdgeInsets.all(detail?['badge'] != null ? 2.5 : 5),
                         margin: EdgeInsets.only(right: 10, bottom: 2.5),
                         decoration: BoxDecoration(
-                          // color: Colors.amberAccent.withOpacity(0.1),
+                          // color: Colors.amberAccent.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(50),
                           // border: Border.all(color: Colors.amber),
                         ),
@@ -180,7 +180,7 @@ class MemberExploreItem extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
-                              color: Colors.black.withOpacity(0.25),
+                              color: Colors.black.withValues(alpha: 0.25),
                               fontStyle: FontStyle.italic,
                               decoration: TextDecoration.lineThrough,
                             ),

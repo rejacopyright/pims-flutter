@@ -90,7 +90,7 @@ class MemberPage extends StatelessWidget {
                       flexibleSpace: FlexibleSpaceBar(
                         background: DecoratedBox(
                             decoration: BoxDecoration(
-                          color: primaryColor.withOpacity(0.5),
+                          color: primaryColor.withValues(alpha: 0.5),
                         )),
                       ),
                     )
@@ -174,7 +174,7 @@ class MemberPage extends StatelessWidget {
                       AppBar(
                         automaticallyImplyLeading: false,
                         toolbarHeight: 100,
-                        backgroundColor: primaryColor.withOpacity(0.5),
+                        backgroundColor: primaryColor.withValues(alpha: 0.5),
                       ),
                       ListView.builder(
                         padding: EdgeInsets.all(15),
@@ -306,7 +306,7 @@ class UnpaidMember extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             elevation: 0,
             backgroundColor: primaryColor,
-            disabledBackgroundColor: primaryColor.withOpacity(0.25),
+            disabledBackgroundColor: primaryColor.withValues(alpha: 0.25),
             foregroundColor: Colors.white,
             shadowColor: Colors.transparent,
             minimumSize: Size(double.infinity, 48),
@@ -448,7 +448,7 @@ class FeatureItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withValues(alpha: 0.25),
             blurRadius: 1,
             offset: Offset(-1, 1),
           ),
@@ -463,7 +463,7 @@ class FeatureItem extends StatelessWidget {
             width: 40,
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: primaryColor.withOpacity(0.1),
+              color: primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(25),
             ),
             child: Image.asset(icon),
@@ -537,14 +537,14 @@ class PendingItem extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 2,
-        overlayColor: Colors.black.withOpacity(0.25),
+        overlayColor: Colors.black.withValues(alpha: 0.25),
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
           side: BorderSide(width: 0.5, color: Color(0xffdddddd)),
         ),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        shadowColor: Colors.black.withOpacity(0.5),
+        shadowColor: Colors.black.withValues(alpha: 0.5),
       ),
       child: Container(
         padding: EdgeInsets.all(15),
@@ -555,7 +555,7 @@ class PendingItem extends StatelessWidget {
               width: 40,
               padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: primaryColor.withOpacity(0.1),
+                color: primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Image.asset('assets/icons/calendar-tick.png'),

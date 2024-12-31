@@ -110,7 +110,7 @@ class DaysWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       backgroundColor: Colors.white,
-      shadowColor: Colors.black.withOpacity(0.25),
+      shadowColor: Colors.black.withValues(alpha: 0.25),
       elevation: 1,
       pinned: true,
       snap: false,

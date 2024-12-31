@@ -55,7 +55,7 @@ class VisitBottomNav extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             offset: Offset(0, -5),
             blurRadius: 5,
           ),
@@ -125,7 +125,7 @@ class VisitBottomNav extends StatelessWidget {
                       clipBehavior: Clip.antiAlias,
                       color: timeIsSelected
                           ? primaryColor
-                          : primaryColor.withOpacity(0.5),
+                          : primaryColor.withValues(alpha: 0.5),
                       child: InkWell(
                         splashFactory: InkSplash.splashFactory,
                         highlightColor: Colors.transparent,
@@ -236,7 +236,7 @@ class ConfirmBooking extends StatelessWidget {
                     onPressed: () => Get.rootDelegate.popRoute(),
                     style: TextButton.styleFrom(
                       elevation: 0,
-                      overlayColor: Colors.black.withOpacity(0.25),
+                      overlayColor: Colors.black.withValues(alpha: 0.25),
                       padding: EdgeInsets.symmetric(vertical: 20),
                       shape: RoundedRectangleBorder(),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -267,7 +267,7 @@ class ConfirmBooking extends StatelessWidget {
                     },
                     style: TextButton.styleFrom(
                       elevation: 0,
-                      overlayColor: Colors.black.withOpacity(0.25),
+                      overlayColor: Colors.black.withValues(alpha: 0.25),
                       padding: EdgeInsets.symmetric(vertical: 20),
                       shape: RoundedRectangleBorder(),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -323,7 +323,7 @@ class BookingVisitPaymentCard extends StatelessWidget {
                   vertical: 20,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.15),
+                  color: Colors.black.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
@@ -347,7 +347,7 @@ class BookingVisitPaymentCard extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         offset: Offset(0, -5),
                         blurRadius: 5,
                       ),
@@ -369,7 +369,7 @@ class BookingVisitPaymentCard extends StatelessWidget {
                           elevation: 0,
                           backgroundColor: primaryColor,
                           disabledBackgroundColor:
-                              primaryColor.withOpacity(0.25),
+                              primaryColor.withValues(alpha: 0.25),
                           foregroundColor: Colors.white,
                           shadowColor: Colors.transparent,
                           minimumSize: Size(double.infinity, 48),
@@ -418,7 +418,7 @@ class TimeSection extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-        color: primaryColor.withOpacity(0.1),
+        color: primaryColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(5),
         // border: Border(
         //   bottom: BorderSide(width: 1, color: Color(0xffdddddd)),

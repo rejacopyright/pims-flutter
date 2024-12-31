@@ -46,19 +46,19 @@ final menuProps = MenuProps(
   align: MenuAlign.topCenter,
   backgroundColor: Colors.white,
   borderRadius: BorderRadius.circular(20),
-  barrierColor: Colors.black.withOpacity(0.15),
-  shadowColor: Colors.black.withOpacity(0.5),
+  barrierColor: Colors.black.withValues(alpha: 0.15),
+  shadowColor: Colors.black.withValues(alpha: 0.5),
 );
 
 final modalBottomSheetProps = ModalBottomSheetProps(
   useSafeArea: true,
   backgroundColor: Colors.white,
-  barrierColor: Colors.black.withOpacity(0.15),
+  barrierColor: Colors.black.withValues(alpha: 0.15),
 );
 
 final itemClickProps = ClickProps(
   borderRadius: BorderRadius.circular(10),
-  splashColor: Colors.black.withOpacity(0.05),
+  splashColor: Colors.black.withValues(alpha: 0.05),
 );
 
 final suffixProps = DropdownSuffixProps(

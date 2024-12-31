@@ -158,7 +158,7 @@ class ProductDetailPage extends StatelessWidget {
                           backgroundColor: Color(0xfffafafa),
                           surfaceTintColor: Colors.white,
                           toolbarHeight: 0,
-                          shadowColor: Colors.black.withOpacity(0.25),
+                          shadowColor: Colors.black.withValues(alpha: 0.25),
                           elevation: 2,
                           automaticallyImplyLeading: false,
                           centerTitle: false,
@@ -251,7 +251,7 @@ class AvailableOpenClass extends StatelessWidget {
               foregroundColor: Colors.black,
               minimumSize: Size(double.infinity, 48),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              shadowColor: Colors.black.withOpacity(0.25),
+              shadowColor: Colors.black.withValues(alpha: 0.25),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
                 side: BorderSide(
@@ -413,7 +413,7 @@ class ClassBadges extends StatelessWidget {
           ),
           // margin: EdgeInsets.only(top: 15, bottom: 20),
           decoration: BoxDecoration(
-            color: primaryColor.withOpacity(0.1),
+            color: primaryColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(5),
             border: Border.all(width: 1, color: primaryColor),
           ),

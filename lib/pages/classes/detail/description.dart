@@ -73,7 +73,7 @@ class ClassDetailDescription extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15),
               decoration: BoxDecoration(
-                // color: primaryColor.withOpacity(0.075),
+                // color: primaryColor.withValues(alpha: 0.075),
                 borderRadius: BorderRadius.circular(10),
               ),
               margin: EdgeInsets.only(bottom: 20),
@@ -204,7 +204,7 @@ class ClassDetailDescription extends StatelessWidget {
             width: fullWidth / 2,
             margin: EdgeInsets.only(bottom: 5),
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(7.5),
             ),
           ),
@@ -213,7 +213,7 @@ class ClassDetailDescription extends StatelessWidget {
             width: fullWidth / 3,
             margin: EdgeInsets.only(bottom: 5),
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(7.5),
             ),
           ),
@@ -222,7 +222,7 @@ class ClassDetailDescription extends StatelessWidget {
             width: fullWidth,
             margin: EdgeInsets.only(bottom: 5),
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(7.5),
             ),
           ),
@@ -283,7 +283,7 @@ class ClassDesciptionBadges extends StatelessWidget {
           ),
           // margin: EdgeInsets.only(top: 15, bottom: 20),
           decoration: BoxDecoration(
-            color: primaryColor.withOpacity(0.1),
+            color: primaryColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(5),
             border: Border.all(width: 1, color: primaryColor),
           ),
@@ -320,7 +320,7 @@ class ClassDesciptionBadges extends StatelessWidget {
             ),
             // margin: EdgeInsets.only(top: 15, bottom: 20),
             decoration: BoxDecoration(
-              color: primaryColor.withOpacity(0.1),
+              color: primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(5),
               border: Border.all(width: 1, color: primaryColor),
             ),
@@ -366,7 +366,7 @@ class Modal {
                   width: 75,
                   margin: EdgeInsets.only(top: 20, bottom: 10),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.15),
+                    color: Colors.black.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),

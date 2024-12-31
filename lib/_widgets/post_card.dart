@@ -43,7 +43,7 @@ class PostCard extends StatelessWidget {
       color: Colors.white,
       borderRadius: BorderRadius.circular(7.5),
       clipBehavior: Clip.antiAlias,
-      shadowColor: Colors.black.withOpacity(0.5),
+      shadowColor: Colors.black.withValues(alpha: 0.5),
       elevation: 3.5,
       child: LinkWell(
         to: '/home/product/detail',
@@ -92,7 +92,7 @@ class PostCard extends StatelessWidget {
                           bottom: 0,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withValues(alpha: 0.9),
                           borderRadius: BorderRadius.circular(3.5),
                         ),
                         child: Text(

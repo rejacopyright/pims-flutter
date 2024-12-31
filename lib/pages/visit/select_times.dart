@@ -107,19 +107,19 @@ class SelectTimes extends StatelessWidget {
             color: isPastTime
                 ? Color(0xfff5f5f5)
                 : isBooked
-                    ? primaryColor.withOpacity(0.1)
+                    ? primaryColor.withValues(alpha: 0.1)
                     : isSelected
                         ? primaryColor
                         : Colors.white,
             clipBehavior: Clip.antiAlias,
-            shadowColor: Colors.black.withOpacity(0.25),
+            shadowColor: Colors.black.withValues(alpha: 0.25),
             elevation: isPastTime || !pageIsReady || isBooked ? 0 : 5,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
               side: BorderSide(
                 color: isBooked && !isPastTime
                     ? primaryColor
-                    : Colors.black.withOpacity(0.1),
+                    : Colors.black.withValues(alpha: 0.1),
                 width: isPastTime ? 0.5 : 0.75,
               ),
             ),
@@ -138,12 +138,12 @@ class SelectTimes extends StatelessWidget {
                         DateFormat('HH:mm').format(item),
                         style: TextStyle(
                           color: isPastTime
-                              ? Colors.black.withOpacity(0.25)
+                              ? Colors.black.withValues(alpha: 0.25)
                               : isBooked
                                   ? primaryColor
                                   : isSelected
                                       ? Colors.white
-                                      : Colors.black.withOpacity(0.5),
+                                      : Colors.black.withValues(alpha: 0.5),
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),

@@ -49,7 +49,7 @@ class _SearchFieldState extends State<SearchField> {
         },
         decoration: InputDecoration(
           filled: true,
-          fillColor: Color(0xffeeeeee).withOpacity(0.9),
+          fillColor: Color(0xffeeeeee).withValues(alpha: 0.9),
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50),
@@ -57,7 +57,7 @@ class _SearchFieldState extends State<SearchField> {
           ),
           hintText: widget.hintText,
           hintStyle: TextStyle(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withValues(alpha: 0.5),
             fontSize: 16,
           ),
           prefixIcon: Container(

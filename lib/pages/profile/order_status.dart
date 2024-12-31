@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pims/_widgets/button.dart';
-import 'main.dart';
 
 class OrderStatus {
   final String label;
@@ -10,7 +9,25 @@ class OrderStatus {
   OrderStatus({required this.label, this.icon, this.params});
 }
 
-class ProfileOrderStatusController extends ProfileController {}
+class ProfileOrderStatusController extends GetxController {
+  RxBool pageIsReady = false.obs;
+  @override
+  void onReady() {
+    Future.delayed(Duration(milliseconds: 100), () {
+      pageIsReady.value = true;
+    });
+    super.onReady();
+  }
+
+  @override
+  void refresh() {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 400), () {
+      onReady();
+    });
+    super.refresh();
+  }
+}
 
 class ProfileOrderStatus extends StatelessWidget {
   const ProfileOrderStatus({super.key});
@@ -75,10 +92,10 @@ class ProfileOrderStatus extends StatelessWidget {
                             padding: EdgeInsets.all(10),
                             margin: EdgeInsets.only(bottom: 2),
                             decoration: BoxDecoration(
-                              color: primary.withOpacity(0.075),
+                              color: primary.withValues(alpha: 0.075),
                               borderRadius: BorderRadius.circular(50),
                               border: Border.all(
-                                color: primary.withOpacity(0.5),
+                                color: primary.withValues(alpha: 0.5),
                               ),
                             ),
                             child: Image.asset(e.icon ?? 'logo.png'),

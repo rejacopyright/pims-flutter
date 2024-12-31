@@ -53,7 +53,7 @@ class ProgramBookingCard extends StatelessWidget {
       color: Colors.white,
       borderRadius: BorderRadius.circular(7.5),
       clipBehavior: Clip.antiAlias,
-      shadowColor: Colors.black.withOpacity(0.5),
+      shadowColor: Colors.black.withValues(alpha: 0.5),
       elevation: 3.5,
       child: LinkWell(
         to: to,
@@ -97,9 +97,9 @@ class ProgramBookingCard extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.white.withOpacity(0),
-                              Colors.white.withOpacity(0.75),
-                              Colors.white.withOpacity(1),
+                              Colors.white.withValues(alpha: 0),
+                              Colors.white.withValues(alpha: 0.75),
+                              Colors.white.withValues(alpha: 1),
                             ],
                           ),
                         ),
@@ -273,7 +273,7 @@ class ProgramBookingCard extends StatelessWidget {
                                   bottom: 5,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: primaryColor.withOpacity(0.05),
+                                  color: primaryColor.withValues(alpha: 0.05),
                                   borderRadius: BorderRadius.circular(3.5),
                                 ),
                                 child: Image.asset(

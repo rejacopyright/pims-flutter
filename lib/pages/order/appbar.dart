@@ -13,7 +13,7 @@ class OrderAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.transparent,
-      shadowColor: Colors.black.withOpacity(0.25),
+      shadowColor: Colors.black.withValues(alpha: 0.25),
       elevation: 1,
       toolbarHeight: kToolbarHeight,
       automaticallyImplyLeading: false,
@@ -64,11 +64,11 @@ class HeaderBackgroundOrder extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                // primaryColor.withOpacity(0),
-                primaryColor.withOpacity(0.5),
-                primaryColor.withOpacity(0.75),
-                primaryColor.withOpacity(0.85),
-                primaryColor.withOpacity(1),
+                // primaryColor.withValues(alpha: 0),
+                primaryColor.withValues(alpha: 0.5),
+                primaryColor.withValues(alpha: 0.75),
+                primaryColor.withValues(alpha: 0.85),
+                primaryColor.withValues(alpha: 1),
               ],
             ),
           ),

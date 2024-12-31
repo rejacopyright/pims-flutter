@@ -28,7 +28,7 @@ class MemberDetailPrice extends StatelessWidget {
             width: 1,
           ),
         ),
-        shadowColor: Colors.black.withOpacity(0.25),
+        shadowColor: Colors.black.withValues(alpha: 0.25),
         elevation: 5,
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -147,7 +147,7 @@ class MemberDetailQR extends StatelessWidget {
                 width: 1,
               ),
             ),
-            shadowColor: Colors.black.withOpacity(0.25),
+            shadowColor: Colors.black.withValues(alpha: 0.25),
             elevation: 1,
             clipBehavior: Clip.antiAlias,
             child: Column(
@@ -248,7 +248,7 @@ class MemberDetailQuota extends StatelessWidget {
                 width: 1,
               ),
             ),
-            shadowColor: Colors.black.withOpacity(0.25),
+            shadowColor: Colors.black.withValues(alpha: 0.25),
             elevation: 5,
             clipBehavior: Clip.antiAlias,
             child: Column(
@@ -555,7 +555,7 @@ class MemberDetailPaymentMethod extends StatelessWidget {
               width: 1,
             ),
           ),
-          shadowColor: Colors.black.withOpacity(0.25),
+          shadowColor: Colors.black.withValues(alpha: 0.25),
           elevation: 1,
           clipBehavior: Clip.antiAlias,
           child: Column(
@@ -652,7 +652,7 @@ class MemberDetailCancel extends StatelessWidget {
             width: 1,
           ),
         ),
-        shadowColor: Colors.black.withOpacity(0.25),
+        shadowColor: Colors.black.withValues(alpha: 0.25),
         elevation: 5,
         clipBehavior: Clip.antiAlias,
         child: Column(

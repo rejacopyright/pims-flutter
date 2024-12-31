@@ -23,7 +23,7 @@ class NavbarWidget extends StatelessWidget {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   offset: Offset(0, -5),
                   blurRadius: 5,
                   spreadRadius: -2.5,

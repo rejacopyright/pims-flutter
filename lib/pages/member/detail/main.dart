@@ -211,14 +211,14 @@ class CancelOrder extends StatelessWidget {
             backgroundColor: Color(0xfff5f5f5),
             foregroundColor: Colors.black,
             elevation: 0,
-            overlayColor: Colors.black.withOpacity(0.25),
+            overlayColor: Colors.black.withValues(alpha: 0.25),
             padding: EdgeInsets.symmetric(vertical: 15),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
               side: BorderSide(width: 0.5, color: Color(0xffaaaaaa)),
             ),
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            shadowColor: Colors.black.withOpacity(0.5),
+            shadowColor: Colors.black.withValues(alpha: 0.5),
           ),
           child: Text(
             btnIsLoading ? 'Waiting...' : 'Batalkan',

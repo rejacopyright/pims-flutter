@@ -82,7 +82,7 @@ class QRButton extends StatelessWidget {
         child: FloatingActionButton(
           elevation: 1.5,
           shape: CircleBorder(
-            side: BorderSide(color: primaryColor.withOpacity(0.75)),
+            side: BorderSide(color: primaryColor.withValues(alpha: 0.75)),
           ),
           backgroundColor: isCurrent ? primaryColor : Colors.white,
           onPressed: () {

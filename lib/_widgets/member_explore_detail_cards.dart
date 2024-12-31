@@ -25,7 +25,7 @@ class MemberExploreDetailFeatures extends StatelessWidget {
                       width: 1,
                     ),
                   ),
-                  shadowColor: Colors.black.withOpacity(0.25),
+                  shadowColor: Colors.black.withValues(alpha: 0.25),
                   elevation: 1,
                   clipBehavior: Clip.antiAlias,
                   child: Column(
@@ -185,7 +185,7 @@ class MemberExploreDetailDescription extends StatelessWidget {
             width: 1,
           ),
         ),
-        shadowColor: Colors.black.withOpacity(0.25),
+        shadowColor: Colors.black.withValues(alpha: 0.25),
         elevation: 1,
         clipBehavior: Clip.antiAlias,
         child: Column(

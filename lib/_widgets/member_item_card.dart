@@ -24,7 +24,7 @@ class MemberItem extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         clipBehavior: Clip.antiAlias,
-        shadowColor: Colors.black.withOpacity(0.75),
+        shadowColor: Colors.black.withValues(alpha: 0.75),
         elevation: 1,
         child: LinkWell(
           to: '$homeRoute/member/detail',
@@ -76,7 +76,7 @@ class MemberItem extends StatelessWidget {
                       ),
                       margin: EdgeInsets.only(bottom: 5),
                       decoration: BoxDecoration(
-                        color: primaryColor.withOpacity(0.1),
+                        color: primaryColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(
@@ -94,7 +94,7 @@ class MemberItem extends StatelessWidget {
                       ),
                       margin: EdgeInsets.only(bottom: 5),
                       decoration: BoxDecoration(
-                        color: Colors.amber.withOpacity(0.1),
+                        color: Colors.amber.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(

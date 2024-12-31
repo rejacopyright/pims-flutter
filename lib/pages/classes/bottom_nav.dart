@@ -24,7 +24,7 @@ class ClassBottomNav extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             offset: Offset(0, -5),
             blurRadius: 5,
           ),
@@ -148,7 +148,7 @@ class BookingClassButton extends StatelessWidget {
                   vertical: 20,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.15),
+                  color: Colors.black.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
@@ -172,7 +172,7 @@ class BookingClassButton extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         offset: Offset(0, -5),
                         blurRadius: 5,
                       ),
@@ -185,8 +185,8 @@ class BookingClassButton extends StatelessWidget {
                       Material(
                         borderRadius: BorderRadius.circular(5),
                         clipBehavior: Clip.antiAlias,
-                        color: primaryColor
-                            .withOpacity(paymentIsSelected ? 1 : 0.5),
+                        color: primaryColor.withValues(
+                            alpha: paymentIsSelected ? 1 : 0.5),
                         child: InkWell(
                           splashFactory: InkSplash.splashFactory,
                           highlightColor: Colors.transparent,
@@ -241,7 +241,7 @@ class ClassSection extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-        color: primaryColor.withOpacity(0.1),
+        color: primaryColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(5),
         // border: Border(
         //   bottom: BorderSide(width: 1, color: Color(0xffdddddd)),

@@ -114,7 +114,7 @@ class ViewTrainerApp extends StatelessWidget {
                       stretch: true,
                       stretchTriggerOffset: 100,
                       onStretchTrigger: () async {},
-                      shadowColor: Colors.black.withOpacity(0.25),
+                      shadowColor: Colors.black.withValues(alpha: 0.25),
                       automaticallyImplyLeading: false,
                       surfaceTintColor: Colors.transparent,
                       expandedHeight: expandedHeight,
@@ -179,7 +179,7 @@ class ViewTrainerApp extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
                               clipBehavior: Clip.antiAlias,
-                              shadowColor: Colors.black.withOpacity(0.5),
+                              shadowColor: Colors.black.withValues(alpha: 0.5),
                               elevation: 3.5,
                               child: StackedUserCard(detail: item),
                             ),
@@ -202,7 +202,7 @@ class ViewTrainerApp extends StatelessWidget {
             Container(
               height: 125,
               margin: EdgeInsets.only(bottom: 20),
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
             ),
             GridView.count(
               clipBehavior: Clip.antiAlias,
@@ -220,7 +220,7 @@ class ViewTrainerApp extends StatelessWidget {
                 4,
                 (index) => Container(
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(7.5),
                   ),
                 ),

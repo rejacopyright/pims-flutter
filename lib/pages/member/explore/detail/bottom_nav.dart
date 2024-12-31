@@ -54,7 +54,7 @@ class MemberExploreDetailBottomNav extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               offset: Offset(0, -5),
               blurRadius: 5,
             ),
@@ -185,7 +185,8 @@ class MemberExploreDetailBottomNav extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
                       backgroundColor: primaryColor,
-                      disabledBackgroundColor: primaryColor.withOpacity(0.25),
+                      disabledBackgroundColor:
+                          primaryColor.withValues(alpha: 0.25),
                       foregroundColor: Colors.white,
                       shadowColor: Colors.transparent,
                       minimumSize: Size(double.infinity, 48),
@@ -259,7 +260,7 @@ class ModalRequiredNIK extends StatelessWidget {
                     },
                     style: TextButton.styleFrom(
                       elevation: 0,
-                      overlayColor: Colors.black.withOpacity(0.25),
+                      overlayColor: Colors.black.withValues(alpha: 0.25),
                       padding: EdgeInsets.symmetric(vertical: 20),
                       shape: RoundedRectangleBorder(),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -327,7 +328,7 @@ class ConfirmReplaceMember extends StatelessWidget {
                     onPressed: () => Get.rootDelegate.popRoute(),
                     style: TextButton.styleFrom(
                       elevation: 0,
-                      overlayColor: Colors.black.withOpacity(0.25),
+                      overlayColor: Colors.black.withValues(alpha: 0.25),
                       padding: EdgeInsets.symmetric(vertical: 20),
                       shape: RoundedRectangleBorder(),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -358,7 +359,7 @@ class ConfirmReplaceMember extends StatelessWidget {
                     },
                     style: TextButton.styleFrom(
                       elevation: 0,
-                      overlayColor: Colors.black.withOpacity(0.25),
+                      overlayColor: Colors.black.withValues(alpha: 0.25),
                       padding: EdgeInsets.symmetric(vertical: 20),
                       shape: RoundedRectangleBorder(),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,

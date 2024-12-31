@@ -60,14 +60,14 @@ class TopUserCard extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       clipBehavior: Clip.antiAlias,
-                      shadowColor: Colors.black.withOpacity(0.5),
+                      shadowColor: Colors.black.withValues(alpha: 0.5),
                       elevation: 3.5,
                       // decoration: BoxDecoration(
                       //   borderRadius: BorderRadius.circular(10),
                       //   color: Colors.white,
                       //   boxShadow: [
                       //     BoxShadow(
-                      //       color: Colors.black.withOpacity(0.15),
+                      //       color: Colors.black.withValues(alpha: 0.15),
                       //       offset: Offset(1, 1),
                       //       blurRadius: 10,
                       //       spreadRadius: -5,
@@ -94,7 +94,7 @@ class TopUserCard extends StatelessWidget {
               height: 125,
               margin: EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(7.5),
               ),
             ),

@@ -39,7 +39,7 @@ class ProgramCard extends StatelessWidget {
       color: Colors.white,
       borderRadius: BorderRadius.circular(7.5),
       clipBehavior: Clip.antiAlias,
-      shadowColor: Colors.black.withOpacity(0.5),
+      shadowColor: Colors.black.withValues(alpha: 0.5),
       elevation: 3.5,
       child: LinkWell(
         to: '/product/detail',
@@ -92,7 +92,7 @@ class ProgramCard extends StatelessWidget {
                           bottom: 0,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withValues(alpha: 0.9),
                           borderRadius: BorderRadius.circular(3.5),
                         ),
                         child: Text(
@@ -205,7 +205,7 @@ class ProgramCard extends StatelessWidget {
                               bottom: 5,
                             ),
                             decoration: BoxDecoration(
-                              color: primary.withOpacity(0.05),
+                              color: primary.withValues(alpha: 0.05),
                               borderRadius: BorderRadius.circular(3.5),
                             ),
                             child: Image.asset(

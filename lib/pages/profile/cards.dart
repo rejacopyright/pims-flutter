@@ -2,9 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:pims/pages/profile/main.dart';
 
-class ProfileCardsController extends ProfileController {}
+class ProfileCardsController extends GetxController {
+  RxBool pageIsReady = false.obs;
+  @override
+  void onReady() {
+    Future.delayed(Duration(milliseconds: 100), () {
+      pageIsReady.value = true;
+    });
+    super.onReady();
+  }
+
+  @override
+  void refresh() {
+    pageIsReady.value = false;
+    Future.delayed(Duration(milliseconds: 500), () {
+      onReady();
+    });
+    super.refresh();
+  }
+}
 
 class ProfileCards extends StatelessWidget {
   const ProfileCards({super.key});
@@ -219,10 +236,10 @@ class ProfileCardTemplate extends StatelessWidget {
                           ? Alignment.centerLeft
                           : Alignment.centerRight,
                       colors: [
-                        Colors.white.withOpacity(0.4),
-                        Colors.white.withOpacity(0.25),
-                        Colors.white.withOpacity(0.15),
-                        Colors.white.withOpacity(0.15),
+                        Colors.white.withValues(alpha: 0.4),
+                        Colors.white.withValues(alpha: 0.25),
+                        Colors.white.withValues(alpha: 0.15),
+                        Colors.white.withValues(alpha: 0.15),
                       ],
                     ),
                   ),
@@ -238,7 +255,7 @@ class ProfileCardTemplate extends StatelessWidget {
                     'assets/images/path-2.svg',
                     width: Get.width + 5,
                     colorFilter: ColorFilter.mode(
-                      Theme.of(context).primaryColor.withOpacity(0.35),
+                      Theme.of(context).primaryColor.withValues(alpha: 0.35),
                       BlendMode.srcIn,
                     ),
                   ),

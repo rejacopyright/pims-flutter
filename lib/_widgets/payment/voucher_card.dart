@@ -89,17 +89,17 @@ class VoucherCard extends StatelessWidget {
                                 curveAxis: Axis.vertical,
                                 backgroundColor: Colors.white,
                                 firstChild: Container(
-                                  color: primaryColor.withOpacity(0.5),
+                                  color: primaryColor.withValues(alpha: 0.5),
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         begin: Alignment.centerLeft,
                                         end: Alignment.centerRight,
                                         colors: [
-                                          primaryColor.withOpacity(1),
-                                          primaryColor.withOpacity(0.75),
-                                          primaryColor.withOpacity(0.25),
-                                          // primaryColor.withOpacity(0),
+                                          primaryColor.withValues(alpha: 1),
+                                          primaryColor.withValues(alpha: 0.75),
+                                          primaryColor.withValues(alpha: 0.25),
+                                          // primaryColor.withValues(alpha: 0),
                                         ],
                                       ),
                                     ),
@@ -129,7 +129,7 @@ class VoucherCard extends StatelessWidget {
                                 secondChild: Container(
                                   height: double.infinity,
                                   color: thisVoucherIsChecked
-                                      ? primaryColor.withOpacity(0.1)
+                                      ? primaryColor.withValues(alpha: 0.1)
                                       : Colors.white,
                                   padding: EdgeInsets.symmetric(horizontal: 10),
                                   child: Row(

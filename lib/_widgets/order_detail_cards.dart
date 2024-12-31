@@ -296,7 +296,7 @@ class OrderDetailPurchaseTime extends StatelessWidget {
             width: 1,
           ),
         ),
-        shadowColor: Colors.black.withOpacity(0.25),
+        shadowColor: Colors.black.withValues(alpha: 0.25),
         elevation: 1,
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -391,7 +391,7 @@ class OrderDetailPrice extends StatelessWidget {
             width: 1,
           ),
         ),
-        shadowColor: Colors.black.withOpacity(0.25),
+        shadowColor: Colors.black.withValues(alpha: 0.25),
         elevation: 5,
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -594,7 +594,7 @@ class OrderDetailQR extends StatelessWidget {
                 width: 1,
               ),
             ),
-            shadowColor: Colors.black.withOpacity(0.25),
+            shadowColor: Colors.black.withValues(alpha: 0.25),
             elevation: 5,
             clipBehavior: Clip.antiAlias,
             child: Column(
@@ -897,11 +897,11 @@ class CancelFormWidget extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: 15),
                         padding: EdgeInsets.all(15),
                         decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.025),
+                          color: Colors.red.withValues(alpha: 0.025),
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                             width: 1,
-                            color: Colors.red.withOpacity(0.25),
+                            color: Colors.red.withValues(alpha: 0.25),
                           ),
                         ),
                         child: Text(
@@ -954,8 +954,8 @@ class CancelFormWidget extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    backgroundColor:
-                        primaryColor.withOpacity(cancelBtnIsLoading ? 0.5 : 1),
+                    backgroundColor: primaryColor.withValues(
+                        alpha: cancelBtnIsLoading ? 0.5 : 1),
                     foregroundColor: Colors.white,
                     minimumSize: Size(double.infinity, 48),
                     shape: StadiumBorder(),
@@ -978,7 +978,7 @@ class CancelFormWidget extends StatelessWidget {
                     backgroundColor: Colors.white,
                     overlayColor: Color(0xffaaaaaa),
                     foregroundColor: Colors.black,
-                    shadowColor: Colors.black.withOpacity(0.25),
+                    shadowColor: Colors.black.withValues(alpha: 0.25),
                     minimumSize: Size(double.infinity, 48),
                     shape: StadiumBorder(
                       side: BorderSide(
@@ -1036,7 +1036,7 @@ class OrderDetailPaymentMethod extends StatelessWidget {
               width: 1,
             ),
           ),
-          shadowColor: Colors.black.withOpacity(0.25),
+          shadowColor: Colors.black.withValues(alpha: 0.25),
           elevation: 1,
           clipBehavior: Clip.antiAlias,
           child: Column(
@@ -1141,7 +1141,7 @@ class OrderDetailCancel extends StatelessWidget {
             width: 1,
           ),
         ),
-        shadowColor: Colors.black.withOpacity(0.25),
+        shadowColor: Colors.black.withValues(alpha: 0.25),
         elevation: 5,
         clipBehavior: Clip.antiAlias,
         child: Column(

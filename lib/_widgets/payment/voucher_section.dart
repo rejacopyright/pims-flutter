@@ -82,7 +82,7 @@ class VoucherSection extends StatelessWidget {
                                   vertical: 20,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.15),
+                                  color: Colors.black.withValues(alpha: 0.15),
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
@@ -111,7 +111,8 @@ class VoucherSection extends StatelessWidget {
                                     color: Colors.white,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.05),
+                                        color: Colors.black
+                                            .withValues(alpha: 0.05),
                                         offset: Offset(0, -5),
                                         blurRadius: 5,
                                       ),

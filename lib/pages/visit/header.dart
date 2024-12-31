@@ -19,7 +19,7 @@ class VisitHeader extends StatelessWidget {
           isCollapsed ? Colors.white : Colors.transparent;
       return SliverAppBar(
         backgroundColor: statusBarColor,
-        shadowColor: Colors.black.withOpacity(0.25),
+        shadowColor: Colors.black.withValues(alpha: 0.25),
         elevation: 1,
         forceElevated: true,
         pinned: true,
@@ -72,11 +72,11 @@ class HeaderTitle extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50),
                 side: BorderSide(
-                  color: Colors.black.withOpacity(0),
+                  color: Colors.black.withValues(alpha: 0),
                   width: 1,
                 ),
               ),
-              color: Colors.white.withOpacity(0.15),
+              color: Colors.white.withValues(alpha: 0.15),
               clipBehavior: Clip.antiAlias,
               child: BackWell(
                 child: Container(
@@ -132,11 +132,11 @@ class HeaderBackgroundVisit extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                // primaryColor.withOpacity(0),
-                primaryColor.withOpacity(0.5),
-                primaryColor.withOpacity(0.75),
-                primaryColor.withOpacity(0.85),
-                primaryColor.withOpacity(1),
+                // primaryColor.withValues(alpha: 0),
+                primaryColor.withValues(alpha: 0.5),
+                primaryColor.withValues(alpha: 0.75),
+                primaryColor.withValues(alpha: 0.85),
+                primaryColor.withValues(alpha: 1),
               ],
             ),
           ),

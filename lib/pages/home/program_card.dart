@@ -69,7 +69,7 @@ class ProgramSection extends StatelessWidget {
               height: 175,
               margin: EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(7.5),
               ),
             ),

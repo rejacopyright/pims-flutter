@@ -13,14 +13,14 @@ class OrderDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
-      shadowColor: Colors.black.withOpacity(0.25),
+      shadowColor: Colors.black.withValues(alpha: 0.25),
       elevation: 1,
       // automaticallyImplyLeading: false,
       // leadingWidth: 75,
       leading: Padding(
         padding: EdgeInsets.symmetric(horizontal: 7.5, vertical: 7.5),
         child: Material(
-          // color: Theme.of(context).primaryColor.withOpacity(0.1),
+          // color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
           color: Colors.white,
           borderRadius: BorderRadius.circular(50),
           clipBehavior: Clip.antiAlias,

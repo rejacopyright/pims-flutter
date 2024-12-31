@@ -45,7 +45,7 @@ class MemberExploreDetailPaymentCard extends StatelessWidget {
                   vertical: 20,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.15),
+                  color: Colors.black.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
@@ -69,7 +69,7 @@ class MemberExploreDetailPaymentCard extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         offset: Offset(0, -5),
                         blurRadius: 5,
                       ),
@@ -102,7 +102,7 @@ class MemberExploreDetailPaymentCard extends StatelessWidget {
                           elevation: 0,
                           backgroundColor: primaryColor,
                           disabledBackgroundColor:
-                              primaryColor.withOpacity(0.25),
+                              primaryColor.withValues(alpha: 0.25),
                           foregroundColor: Colors.white,
                           shadowColor: Colors.transparent,
                           minimumSize: Size(double.infinity, 48),

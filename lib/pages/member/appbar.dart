@@ -35,7 +35,7 @@ class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
       final textColor = isCollapsed && isMember ? Colors.black : Colors.white;
       return SliverAppBar(
         backgroundColor: statusBarColor,
-        shadowColor: Colors.black.withOpacity(0.25),
+        shadowColor: Colors.black.withValues(alpha: 0.25),
         elevation: 1,
         pinned: true,
         expandedHeight: expandedHeight,
@@ -148,7 +148,7 @@ class MemberAppBar extends StatelessWidget implements PreferredSizeWidget {
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         shadowColor: Colors.transparent,
-                        backgroundColor: Colors.black.withOpacity(0.05),
+                        backgroundColor: Colors.black.withValues(alpha: 0.05),
                       ),
                     ),
                   ),
@@ -195,7 +195,7 @@ class MemberCard extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.25),
+            color: Colors.white.withValues(alpha: 0.25),
             offset: Offset(-2.5, -2.5),
             blurRadius: 15,
           ),
@@ -204,10 +204,10 @@ class MemberCard extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            primaryColor.withOpacity(0.15),
-            primaryColor.withOpacity(0.5),
-            primaryColor.withOpacity(0.85),
-            primaryColor.withOpacity(1),
+            primaryColor.withValues(alpha: 0.15),
+            primaryColor.withValues(alpha: 0.5),
+            primaryColor.withValues(alpha: 0.85),
+            primaryColor.withValues(alpha: 1),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
@@ -226,7 +226,7 @@ class MemberCard extends StatelessWidget {
                 width: 500,
                 // width: Get.width + 5,
                 colorFilter: ColorFilter.mode(
-                  Colors.white.withOpacity(0.1),
+                  Colors.white.withValues(alpha: 0.1),
                   BlendMode.srcIn,
                 ),
               ),
@@ -247,7 +247,7 @@ class MemberCard extends StatelessWidget {
                       margin: EdgeInsets.only(right: 10),
                       decoration: BoxDecoration(
                         color: member?['badge'] != null
-                            ? Colors.white.withOpacity(0.5)
+                            ? Colors.white.withValues(alpha: 0.5)
                             : Colors.amberAccent.shade100,
                         borderRadius: BorderRadius.circular(50),
                       ),
@@ -288,7 +288,7 @@ class MemberCard extends StatelessWidget {
                   children: [
                     LinearProgressIndicator(
                       value: daysPercentage,
-                      backgroundColor: Colors.white.withOpacity(0.5),
+                      backgroundColor: Colors.white.withValues(alpha: 0.5),
                       valueColor:
                           AlwaysStoppedAnimation(primaryColor.withGreen(165)),
                       minHeight: 10,
@@ -344,10 +344,10 @@ class HeaderBackgroundMember extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                primaryColor.withOpacity(0.5),
-                primaryColor.withOpacity(0.75),
-                primaryColor.withOpacity(0.85),
-                primaryColor.withOpacity(1),
+                primaryColor.withValues(alpha: 0.5),
+                primaryColor.withValues(alpha: 0.75),
+                primaryColor.withValues(alpha: 0.85),
+                primaryColor.withValues(alpha: 1),
               ],
             ),
           ),

@@ -58,7 +58,7 @@ class ClassBottomNav extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               offset: Offset(0, -5),
               blurRadius: 5,
             ),
@@ -217,7 +217,7 @@ class ConfirmBooking extends StatelessWidget {
                     onPressed: () => Get.rootDelegate.popRoute(),
                     style: TextButton.styleFrom(
                       elevation: 0,
-                      overlayColor: Colors.black.withOpacity(0.25),
+                      overlayColor: Colors.black.withValues(alpha: 0.25),
                       padding: EdgeInsets.symmetric(vertical: 20),
                       shape: RoundedRectangleBorder(),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -248,7 +248,7 @@ class ConfirmBooking extends StatelessWidget {
                     },
                     style: TextButton.styleFrom(
                       elevation: 0,
-                      overlayColor: Colors.black.withOpacity(0.25),
+                      overlayColor: Colors.black.withValues(alpha: 0.25),
                       padding: EdgeInsets.symmetric(vertical: 20),
                       shape: RoundedRectangleBorder(),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -285,7 +285,7 @@ class ClassBottomNavFullQuota extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             offset: Offset(0, -5),
             blurRadius: 5,
           ),
@@ -362,7 +362,7 @@ class ClassBottomNavIsBookedByMe extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             offset: Offset(0, -5),
             blurRadius: 5,
           ),

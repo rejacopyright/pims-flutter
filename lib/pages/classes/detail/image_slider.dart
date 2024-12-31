@@ -87,7 +87,7 @@ class ClassDetailImageSlider extends StatelessWidget {
                         vertical: 3.5,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Text(
@@ -131,7 +131,7 @@ class ClassDetailImageSlider extends StatelessWidget {
                             color: activeIndex
                                 ? Theme.of(context)
                                     .primaryColor
-                                    .withOpacity(0.5)
+                                    .withValues(alpha: 0.5)
                                 : Colors.transparent,
                           ),
                         ),
@@ -160,7 +160,8 @@ class ClassDetailImageSlider extends StatelessWidget {
         children: [
           Container(
             height: 300,
-            decoration: BoxDecoration(color: Colors.black.withOpacity(0.05)),
+            decoration:
+                BoxDecoration(color: Colors.black.withValues(alpha: 0.05)),
           ),
           Container(
             margin: EdgeInsets.symmetric(
@@ -175,7 +176,7 @@ class ClassDetailImageSlider extends StatelessWidget {
                   height: 50,
                   margin: EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(7.5),
                   ),
                 ),

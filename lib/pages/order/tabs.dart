@@ -192,7 +192,7 @@ class OrderTabContent extends StatelessWidget {
               width: fullWidth / 2,
               margin: EdgeInsets.only(bottom: 5),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(7.5),
               ),
             ),
@@ -201,7 +201,7 @@ class OrderTabContent extends StatelessWidget {
               width: fullWidth / 3,
               margin: EdgeInsets.only(bottom: 5),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(7.5),
               ),
             ),
@@ -210,7 +210,7 @@ class OrderTabContent extends StatelessWidget {
               width: fullWidth,
               margin: EdgeInsets.only(bottom: 5),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(7.5),
               ),
             ),
