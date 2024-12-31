@@ -32,7 +32,7 @@ class ServiceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 75,
+            width: 65,
             padding: EdgeInsets.all(12.5),
             margin: EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
@@ -47,7 +47,10 @@ class ServiceCard extends StatelessWidget {
               label,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: 13, height: 1),
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                height: 1,
+              ),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
@@ -129,7 +132,7 @@ class ServiceSection extends StatelessWidget {
                         name: '/trainer',
                       )
                     ]
-                  : [SizedBox.shrink()]),
+                  : []),
             ],
           ),
         );

@@ -137,6 +137,7 @@ class ClassItem extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: primaryColor,
+                      fontSize: 11,
                     ),
                   ),
                 ),
@@ -147,7 +148,7 @@ class ClassItem extends StatelessWidget {
                     maxLines: 2,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -162,9 +163,9 @@ class ClassItem extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                         ),
-                        width: 20,
-                        height: 20,
-                        child: Ink.image(
+                        width: 16,
+                        height: 16,
+                        child: Image(
                           image: trainerImage != null
                               ? NetworkImage(trainerImage)
                               : AssetImage('assets/avatar/user.png'),
@@ -177,7 +178,7 @@ class ClassItem extends StatelessWidget {
                         maxLines: 1,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                          fontSize: 12,
                         ),
                       ),
                     ],
@@ -191,28 +192,28 @@ class ClassItem extends StatelessWidget {
                     children: [
                       Icon(
                         Iconsax.calendar5,
-                        size: 16,
+                        size: 13,
                         color: primaryColor,
                       ),
                       Text(
                         start_date,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                          fontSize: 11,
                         ),
                       ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: fee > 0 ? 15 : 0),
+                  padding: EdgeInsets.only(bottom: fee > 0 ? 10 : 0),
                   child: Wrap(
                     spacing: 5,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Icon(
                         Iconsax.clock5,
-                        size: 16,
+                        size: 13,
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
@@ -220,7 +221,7 @@ class ClassItem extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color(0xff777777),
-                          fontSize: 14,
+                          fontSize: 11,
                         ),
                       ),
                     ],
@@ -233,7 +234,7 @@ class ClassItem extends StatelessWidget {
                         maxLines: 1,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 14,
                         ),
                       )
                     : SizedBox.shrink(),
@@ -304,14 +305,14 @@ class VisitItem extends StatelessWidget {
                     children: [
                       Icon(
                         Iconsax.calendar5,
-                        size: 20,
+                        size: 14,
                         color: primaryColor,
                       ),
                       Text(
                         start_date,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 14,
                         ),
                       ),
                     ],
@@ -323,7 +324,7 @@ class VisitItem extends StatelessWidget {
                   children: [
                     Icon(
                       Iconsax.clock5,
-                      size: 18,
+                      size: 14,
                       color: Color(0xffdddddd),
                     ),
                     Text(
@@ -331,7 +332,7 @@ class VisitItem extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xff777777),
-                        fontSize: 16,
+                        fontSize: 12,
                       ),
                     ),
                   ],
@@ -344,7 +345,7 @@ class VisitItem extends StatelessWidget {
                         maxLines: 1,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 14,
                         ),
                       )
                     : SizedBox.shrink(),

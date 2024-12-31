@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:pims/_controller/user_controller.dart';
 import 'package:pims/_widgets/button.dart';
 import 'package:pims/_widgets/navbar.dart';
+import 'package:pims/_widgets/title_show_all.dart';
 import 'package:pims/pages/home/banner_promo.dart';
 import 'package:pims/pages/home/header.dart';
-import 'package:pims/pages/home/program_card.dart';
 import 'package:pims/pages/home/service_card.dart';
 import 'package:pims/pages/home/top_user_card.dart';
+
+import 'top_program_card.dart';
 
 class HomeApp extends StatelessWidget {
   const HomeApp({super.key});
@@ -52,7 +54,8 @@ class Homepage extends StatelessWidget {
     final topUserController = Get.put(TopUserCardController());
     final serviceController = Get.put(ServiceSectionController());
     final bannerController = Get.put(BannerPromoController());
-    final programController = Get.put(ProgramSectionController());
+    final topProgramCardController = Get.put(TopProgramCardController());
+    // final programController = Get.put(ProgramSectionController());
     final userController = Get.put(UserController());
     userController.onInit();
 
@@ -74,7 +77,7 @@ class Homepage extends StatelessWidget {
             bannerController.refresh();
             serviceController.refresh();
             topUserController.refresh();
-            programController.refresh();
+            topProgramCardController.refresh();
           },
           child: CustomScrollView(
             physics: AlwaysScrollableScrollPhysics(),
@@ -94,11 +97,14 @@ class Homepage extends StatelessWidget {
                         ),
                         // TitleShowAll(title: 'Temukan Tukang'),
                         ServiceSection(user: user),
-                        // TitleShowAll(
-                        //   title: 'Trainers',
-                        //   margin: EdgeInsets.only(top: 5, bottom: 5),
-                        // ),
-                        // TopUserCard(),
+                        TitleShowAll(
+                          title: 'Top Program',
+                          margin: EdgeInsets.only(top: 20),
+                          onTapMore: () {
+                            Get.rootDelegate.toNamed('/product');
+                          },
+                        ),
+                        TopProgramCard(),
                         // Padding(padding: EdgeInsets.only(bottom: 5)),
                         // TitleShowAll(
                         //   title: 'Programs',
@@ -119,7 +125,7 @@ class Homepage extends StatelessWidget {
               //     childCount: 1,
               //   ),
               // ),
-              SliverPadding(padding: EdgeInsets.only(bottom: 100))
+              SliverPadding(padding: EdgeInsets.only(bottom: 125))
             ],
           ),
         );

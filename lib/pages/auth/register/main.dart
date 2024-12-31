@@ -180,9 +180,9 @@ class RegisterPage extends StatelessWidget {
                               if (value!.isEmpty) {
                                 return 'Username wajib diisi';
                               }
-                              const pattern = r"""([a-z0-9_])$""";
-                              final regex = RegExp(pattern);
-                              if (!regex.hasMatch(value)) {
+                              var specialCharRegex = RegExp(
+                                  r"""([A-Z\s!@#$%^&*()\-\+=[\]{}?|\\;:/.,'"<>~`])""");
+                              if (specialCharRegex.hasMatch(value)) {
                                 return 'Hanya boleh huruf kecil, (_), dan angka';
                               }
                               if (value.length < 3) {
@@ -446,6 +446,7 @@ class RegisterPage extends StatelessWidget {
                               ),
                             ),
                           ),
+                          SizedBox(height: 20),
                         ],
                       ),
                     ),

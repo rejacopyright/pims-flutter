@@ -71,7 +71,7 @@ class ProgramCard extends StatelessWidget {
                       right: 5,
                       child: Icon(
                         Icons.photo_library,
-                        size: 20,
+                        size: 16,
                         color: Colors.white,
                       ),
                     ),
@@ -89,7 +89,7 @@ class ProgramCard extends StatelessWidget {
                           left: 7.5,
                           right: 7.5,
                           top: 1.5,
-                          bottom: 0,
+                          bottom: 1.5,
                         ),
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.9),
@@ -100,7 +100,7 @@ class ProgramCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 10,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -116,7 +116,7 @@ class ProgramCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -178,7 +178,7 @@ class ProgramCard extends StatelessWidget {
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 12,
+                                    fontSize: 11,
                                   ),
                                 ),
                                 Text(
@@ -186,7 +186,7 @@ class ProgramCard extends StatelessWidget {
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 12,
+                                    fontSize: 11,
                                   ),
                                 ),
                               ],

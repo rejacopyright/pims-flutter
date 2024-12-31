@@ -110,7 +110,7 @@ class ProfilePage extends StatelessWidget {
                           'Pesanan Saya',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontSize: 14,
                           ),
                         ),
                       ),

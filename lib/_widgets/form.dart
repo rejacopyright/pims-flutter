@@ -58,14 +58,14 @@ class _SearchFieldState extends State<SearchField> {
           hintText: widget.hintText,
           hintStyle: TextStyle(
             color: Colors.black.withValues(alpha: 0.5),
-            fontSize: 16,
+            fontSize: 14,
           ),
           prefixIcon: Container(
             padding: EdgeInsets.only(left: 5),
             width: 40,
             child: Icon(
               Iconsax.search_normal,
-              size: 18,
+              size: 14,
             ),
           ),
           prefixIconColor: Theme.of(context).primaryColor,

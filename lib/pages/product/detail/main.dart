@@ -171,18 +171,19 @@ class ProductDetailPage extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 15),
                                 child: Wrap(
-                                  spacing: 10,
+                                  spacing: 5,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
                                     Icon(
                                       Iconsax.calendar5,
-                                      size: 20,
+                                      size: 16,
                                       color: Theme.of(context).primaryColor,
                                     ),
                                     Text(
                                       'Jadwal Kelas',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         color: Theme.of(context).primaryColor,
                                       ),
                                     ),

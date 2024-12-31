@@ -79,7 +79,7 @@ class ProfileAppBar extends StatelessWidget {
                         padding: EdgeInsets.only(
                           left: 20,
                           right: 20,
-                          top: 35,
+                          top: 25,
                         ),
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
@@ -102,8 +102,8 @@ class ProfileAppBar extends StatelessWidget {
                                   );
                                 },
                                 child: Container(
-                                  width: 100,
-                                  height: 100,
+                                  width: 75,
+                                  height: 75,
                                   clipBehavior: Clip.antiAlias,
                                   margin: EdgeInsets.only(right: 15),
                                   decoration: BoxDecoration(
@@ -125,7 +125,7 @@ class ProfileAppBar extends StatelessWidget {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                                      fontSize: 16,
                                     ),
                                   ),
                                   Wrap(
@@ -135,14 +135,14 @@ class ProfileAppBar extends StatelessWidget {
                                     children: [
                                       Icon(
                                         Icons.mail,
-                                        size: 16,
+                                        size: 12,
                                         color: Colors.white,
                                       ),
                                       Text(
                                         user?['email'] ?? '???',
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
                                         ),
                                       ),
                                     ],
@@ -160,25 +160,27 @@ class ProfileAppBar extends StatelessWidget {
                                             (order?['unpaid_count'] ?? 0)
                                                 .toString(),
                                             style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
                                             ),
                                           ),
                                           Text(
                                             'Belum bayar',
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            ),
                                           ),
                                         ],
                                       ),
                                       SizedBox(
-                                        height: 50,
+                                        height: 40,
                                         child: VerticalDivider(
-                                          width: 35,
-                                          thickness: 1,
-                                          indent: 10,
-                                          endIndent: 10,
+                                          width: 25,
+                                          thickness: 0.25,
+                                          indent: 5,
+                                          endIndent: 15,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -190,15 +192,17 @@ class ProfileAppBar extends StatelessWidget {
                                             (order?['active_count'] ?? 0)
                                                 .toString(),
                                             style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
                                             ),
                                           ),
                                           Text(
                                             'Jadwal Aktif',
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -210,7 +214,7 @@ class ProfileAppBar extends StatelessWidget {
                                   Row(
                                     children: [
                                       SizedBox(
-                                        height: 35,
+                                        height: 30,
                                         child: TextButton(
                                           onPressed: () {
                                             Get.rootDelegate
@@ -226,13 +230,13 @@ class ProfileAppBar extends StatelessWidget {
                                             ),
                                           ),
                                           child: Wrap(
-                                            spacing: 7.5,
+                                            spacing: 5,
                                             crossAxisAlignment:
                                                 WrapCrossAlignment.center,
                                             children: [
                                               Icon(
                                                 Iconsax.setting,
-                                                size: 18,
+                                                size: 12,
                                                 color: Colors.white,
                                               ),
                                               Text(
@@ -240,6 +244,7 @@ class ProfileAppBar extends StatelessWidget {
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
+                                                  fontSize: 11,
                                                   height: 0,
                                                 ),
                                               ),
@@ -251,7 +256,7 @@ class ProfileAppBar extends StatelessWidget {
                                         padding: EdgeInsets.only(right: 10),
                                       ),
                                       SizedBox(
-                                        height: 35,
+                                        height: 30,
                                         child: TextButton(
                                           onPressed: () {
                                             box.remove('token');
@@ -261,13 +266,13 @@ class ProfileAppBar extends StatelessWidget {
                                                 Colors.redAccent.shade200,
                                           ),
                                           child: Wrap(
-                                            spacing: 7.5,
+                                            spacing: 5,
                                             crossAxisAlignment:
                                                 WrapCrossAlignment.center,
                                             children: [
                                               Icon(
                                                 Icons.logout,
-                                                size: 18,
+                                                size: 12,
                                                 color: Colors.white,
                                               ),
                                               Text(
@@ -275,6 +280,7 @@ class ProfileAppBar extends StatelessWidget {
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
+                                                  fontSize: 11,
                                                   height: 0,
                                                 ),
                                               ),

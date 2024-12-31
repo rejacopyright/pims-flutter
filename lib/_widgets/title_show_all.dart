@@ -6,6 +6,7 @@ class TitleShowAll extends StatelessWidget {
   final String? showMore;
   final String? path;
   final EdgeInsetsGeometry? margin;
+  final Function()? onTapMore;
 
   const TitleShowAll({
     super.key,
@@ -13,6 +14,7 @@ class TitleShowAll extends StatelessWidget {
     this.showMore,
     this.path,
     this.margin,
+    this.onTapMore,
   });
 
   @override
@@ -30,11 +32,13 @@ class TitleShowAll extends StatelessWidget {
             title ?? 'Title',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 14,
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              onTapMore!();
+            },
             borderRadius: BorderRadius.circular(5),
             child: Container(
               padding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 5),
@@ -48,7 +52,7 @@ class TitleShowAll extends StatelessWidget {
                     style: TextStyle(
                       color: primary,
                       fontWeight: FontWeight.bold,
-                      fontSize: 14,
+                      fontSize: 12,
                     ),
                   ),
                   Icon(Iconsax.arrow_right_3, size: 12, color: primary),

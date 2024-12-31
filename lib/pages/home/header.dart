@@ -281,7 +281,7 @@ class HomeHeaderContent extends StatelessWidget {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize:
-                                                member?['id'] != null ? 14 : 12,
+                                                member?['id'] != null ? 12 : 11,
                                             color: member?['id'] != null
                                                 ? primaryColor.withGreen(150)
                                                 : Colors.black,
@@ -292,7 +292,7 @@ class HomeHeaderContent extends StatelessWidget {
                                             : Text(
                                                 'Miliki Sekarang',
                                                 style: TextStyle(
-                                                  fontSize: 12,
+                                                  fontSize: 11,
                                                 ),
                                               ),
                                       ],

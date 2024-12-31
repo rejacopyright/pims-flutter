@@ -69,7 +69,7 @@ class ProfileOrderStatus extends StatelessWidget {
             crossAxisCount: 4,
             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
             physics: NeverScrollableScrollPhysics(),
-            // childAspectRatio: 0.9,
+            childAspectRatio: 1.2,
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             crossAxisSpacing: 0,
@@ -77,23 +77,23 @@ class ProfileOrderStatus extends StatelessWidget {
             children: servicesList
                 .map(
                   (e) => Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Material(
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(15),
                         clipBehavior: Clip.antiAlias,
                         color: Colors.transparent,
                         child: LinkWell(
                           to: '/order',
                           params: e.params,
                           child: Container(
-                            width: 55,
-                            padding: EdgeInsets.all(10),
+                            width: 50,
+                            padding: EdgeInsets.all(12.5),
                             margin: EdgeInsets.only(bottom: 2),
                             decoration: BoxDecoration(
                               color: primary.withValues(alpha: 0.075),
-                              borderRadius: BorderRadius.circular(50),
+                              borderRadius: BorderRadius.circular(15),
                               border: Border.all(
                                 color: primary.withValues(alpha: 0.5),
                               ),
@@ -108,7 +108,7 @@ class ProfileOrderStatus extends StatelessWidget {
                           e.label,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: 10,
                             fontWeight: FontWeight.bold,
                           ),
                           overflow: TextOverflow.ellipsis,

@@ -320,6 +320,7 @@ Future classTransaction(dynamic detailClass) async {
 
   final params = {
     'class_schedule_id': detailClass?['id'],
+    'class_store_id': detailClass?['class_id'],
     'user_type': isMember ? 2 : 1,
     'payment_id': selectedPayment?.name,
     'service_id': thisService?.type ?? 2,
