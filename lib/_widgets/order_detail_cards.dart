@@ -275,6 +275,116 @@ class OrderDetailMandiriBank extends StatelessWidget {
   }
 }
 
+class OrderDetailPaymentQRIS extends StatelessWidget {
+  const OrderDetailPaymentQRIS({
+    super.key,
+    required this.provider,
+    this.img,
+  });
+  final String provider;
+  final String? img;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = Get.put(OrderDetailCardController());
+    final paymentController = Get.put(PaymentController());
+    final primaryColor = Theme.of(context).primaryColor;
+    return Obx(() {
+      final paymentData = paymentController.paymentData.value;
+      final payment =
+          paymentData?.firstWhereOrNull((item) => item.name == provider);
+      final isPayment = payment != null;
+      final isCopied = state.isCopied.value;
+      return Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 25, bottom: 10),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            height: isPayment ? 20 : 75,
+            child: Image.asset(
+              payment?.icon ?? 'assets/icons/no-image.png',
+              fit: BoxFit.contain,
+              opacity: AlwaysStoppedAnimation(1),
+            ),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: img != null
+                ? Image.network(
+                    img as String,
+                    width: 300,
+                    height: 300,
+                    fit: BoxFit.contain,
+                  )
+                : SizedBox.shrink(),
+          ),
+          img != null
+              ? Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(top: 15),
+                  child: Material(
+                    color: isCopied ? primaryColor : Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.5),
+                      side: const BorderSide(
+                        color: Color(0xffdddddd),
+                        width: 1,
+                      ),
+                    ),
+                    // elevation: 1,
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      splashFactory: InkSplash.splashFactory,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        await state.setCopied(true);
+                        await Clipboard.setData(
+                          ClipboardData(text: img ?? ''),
+                        );
+                        Future.delayed(Duration(milliseconds: 1500), () {
+                          state.setCopied(false);
+                        });
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: 10,
+                          bottom: 10,
+                          left: 15,
+                          right: 25,
+                        ),
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 10,
+                          children: [
+                            Icon(
+                              Iconsax.copy5,
+                              size: 16,
+                              color: isCopied ? Colors.white : Colors.black,
+                            ),
+                            Text(
+                              isCopied ? 'Tersalin' : 'Salin Link',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: isCopied ? Colors.white : Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : SizedBox.shrink(),
+        ],
+      );
+    });
+  }
+}
+
 class OrderDetailPurchaseTime extends StatelessWidget {
   const OrderDetailPurchaseTime(
       {super.key, this.date = '???', this.time = '???'});

@@ -153,6 +153,7 @@ class OrderDetailPage extends StatelessWidget {
           final biller_code = data?['payment']?['biller_code'];
           final bill_key = data?['payment']?['bill_key'];
           final permata_va_number = data?['payment']?['permata_va_number'];
+          final qris_img = data?['payment']?['actions']?[0]?['url'];
 
           return ListView.builder(
             itemCount: 1,
@@ -170,18 +171,25 @@ class OrderDetailPage extends StatelessWidget {
                                       provider: provider,
                                       account_no: va_number ?? '???',
                                     )
-                                  : ['permata'].contains(provider)
-                                      ? OrderDetailPaymentBank(
-                                          provider: 'permata',
-                                          account_no:
-                                              permata_va_number ?? '???',
-                                        )
-                                      : ['mandiri'].contains(provider)
-                                          ? OrderDetailMandiriBank(
-                                              biller_code: biller_code ?? '???',
-                                              bill_key: bill_key ?? '???',
-                                            )
-                                          : SizedBox.shrink(),
+                                  : SizedBox.shrink(),
+                              ['permata'].contains(provider)
+                                  ? OrderDetailPaymentBank(
+                                      provider: 'permata',
+                                      account_no: permata_va_number ?? '???',
+                                    )
+                                  : SizedBox.shrink(),
+                              ['mandiri'].contains(provider)
+                                  ? OrderDetailMandiriBank(
+                                      biller_code: biller_code ?? '???',
+                                      bill_key: bill_key ?? '???',
+                                    )
+                                  : SizedBox.shrink(),
+                              ['qris'].contains(provider)
+                                  ? OrderDetailPaymentQRIS(
+                                      provider: 'qris',
+                                      img: qris_img,
+                                    )
+                                  : SizedBox.shrink(),
                               OrderDetailPurchaseTime(
                                 date: expired_date,
                                 time: expired_time,
