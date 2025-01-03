@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pims/_config/dio.dart';
 import 'package:pims/_controller/payment_controller.dart';
+import 'package:pims/_widgets/downloader.dart';
 import 'package:pims/_widgets/helper.dart';
 import 'package:pims/pages/order/tabs.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailCardController extends GetxController {
   RxBool isCopied = false.obs;
@@ -280,9 +283,11 @@ class OrderDetailPaymentQRIS extends StatelessWidget {
     super.key,
     required this.provider,
     this.img,
+    this.order_id,
   });
   final String provider;
   final String? img;
+  final String? order_id;
 
   @override
   Widget build(BuildContext context) {
@@ -339,15 +344,136 @@ class OrderDetailPaymentQRIS extends StatelessWidget {
                     child: InkWell(
                       splashFactory: InkSplash.splashFactory,
                       highlightColor: Colors.transparent,
-                      onTap: () async {
-                        await state.setCopied(true);
-                        await Clipboard.setData(
-                          ClipboardData(text: img ?? ''),
-                        );
-                        Future.delayed(Duration(milliseconds: 1500), () {
-                          state.setCopied(false);
-                        });
-                      },
+                      onTap: img != null
+                          ? () async {
+                              state.setCopied(true);
+                              bool result = await _permissionRequest();
+                              if (result && context.mounted) {
+                                await showDialog(
+                                    context: context,
+                                    builder: (dialogcontext) {
+                                      return DownloadProgressDialog(
+                                        fileName: '${order_id ?? 'qris'}.png',
+                                        baseUrl: img.toString(),
+                                      );
+                                    });
+                              }
+                              await Clipboard.setData(
+                                ClipboardData(text: img ?? ''),
+                              );
+                              state.setCopied(false);
+                            }
+                          : null,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: 10,
+                          bottom: 10,
+                          left: 15,
+                          right: 25,
+                        ),
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 10,
+                          children: [
+                            Icon(
+                              Iconsax.export_1,
+                              size: 16,
+                              color: isCopied ? Colors.white : Colors.black,
+                            ),
+                            Text(
+                              isCopied ? 'Waiting...' : 'Download QR',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: isCopied ? Colors.white : Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : SizedBox.shrink(),
+        ],
+      );
+    });
+  }
+
+  static Future<bool> _permissionRequest() async {
+    PermissionStatus result;
+    result = await Permission.storage.request();
+    if (result.isGranted) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+class OrderDetailPaymentEWallet extends StatelessWidget {
+  const OrderDetailPaymentEWallet({
+    super.key,
+    required this.provider,
+    this.pay_link,
+  });
+  final String provider;
+  final String? pay_link;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = Get.put(OrderDetailCardController());
+    final paymentController = Get.put(PaymentController());
+    final primaryColor = Theme.of(context).primaryColor;
+    return Obx(() {
+      final paymentData = paymentController.paymentData.value;
+      final payment =
+          paymentData?.firstWhereOrNull((item) => item.name == provider);
+      final isPayment = payment != null;
+      return Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 25, bottom: 10),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            height: isPayment ? 40 : 75,
+            child: Image.asset(
+              payment?.icon ?? 'assets/icons/no-image.png',
+              fit: BoxFit.contain,
+              opacity: AlwaysStoppedAnimation(1),
+            ),
+          ),
+          pay_link != null
+              ? Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(top: 15),
+                  child: Material(
+                    color: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.5),
+                      side: const BorderSide(
+                        color: Color(0xffdddddd),
+                        width: 1,
+                      ),
+                    ),
+                    // elevation: 1,
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      splashFactory: InkSplash.splashFactory,
+                      highlightColor: Colors.transparent,
+                      onTap: pay_link != null
+                          ? () async {
+                              final url = Uri.parse(pay_link ?? '');
+                              if (await canLaunchUrl(url)) {
+                                launchUrl(url);
+                              }
+                              Future.delayed(Duration(milliseconds: 1500), () {
+                                state.setCopied(false);
+                              });
+                            }
+                          : null,
                       child: Padding(
                         padding: EdgeInsets.only(
                           top: 10,
@@ -362,14 +488,14 @@ class OrderDetailPaymentQRIS extends StatelessWidget {
                             Icon(
                               Iconsax.copy5,
                               size: 16,
-                              color: isCopied ? Colors.white : Colors.black,
+                              color: Colors.white,
                             ),
                             Text(
-                              isCopied ? 'Tersalin' : 'Salin Link',
+                              'Bayar',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: isCopied ? Colors.white : Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                           ],

@@ -160,6 +160,7 @@ class PaymentController extends GetxController {
   // STATES
   RxList paymentMethod = [].obs;
   final paymentData = Rxn<List<PaymentData>>();
+  final paymentAccount = RxList();
 
   final selectedVoucher = Rxn<Map<String, dynamic>>(null);
   final selectedPayment = Rxn<PaymentData>(null);
@@ -172,7 +173,7 @@ class PaymentController extends GetxController {
   void onInit() async {
     try {
       final api = await API().get('/global/payment_method');
-      final result = (api.data as List)
+      final result = ((api.data?['data'] ?? []) as List)
           .where((item) => !['corporate', 'cod'].contains(item?['name']))
           .map((item) {
         final thisItem =
@@ -180,11 +181,35 @@ class PaymentController extends GetxController {
         item['icon'] = thisItem?.icon ?? '';
         return PaymentData.fromJson(item);
       }).toList();
+      final payment_account =
+          ((api.data?['payment_account'] ?? []) as List).toList();
+      paymentAccount.value = payment_account;
       paymentData.value = result;
     } catch (e) {
       //
     }
     super.onInit();
+  }
+
+  Future createGopayLink() async {
+    try {
+      final myAPI = await API().get('/me');
+      final my = myAPI.data;
+      dynamic phone;
+      if (my?['phone'] != null) {
+        phone = my?['phone']?.toString();
+        if (phone.toString().startsWith(RegExp(r'(08|628)'))) {
+          phone = phone.toString().replaceFirst(RegExp(r'(0|62)'), '', 0);
+        }
+        final api =
+            await API().post('payment/link/gopay', data: {'phone': phone});
+        if (api.data?['status'] == 'success') {
+          onInit();
+        }
+      }
+    } catch (e) {
+      //
+    }
   }
 }
 

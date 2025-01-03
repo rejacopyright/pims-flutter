@@ -102,27 +102,40 @@ class PaymentCard extends StatelessWidget {
   }
 }
 
-class PaymentItem extends StatelessWidget {
-  const PaymentItem({
-    super.key,
-    required this.item,
-  });
+class PaymentItem extends StatefulWidget {
+  const PaymentItem({super.key, required this.item});
 
   final PaymentData item;
 
   @override
+  State<PaymentItem> createState() => PaymentItemState();
+}
+
+class PaymentItemState extends State<PaymentItem> {
+  bool btnIsLoading = false;
+  setBtnIsLoading(e) => setState(() => btnIsLoading = e);
+  @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
     final paymentController = Get.put(PaymentController());
+    final item = widget.item;
     return Obx(() {
       final thisPaymentIsChecked =
           item.name == paymentController.selectedPayment.value?.name;
+      final paymentAccount = paymentController.paymentAccount.toList();
+      bool isGopay = item.name == 'gopay-xxx';
+      dynamic gopay;
+      if (isGopay) {
+        gopay = paymentAccount.firstWhereOrNull((e) => e?['type'] == 'gopay');
+      }
       return InkWell(
         splashColor: Colors.transparent,
-        onTap: () {
-          paymentController
-              .setSelectedPayment(thisPaymentIsChecked ? null : item);
-        },
+        onTap: !isGopay || (isGopay && gopay != null)
+            ? () {
+                paymentController
+                    .setSelectedPayment(thisPaymentIsChecked ? null : item);
+              }
+            : null,
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 20),
           margin: EdgeInsets.symmetric(vertical: 5),
@@ -180,15 +193,43 @@ class PaymentItem extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: Icon(
-                          Iconsax.tick_circle5,
-                          color: thisPaymentIsChecked
-                              ? primaryColor
-                              : Color(0xffdddddd),
-                        ),
-                      )
+                      isGopay && gopay == null
+                          ? ElevatedButton(
+                              onPressed: btnIsLoading
+                                  ? null
+                                  : () async {
+                                      setBtnIsLoading(true);
+                                      await paymentController.createGopayLink();
+                                      setBtnIsLoading(false);
+                                    },
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: primaryColor,
+                                foregroundColor: Colors.white,
+                                minimumSize: Size.zero,
+                                shape: StadiumBorder(),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 7.5,
+                                ),
+                              ),
+                              child: Text(
+                                btnIsLoading ? 'Waiting...' : 'Aktivasi',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            )
+                          : Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 15),
+                              child: Icon(
+                                Iconsax.tick_circle5,
+                                color: thisPaymentIsChecked
+                                    ? primaryColor
+                                    : Color(0xffdddddd),
+                              ),
+                            ),
                     ],
                   ),
                 ),

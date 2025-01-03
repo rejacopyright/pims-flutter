@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 NumberFormat currency = NumberFormat.decimalPatternDigits(
   locale: 'id_ID',
@@ -88,5 +91,56 @@ class Debouncer {
 
   void dispose() {
     _timer?.cancel();
+  }
+}
+
+class DownloaderState {
+  DownloaderState({required this.fileName, required this.baseUrl});
+  String fileName;
+  String baseUrl;
+}
+
+class FileDownloader {
+  Dio dio = Dio();
+  bool isSuccess = false;
+
+  void startDownloading(BuildContext context, DownloaderState params,
+      final Function okCallback) async {
+    String path = await getFilePath('/${params.fileName}');
+
+    try {
+      await dio.download(
+        params.baseUrl,
+        path,
+        onReceiveProgress: (recivedBytes, totalBytes) {
+          okCallback(recivedBytes, totalBytes);
+        },
+        deleteOnError: true,
+      ).then((_) {
+        isSuccess = true;
+      });
+    } catch (e) {
+      //
+    }
+
+    if (isSuccess) {
+      Get.rootDelegate.popRoute();
+    }
+  }
+
+  Future<String> getFilePath(String filename) async {
+    Directory? dir;
+
+    try {
+      if (Platform.isIOS) {
+        dir = await getApplicationDocumentsDirectory(); // for iOS
+      } else {
+        dir = Directory('/storage/emulated/0/Download/'); // for android
+        if (!await dir.exists()) dir = (await getExternalStorageDirectory())!;
+      }
+    } catch (err) {
+      //
+    }
+    return "${dir?.path}$filename";
   }
 }

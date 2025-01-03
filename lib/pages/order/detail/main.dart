@@ -154,6 +154,14 @@ class OrderDetailPage extends StatelessWidget {
           final bill_key = data?['payment']?['bill_key'];
           final permata_va_number = data?['payment']?['permata_va_number'];
           final qris_img = data?['payment']?['actions']?[0]?['url'];
+          String? ewallet_link;
+          if (data?['payment'] != null) {
+            List ewallet_actions =
+                ((data?['payment']?['actions'] ?? []) as List).toList();
+            final ewallet_action = ewallet_actions
+                .firstWhereOrNull((e) => e?['name'] == 'deeplink-redirect');
+            ewallet_link = ewallet_action?['url'];
+          }
 
           return ListView.builder(
             itemCount: 1,
@@ -188,6 +196,13 @@ class OrderDetailPage extends StatelessWidget {
                                   ? OrderDetailPaymentQRIS(
                                       provider: 'qris',
                                       img: qris_img,
+                                      order_id: data?['order_no'],
+                                    )
+                                  : SizedBox.shrink(),
+                              ['shopee_pay', 'gopay'].contains(provider)
+                                  ? OrderDetailPaymentEWallet(
+                                      provider: provider,
+                                      pay_link: ewallet_link,
                                     )
                                   : SizedBox.shrink(),
                               OrderDetailPurchaseTime(
