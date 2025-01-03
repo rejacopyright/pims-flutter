@@ -70,7 +70,7 @@ class Homepage extends StatelessWidget {
         return RefreshIndicator(
           color: Theme.of(context).primaryColor,
           displacement: 60,
-          edgeOffset: 190,
+          edgeOffset: 150,
           onRefresh: () async {
             userController.onInit();
             homeHeaderController.refresh();

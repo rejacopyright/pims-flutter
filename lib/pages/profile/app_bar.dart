@@ -258,8 +258,8 @@ class ProfileAppBar extends StatelessWidget {
                                       SizedBox(
                                         height: 30,
                                         child: TextButton(
-                                          onPressed: () {
-                                            box.remove('token');
+                                          onPressed: () async {
+                                            await box.remove('token');
                                           },
                                           style: TextButton.styleFrom(
                                             backgroundColor:

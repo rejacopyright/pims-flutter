@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pims/_config/dio.dart';
 
 fetchMe() async {
@@ -17,7 +18,9 @@ class UserController extends GetxController {
 
   @override
   void onInit() async {
-    // final box = GetStorage();
+    final box = GetStorage();
+    final userBox = await box.read('user');
+    user.value = userBox;
     try {
       final api = await fetchMe();
       user.value = api;

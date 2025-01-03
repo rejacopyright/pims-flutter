@@ -24,7 +24,7 @@ List<ProductService> servicesList = [
   ProductService(
     label: 'Gym Visit',
     name: '/services/visit',
-    icon: 'assets/icons/dumbbell.png',
+    icon: 'assets/icons/bike.png',
     home: true,
   ),
   ProductService(
@@ -37,7 +37,7 @@ List<ProductService> servicesList = [
   ProductService(
     label: 'Kelas Fungsional',
     name: '/services/class/functional',
-    icon: 'assets/icons/bike.png',
+    icon: 'assets/icons/dumbbell.png',
     home: true,
     type: 'functional',
   ),

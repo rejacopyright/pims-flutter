@@ -99,6 +99,7 @@ class ProfileEditController extends GetxController {
   RxBool submitBtnIsLoading = false.obs;
 
   setCity(e) => dataCity.value = e;
+  setProvince(e) => dataProvince.value = e;
 
   setEmail(e) => email.value = e;
   setFirstName(e) => first_name.value = e;
@@ -127,8 +128,8 @@ class ProfileEditController extends GetxController {
       final religion = await getReligion();
       dataReligion.value = religion;
 
-      final province = await getProvince();
-      dataProvince.value = province;
+      // final province = await getProvince();
+      // dataProvince.value = province;
 
       final occupation = await getOccupation();
       dataOccupation.value = occupation;
@@ -158,8 +159,15 @@ class ProfileEditController extends GetxController {
       setReligionID(res?['religion_id']);
       setOccupationID(res?['occupation_id']);
       if (![null, ''].contains(res?['province_id'])) {
+        setProvince([
+          {'value': res?['province']?['id'], 'label': res?['province']?['name']}
+        ]);
         setProvinceID(res['province_id']);
-        dataCity.value = await getCity(res['province_id']);
+        if (![null, ''].contains(res?['city_id'])) {
+          setCity([
+            {'value': res?['city']?['id'], 'label': res?['city']?['name']}
+          ]);
+        }
       }
       setCityID(res?['city_id']);
       setAddress(res?['address'] ?? '');
@@ -538,6 +546,15 @@ class ProfileEditPage extends StatelessWidget {
                                     title: 'Provinsi',
                                     items: dataProvince,
                                     initialValue: province_id,
+                                    onOpen: (value) async {
+                                      try {
+                                        final provinces = await getProvince();
+                                        state.setProvince(provinces);
+                                        return true;
+                                      } catch (e) {
+                                        return false;
+                                      }
+                                    },
                                     onChange: (e) async {
                                       state.setProvinceID(e?['value']);
                                       state.setCityID(null);
@@ -556,6 +573,18 @@ class ProfileEditPage extends StatelessWidget {
                                     title: 'Kota',
                                     items: dataCity,
                                     initialValue: city_id,
+                                    onOpen: province_id != null
+                                        ? (value) async {
+                                            try {
+                                              final cities =
+                                                  await getCity(province_id);
+                                              state.setCity(cities);
+                                              return true;
+                                            } catch (e) {
+                                              return false;
+                                            }
+                                          }
+                                        : null,
                                     onChange: (e) =>
                                         state.setCityID(e?['value']),
                                   ),

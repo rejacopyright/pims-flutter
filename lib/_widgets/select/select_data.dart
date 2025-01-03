@@ -15,11 +15,13 @@ class DropdownData extends StatefulWidget {
     this.items = const [],
     this.initialValue,
     this.onChange,
+    this.onOpen,
   });
 
   final String title;
   final List<Map<String, dynamic>> items;
   final ValueChanged<Map<String, dynamic>?>? onChange;
+  final Future<bool?> Function(Map<String, dynamic>?)? onOpen;
   final dynamic initialValue;
 
   @override
@@ -113,6 +115,12 @@ class DropdownDataWidget extends State<DropdownData> {
               ),
             ),
           ),
+          onBeforePopupOpening: widget.onOpen != null
+              ? (selectedItem) {
+                  return widget.onOpen!(selectedItem);
+                  // return Future.delayed(Duration.zero);
+                }
+              : null,
           onChanged: (e) {
             setSelected(e);
             widget.onChange!(e);
