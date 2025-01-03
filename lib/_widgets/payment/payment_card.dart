@@ -11,92 +11,95 @@ class PaymentCard extends StatelessWidget {
     final paymentController = Get.put(PaymentController());
     return Obx(() {
       final paymentData = paymentController.paymentData.value;
-      return ListView(
-        physics: ClampingScrollPhysics(),
+      return SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 15),
-        shrinkWrap: true,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            child: Text(
-              'Transfer Bank',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+        physics: ClampingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                'Transfer Bank',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
             ),
-          ),
-          paymentData != null
-              ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: paymentData
-                      .where((item) => item.type == 1) // bank_transfer
-                      .map((item) => PaymentItem(item: item))
-                      .toList(),
-                )
-              : SizedBox.shrink(),
-          SizedBox(height: 20),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            child: Text(
-              'E - Wallets',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+            paymentData != null
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: paymentData
+                        .where((item) => item.type == 1) // bank_transfer
+                        .map((item) => PaymentItem(item: item))
+                        .toList(),
+                  )
+                : SizedBox.shrink(),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                'E - Wallets',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
             ),
-          ),
-          paymentData != null
-              ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: paymentData
-                      .where((item) => item.type == 2) // e_wallet
-                      .map((item) => PaymentItem(item: item))
-                      .toList(),
-                )
-              : SizedBox.shrink(),
-          SizedBox(height: 20),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            child: Text(
-              'Bayar di Konter',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+            paymentData != null
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: paymentData
+                        .where((item) => item.type == 2) // e_wallet
+                        .map((item) => PaymentItem(item: item))
+                        .toList(),
+                  )
+                : SizedBox.shrink(),
+            SizedBox(height: 20),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(vertical: 5),
+            //   child: Text(
+            //     'Bayar di Konter',
+            //     style: TextStyle(
+            //       fontWeight: FontWeight.bold,
+            //       fontSize: 16,
+            //     ),
+            //   ),
+            // ),
+            // paymentData != null
+            //     ? Column(
+            //         mainAxisSize: MainAxisSize.min,
+            //         children: paymentData
+            //             .where((item) => item.type == 3) // counter
+            //             .map((item) => PaymentItem(item: item))
+            //             .toList(),
+            //       )
+            //     : SizedBox.shrink(),
+            // SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                'Metode Lainnya',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
             ),
-          ),
-          paymentData != null
-              ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: paymentData
-                      .where((item) => item.type == 3) // counter
-                      .map((item) => PaymentItem(item: item))
-                      .toList(),
-                )
-              : SizedBox.shrink(),
-          SizedBox(height: 20),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            child: Text(
-              'Metode Lainnya',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-          ),
-          paymentData != null
-              ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: paymentData
-                      .where((item) => item.type == 4) // other
-                      .map((item) => PaymentItem(item: item))
-                      .toList(),
-                )
-              : SizedBox.shrink(),
-          SizedBox(height: 20),
-        ],
+            paymentData != null
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: paymentData
+                        .where((item) => item.type == 4) // other
+                        .map((item) => PaymentItem(item: item))
+                        .toList(),
+                  )
+                : SizedBox.shrink(),
+            SizedBox(height: 20),
+          ],
+        ),
       );
     });
   }
